@@ -1,2 +1,4 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>Welcome to Waive Player</h1>
+<p>Placholder for now</p>
+
+<a href="/player">Go to Player</a>
