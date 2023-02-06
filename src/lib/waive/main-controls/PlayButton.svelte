@@ -1,5 +1,5 @@
 <script lang="ts">
-	enum STATE {
+	enum PlayingState {
 		NEW,
 		RUNNING,
 		PAUSED
@@ -7,15 +7,15 @@
 
 	export let elapsedTime: number = 0;
 
-	let state: STATE = STATE.NEW;
+	let state: PlayingState = PlayingState.NEW;
 	let startTime: number = 0;
 	let pausedTime: number = 0;
 
 	const start = () => {
 		startTime = Date.now();
-		state = STATE.RUNNING;
+		state = PlayingState.RUNNING;
 		setInterval(() => {
-			if (state === STATE.RUNNING) {
+			if (state === PlayingState.RUNNING) {
 				const endTime = Date.now();
 				elapsedTime = endTime - startTime + pausedTime;
 			}
@@ -23,17 +23,17 @@
 	};
 
 	const pause = () => {
-		state = STATE.PAUSED;
+		state = PlayingState.PAUSED;
 		pausedTime = elapsedTime;
 	};
 
 	const resume = () => {
 		startTime = Date.now();
-		state = STATE.RUNNING;
+		state = PlayingState.RUNNING;
 	};
 </script>
 
-{#if state === STATE.NEW}
+{#if state === PlayingState.NEW}
 	<button on:click={start} class="btn btn-circle text-white">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +49,7 @@
 			/></svg
 		>
 	</button>
-{:else if state === STATE.RUNNING}
+{:else if state === PlayingState.RUNNING}
 	<button on:click={pause} class="btn btn-circle text-white">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@
 			/></svg
 		>
 	</button>
-{:else if state === STATE.PAUSED}
+{:else if state === PlayingState.PAUSED}
 	<button on:click={resume} class="btn btn-circle text-white">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"

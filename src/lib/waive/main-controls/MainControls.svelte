@@ -39,26 +39,26 @@
 	</div>
 
 	<!-- BPM & Rythm -->
-	<div class="text-white text-xs text-center space-y-2">
+	<div class="text-white text-xs text-center space-x-2 flex flex-row">
 		<!-- BPM -->
 		<div class="flex flex-row space-x-1">
-			<span class="badge rounded-l-full flex-grow bg-gray-800 py-1 px-4">{bpm}bpm</span>
+			<span class="badge rounded-l-full flex-grow bg-gray-800 py-2 px-4">{bpm}bpm</span>
 
-			<div class="bg-gray-800 rounded-r-full py-1 px-4">
-				<button class="btn btn-xs "> - </button>
-				<button class="btn btn-xs"> + </button>
+			<div class="bg-gray-800 rounded-r-full py-2 px-4">
+				<button class="btn btn-sm"> - </button>
+				<button class="btn btn-sm"> + </button>
 			</div>
 		</div>
 
 		<!-- Rythm -->
-		<div class="flex flex-row space-x-1">
-			<span class="badge rounded-l-full flex-grow bg-gray-800 py-1 px-4"
+		<div class="flex flex-row space-x-1 ">
+			<span class="badge rounded-l-full flex-grow bg-gray-800 py-2 px-4"
 				>{rythm.base}/{rythm.over}</span
 			>
 
-			<div class="bg-gray-800 rounded-r-full py-1 px-4">
-				<button class="btn btn-xs "> - </button>
-				<button class="btn btn-xs"> + </button>
+			<div class="bg-gray-800 rounded-r-full py-2 px-4">
+				<button class="btn-sm"> - </button>
+				<button class="btn-sm"> + </button>
 			</div>
 		</div>
 	</div>

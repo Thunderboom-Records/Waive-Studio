@@ -1,34 +1,23 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import { Instrument } from '$lib/types/waive';
+	import MainControls from '$lib/waive/main-controls/MainControls.svelte';
+	import Player from '$lib/waive/player/Player.svelte';
+	import Selected from '$lib/waive/Selected.svelte';
 
-	import MainControlSection from '$lib/player/main-controls/MainControlSection.svelte';
-	import MasterFxSection from '$lib/player/master-fx/MasterFxSection.svelte';
-	import PatternSection from '$lib/player/pattern/PatternSection.svelte';
-	import PlayerSection from '$lib/player/player/PlayerSection.svelte';
-	import SampleSection from '$lib/player/sample/SampleSection.svelte';
-
-	export let data: PageData;
+	let selected: Instrument = Instrument.HIHAT;
 </script>
 
-<div class="flex flex-col bg-gray-900">
-	<section class="border border-green-400">
-		<div class="w-1/3">
-			<MainControlSection />
+<div class="flex flex-row bg-gray-900 border border-white p-1 space-x-4">
+	<section class="w-2/3 flex flex-col border border-green-400 ">
+		<div class="justify-center">
+			<MainControls />
 		</div>
 		<div>
-			<MasterFxSection />
+			<Player />
 		</div>
 	</section>
 
-	<section class="flex flex-row">
-		<div>
-			<PatternSection />
-		</div>
-		<div>
-			<SampleSection />
-		</div>
-		<div>
-			<PlayerSection />
-		</div>
+	<section class="w-1/3 flex flex-col border border-blue-400">
+		<Selected {selected} />
 	</section>
 </div>
