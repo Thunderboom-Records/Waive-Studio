@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Faq from './Faq.svelte';
+	import Faq from '$lib/thunderboom/Faq.svelte';
 </script>
 
 <main class="flex flex-row ">

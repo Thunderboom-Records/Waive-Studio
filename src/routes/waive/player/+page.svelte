@@ -1,10 +1,11 @@
 <script lang="ts">
-	import MainControlSection from '$lib/components/player/main-controls/MainControlSection.svelte';
-	import MasterFxSection from '$lib/components/player/master-fx/MasterFxSection.svelte';
-	import PatternSection from '$lib/components/player/pattern/PatternSection.svelte';
-	import PlayerSection from '$lib/components/player/player/PlayerSection.svelte';
-	import SampleSection from '$lib/components/player/sample/SampleSection.svelte';
 	import type { PageData } from './$types';
+
+	import MainControlSection from '$lib/player/main-controls/MainControlSection.svelte';
+	import MasterFxSection from '$lib/player/master-fx/MasterFxSection.svelte';
+	import PatternSection from '$lib/player/pattern/PatternSection.svelte';
+	import PlayerSection from '$lib/player/player/PlayerSection.svelte';
+	import SampleSection from '$lib/player/sample/SampleSection.svelte';
 
 	export let data: PageData;
 </script>
