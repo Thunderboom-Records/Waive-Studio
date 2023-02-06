@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { base } from '$app/paths';
+	import PlayButton from './PlayButton.svelte';
+	import Timer from './Timer.svelte';
 
-	let timer = 0;
+	export let elapsedTime: number = 0;
 
 	let bpm = 120;
 	let rythm = {
@@ -12,26 +13,12 @@
 
 <div class="flex flex-row justify-evenly items-center py-4">
 	<!-- Timer -->
-	<div class="badge badge-lg text-white bg-gray-800 rounded-full py-1 px-8">{timer}</div>
+	<Timer {elapsedTime} />
 
 	<!-- Play & Record Buttons -->
 	<div>
 		<!-- Play Button -->
-		<button class="btn btn-circle text-white">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-6 w-6"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-				><path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M6 18L18 6M6 6l12 12"
-				/></svg
-			>
-		</button>
+		<PlayButton bind:elapsedTime />
 
 		<!-- Record Button -->
 		<button class="btn btn-circle text-white">
