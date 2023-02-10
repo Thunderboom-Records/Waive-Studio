@@ -1,8 +1,8 @@
 <script lang="ts">
 	import DelaySelection from './DelaySelection.svelte';
 	import FilterSelection from './FilterSelection.svelte';
-	import MasterFxHeader from './MasterFxHeader.svelte';
-	import MasterFxKnob from './MasterFxKnob.svelte';
+	import FxHeader from './FxHeader.svelte';
+	import FxKnob from './FxKnob.svelte';
 </script>
 
 <section class="flex flex-col">
@@ -10,61 +10,68 @@
 		<h2 class="text-gray-300 text-center">master fx</h2>
 	</div>
 	<div class="flex flex-row">
+		<!-- Delay Controls -->
 		<div class="flex flex-col">
-			<MasterFxHeader>delay</MasterFxHeader>
+			<FxHeader>delay</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-2 p-4">
-				<MasterFxKnob>feedback</MasterFxKnob>
+				<FxKnob>feedback</FxKnob>
 				<DelaySelection />
 			</div>
 		</div>
 
+		<!-- Reverb Controls -->
 		<div class="border-x-2 border-gray-800 flex flex-col">
-			<MasterFxHeader>reverb</MasterFxHeader>
+			<FxHeader>reverb</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-2 p-4">
-				<MasterFxKnob>decay</MasterFxKnob>
-				<MasterFxKnob>wet</MasterFxKnob>
+				<FxKnob>decay</FxKnob>
+				<FxKnob>wet</FxKnob>
 			</div>
 		</div>
 
+		<!-- Filter Controls -->
 		<div class="border-x-2 border-gray-800 flex flex-col">
-			<MasterFxHeader>filter</MasterFxHeader>
+			<FxHeader>filter</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-4 p-4">
 				<FilterSelection />
-				<MasterFxKnob>frequency</MasterFxKnob>
-				<MasterFxKnob>q</MasterFxKnob>
+				<FxKnob>frequency</FxKnob>
+				<FxKnob>q</FxKnob>
 			</div>
 		</div>
 
+		<!-- EQ Controls -->
 		<div class="border-x-2 border-gray-800 flex flex-col">
-			<MasterFxHeader>eq3</MasterFxHeader>
+			<FxHeader>eq3</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-4 p-4">
-				<MasterFxKnob>low</MasterFxKnob>
-				<MasterFxKnob>mid</MasterFxKnob>
-				<MasterFxKnob>high</MasterFxKnob>
+				<FxKnob>low</FxKnob>
+				<FxKnob>mid</FxKnob>
+				<FxKnob>high</FxKnob>
 			</div>
 		</div>
 
+		<!-- Compressor Controls -->
 		<div class="border-x-2 border-gray-800 flex flex-col">
-			<MasterFxHeader>compressor</MasterFxHeader>
+			<FxHeader>compressor</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-4 p-4">
-				<MasterFxKnob>attack</MasterFxKnob>
-				<MasterFxKnob>release</MasterFxKnob>
-				<MasterFxKnob>ratio</MasterFxKnob>
-				<MasterFxKnob>threshold</MasterFxKnob>
+				<FxKnob>attack</FxKnob>
+				<FxKnob>release</FxKnob>
+				<FxKnob>ratio</FxKnob>
+				<FxKnob>threshold</FxKnob>
 			</div>
 		</div>
 
+		<!-- Gain Controls -->
 		<div class="border-x-2 border-gray-800 flex flex-col">
-			<MasterFxHeader>gain</MasterFxHeader>
+			<FxHeader>gain</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-2 p-4">
-				<MasterFxKnob>gain</MasterFxKnob>
+				<FxKnob>gain</FxKnob>
 			</div>
 		</div>
 
+		<!-- Limiter Controls -->
 		<div class="border-x-2 border-gray-800 flex flex-col">
-			<MasterFxHeader>limiter</MasterFxHeader>
+			<FxHeader>limiter</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-2 p-4">
-				<MasterFxKnob>threshold</MasterFxKnob>
+				<FxKnob>threshold</FxKnob>
 			</div>
 		</div>
 	</div>

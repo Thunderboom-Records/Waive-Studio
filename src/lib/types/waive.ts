@@ -1,7 +1,11 @@
-export enum Instrument {
+export enum InstrumentType {
     KICK,
     SNARE,
     HIHAT,
-    BASE,
+    BASS,
     LEAD
+}
+
+export type Instrument = {
+    type: InstrumentType
 }
