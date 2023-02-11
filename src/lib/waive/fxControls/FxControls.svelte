@@ -5,13 +5,13 @@
 	import FxKnob from './FxKnob.svelte';
 </script>
 
-<section class="flex flex-col">
+<section class="flex flex-col w-full">
 	<div>
-		<h2 class="text-gray-300 text-center">master fx</h2>
+		<h2 class="text-gray-400 text-center">master fx</h2>
 	</div>
 	<div class="flex flex-row">
 		<!-- Delay Controls -->
-		<div class="flex flex-col">
+		<div class="flex flex-col w-full">
 			<FxHeader>delay</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-2 p-4">
 				<FxKnob>feedback</FxKnob>
@@ -20,7 +20,7 @@
 		</div>
 
 		<!-- Reverb Controls -->
-		<div class="border-x-2 border-gray-800 flex flex-col">
+		<div class="border-x-2 border-gray-800 flex flex-col w-full">
 			<FxHeader>reverb</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-2 p-4">
 				<FxKnob>decay</FxKnob>
@@ -29,7 +29,7 @@
 		</div>
 
 		<!-- Filter Controls -->
-		<div class="border-x-2 border-gray-800 flex flex-col">
+		<div class="border-x-2 border-gray-800 flex flex-col w-full">
 			<FxHeader>filter</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-4 p-4">
 				<FilterSelection />
@@ -39,7 +39,7 @@
 		</div>
 
 		<!-- EQ Controls -->
-		<div class="border-x-2 border-gray-800 flex flex-col">
+		<div class="border-x-2 border-gray-800 flex flex-col w-full">
 			<FxHeader>eq3</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-4 p-4">
 				<FxKnob>low</FxKnob>
@@ -49,7 +49,7 @@
 		</div>
 
 		<!-- Compressor Controls -->
-		<div class="border-x-2 border-gray-800 flex flex-col">
+		<div class="border-x-2 border-gray-800 flex flex-col w-full">
 			<FxHeader>compressor</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-4 p-4">
 				<FxKnob>attack</FxKnob>
@@ -60,7 +60,7 @@
 		</div>
 
 		<!-- Gain Controls -->
-		<div class="border-x-2 border-gray-800 flex flex-col">
+		<div class="border-x-2 border-gray-800 flex flex-col w-full">
 			<FxHeader>gain</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-2 p-4">
 				<FxKnob>gain</FxKnob>
@@ -68,7 +68,7 @@
 		</div>
 
 		<!-- Limiter Controls -->
-		<div class="border-x-2 border-gray-800 flex flex-col">
+		<div class="border-x-2 border-gray-800 flex flex-col w-full">
 			<FxHeader>limiter</FxHeader>
 			<div class="flex flex-row justify-center items-center h-full space-x-2 p-4">
 				<FxKnob>threshold</FxKnob>

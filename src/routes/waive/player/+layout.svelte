@@ -1,12 +1,9 @@
 <script lang="ts">
-	import type { LayoutData } from './$types';
 	import type { Route } from '$lib/types/route';
 
 	import '$lib/styles/app.postcss';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-
-	export let data: LayoutData;
 
 	let routes: Route[] = [
 		{ href: '/waive/player', label: 'Player' },

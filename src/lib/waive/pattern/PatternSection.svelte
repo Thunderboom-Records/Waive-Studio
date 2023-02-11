@@ -2,7 +2,7 @@
 	import PatternBars from './PatternBars.svelte';
 	import PatternControls from './PatternControls.svelte';
 	import PatternHeader from './PatternHeader.svelte';
-	import PatternSmToggles from './PatternSMToggles.svelte';
+	import SmToggles from './SmControls.svelte';
 
 	export let patterns: string[];
 </script>
@@ -12,7 +12,7 @@
 
 	{#each patterns as pattern}
 		<div class="flex flex-row space-x-1">
-			<PatternSmToggles />
+			<SmToggles />
 
 			<div class="flex flex-row w-full">
 				<PatternControls {pattern} />

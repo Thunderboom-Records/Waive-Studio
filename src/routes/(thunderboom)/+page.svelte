@@ -64,3 +64,13 @@
 		</div>
 	</div>
 </div>
+
+<p class="bg-red-500 text-red-600">color placeholder</p>
+
+<p class="bg-orange-500 text-orange-600">color placeholder</p>
+
+<p class="bg-purple-500 text-purple-600">color placeholder</p>
+
+<p class="bg-green-500 text-green-600">color placeholder</p>
+
+<p class="bg-blue-500 text-blue-600">color placeholder</p>

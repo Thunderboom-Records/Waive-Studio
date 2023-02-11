@@ -1,59 +1,34 @@
 <script lang="ts">
-	import { InstrumentType, type Instrument } from '$lib/types/waive';
-	import { onMount } from 'svelte';
+	import type { Instrument } from '$lib/types/waive';
+	import DownloadButton from '$lib/components/DownloadButton.svelte';
+	import SmToggles from '../pattern/SmControls.svelte';
 	import PlayerSection from '../player/PlayerSection.svelte';
+	import PatternControls from '../pattern/PatternControls.svelte';
+	import PatternBars from '../pattern/PatternBars.svelte';
 
 	export let instrument: Instrument;
-	let color: string;
-
-	onMount(() => {
-		setColor();
-	});
-
-	function setColor() {
-		switch (instrument.type) {
-			case InstrumentType.KICK:
-				color = 'red';
-				break;
-			case InstrumentType.SNARE:
-				color = 'blue';
-				break;
-			case InstrumentType.HIHAT:
-				color = 'purple';
-				break;
-			case InstrumentType.BASS:
-				color = 'orange';
-				break;
-			case InstrumentType.LEAD:
-				color = 'green';
-				break;
-		}
-	}
 </script>
 
-<div class="bg-gray-900 w-48" />
-<div class="bg-gray-900 w-48" />
-<div class="bg-gray-900 w-48" />
-<div class="bg-gray-900 w-48" />
-<div class="bg-gray-900 w-48" />
-<div class="bg-gray-900 w-48" />
-<div class="bg-gray-900 w-48" />
-<div class="bg-gray-900 w-48" />
-<!-- Col 1: Placeholder -->
-<div class="bg-gray-900 min-w-16" />
+<!-- Col 1: S&M Controls -->
+<SmToggles color={instrument.color} />
 
-<!-- Col 2: PatternHeader -->
-<div class="bg-gray-900 min-w-96">
-	<h2 class="text-{color}-500 text-center">pattern</h2>
+<!-- Col 2: Pattern Controls -->
+<!-- <div class="bg-gray-900 min-w-96">
+	<h2 class="text-{instrument.color}-600 text-center">pattern</h2>
+</div> -->
+
+<div class="flex flex-row w-full">
+	<PatternControls {instrument} />
+	<PatternBars {instrument} />
 </div>
 
-<!-- Col 3: SampleHeader-->
+<!-- Col 3: Sample Controls -->
 <div class="bg-gray-900 min-w-48">
-	<h2 class="text-gray-300 text-center">sample</h2>
+	<h2 class="text-gray-500 text-center">sample</h2>
 </div>
 
-<!-- Col 4-7: PlayerHeader -->
+<!-- Col 4-7: Player Display -->
 <PlayerSection />
 
-<!-- Col 8: Placeholder-->
-<div class="bg-gray-900 min-w-16" />
+<!-- Col 8: Download Button -->
+<DownloadButton {instrument} />

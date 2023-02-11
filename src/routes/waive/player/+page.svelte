@@ -8,15 +8,15 @@
 	import InstrumentHeader from '$lib/waive/instruments/InstrumentHeader.svelte';
 
 	let instruments: Instrument[] = [
-		{ type: InstrumentType.KICK },
-		{ type: InstrumentType.SNARE },
-		{ type: InstrumentType.HIHAT },
-		{ type: InstrumentType.BASE },
-		{ type: InstrumentType.LEAD }
+		{ type: InstrumentType.KICK, color: 'red' },
+		{ type: InstrumentType.SNARE, color: 'blue' },
+		{ type: InstrumentType.HIHAT, color: 'purple' },
+		{ type: InstrumentType.BASS, color: 'orange' },
+		{ type: InstrumentType.LEAD, color: 'green' }
 	];
 </script>
 
-<div class="flex flex-col bg-gray-900 space-y-1 ">
+<div class="flex flex-col bg-gray-800 space-y-1 ">
 	<div class="grid grid-cols-instrument-grid bg-gray-800 w-full gap-1">
 		<!-- Row 1 -->
 		<div class=" bg-gray-900 col-span-2">
@@ -28,6 +28,7 @@
 
 		<!-- Row 2 -->
 		<InstrumentHeader />
+
 		<!-- Row 3+ -->
 		{#each instruments as instrument}
 			<InstrumentRow {instrument} />
@@ -49,5 +50,5 @@
 		</div>
 	</div> -->
 
-	<div class="bg-gray-900 w-full h-4 mt-16" />
+	<div class="bg-gray-900 w-full h-4" />
 </div>

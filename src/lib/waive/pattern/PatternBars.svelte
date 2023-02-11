@@ -1,4 +1,7 @@
 <script lang="ts">
+	import type { Instrument } from '$lib/types/waive';
+
+	export let instrument: Instrument;
 	let bars: number[] = [1, 2, 3, 4, 5];
 </script>
 
@@ -9,3 +12,13 @@
 		</div>
 	{/each}
 </div>
+
+<!-- <p class="bg-red-500 text-red-600">color placeholder</p>
+
+<p class="bg-orange-500 text-orange-600">color placeholder</p>
+
+<p class="bg-purple-500 text-purple-600">color placeholder</p>
+
+<p class="bg-green-500 text-green-600">color placeholder</p>
+
+<p class="bg-blue-500 text-blue-600">color placeholder</p> -->

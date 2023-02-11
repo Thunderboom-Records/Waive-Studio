@@ -1,0 +1,18 @@
+<script lang="ts">
+	export let color: string;
+	export let active: boolean = false;
+
+	function toggle() {
+		active = !active;
+	}
+</script>
+
+{#if !active}
+	<button on:click={toggle} class="bg-gray-900 h-16 w-full btn btn-xs text-xs">
+		<slot />
+	</button>
+{:else}
+	<button on:click={toggle} class="bg-gray-900 text-{color}-600 h-16 w-full btn btn-xs text-xs">
+		<slot />
+	</button>
+{/if}

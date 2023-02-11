@@ -7,5 +7,6 @@ export enum InstrumentType {
 }
 
 export type Instrument = {
-    type: InstrumentType
+    type: InstrumentType,
+    color: string
 }
