@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 const config = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 
@@ -35,6 +37,9 @@ const config = {
 			}
 		},
 		extend: {	
+			fontFamily: {
+				'sans': ['VG5000', ...defaultTheme.fontFamily.sans]
+			},
 			width: {
 				'128': '28rem'
 			},

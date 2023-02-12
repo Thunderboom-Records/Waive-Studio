@@ -18,8 +18,12 @@
 
 <div>
 	<Header {routes} />
-	<main class="min-h-screen min-w-screen bg-gray-800 p-8">
-		<slot />
+
+	<main class="min-h-screen min-w-screen bg-gray-800 p-6 ">
+		<div class="rounded-xl bg-gray-800 p-6 shadow-2xl shadow-gray-600 border border-gray-500">
+			<slot />
+		</div>
 	</main>
+
 	<Footer />
 </div>

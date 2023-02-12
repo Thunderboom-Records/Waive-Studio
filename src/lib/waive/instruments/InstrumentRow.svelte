@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Instrument } from '$lib/types/waive';
+	import type { Bar, Instrument } from '$lib/types/waive';
 	import DownloadButton from '$lib/components/DownloadButton.svelte';
 	import SmToggles from '../pattern/SmControls.svelte';
 	import PlayerSection from '../player/PlayerSection.svelte';
@@ -9,20 +9,22 @@
 
 	export let instrument: Instrument;
 
-	let bars: number[];
+	let bars: Bar[] = [
+		{ index: 0, active: true, instrument: instrument },
+		{ index: 1, active: true, instrument: instrument },
+		{ index: 2, active: false, instrument: instrument },
+		{ index: 3, active: false, instrument: instrument },
+		{ index: 4, active: false, instrument: instrument }
+	];
 </script>
 
 <!-- Col 1: S&M Controls -->
 <SmToggles color={instrument.color} />
 
 <!-- Col 2: Pattern Controls -->
-<!-- <div class="bg-gray-900 min-w-96">
-	<h2 class="text-{instrument.color}-600 text-center">pattern</h2>
-</div> -->
-
 <div class="flex flex-row justify-evenly bg-gray-900">
-	<PatternControls {instrument} />
-	<PatternBars {instrument} />
+	<PatternControls {bars} />
+	<PatternBars {bars} />
 </div>
 
 <!-- Col 3: Sample Controls -->
