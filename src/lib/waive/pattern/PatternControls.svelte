@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { InstrumentType, type Instrument } from '$lib/types/waive';
+	import { InstrumentType, type Bar, type Instrument } from '$lib/types/waive';
 
-	export let instrument: Instrument;
+	export let bars: Bar[];
+
+	let instrument = bars[0].instrument;
 </script>
 
 <div class="flex flex-col justify-evenly place-items-start">
