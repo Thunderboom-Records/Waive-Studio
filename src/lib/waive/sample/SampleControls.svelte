@@ -1,12 +1,13 @@
 <script lang="ts">
 	import SampleSelection from './SampleSelection.svelte';
-
-	export let pattern: string;
 </script>
 
-<div class="flex flex-col p-2 space-y-2 bg-gray-900 h-full justify-center content-center">
-	<div class="flex flex-row justify-evenly">
-		<button class="bg-gray-600 btn rounded-xl w-8 h-6 text-sm place-items-center">
+<div class="flex flex-col p-2 space-y-2 bg-gray-900 h-full justify-center place-items-center">
+	<div class="flex flex-row justify-between w-60">
+		<button
+			class="flex flex-row justify-center place-items-center 
+					bg-gray-500 hover:bg-gray-600 btn rounded-full w-12 h-8 text-sm"
+		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
@@ -21,9 +22,11 @@
 			</svg>
 		</button>
 
-		<button class="bg-gray-600 btn rounded-xl w-8 h-6 text-sm">fx</button>
+		<button class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-12 h-8 text-sm">fx</button>
 
-		<button class="bg-gray-600 btn rounded-xl w-24 h-6 text-sm">new sample</button>
+		<button class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-28 h-8 text-sm"
+			>new sample</button
+		>
 	</div>
 
 	<SampleSelection />

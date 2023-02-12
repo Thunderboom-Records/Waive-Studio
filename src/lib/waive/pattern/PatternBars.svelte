@@ -1,24 +1,19 @@
 <script lang="ts">
-	import type { Instrument } from '$lib/types/waive';
+	import type { Bar, Instrument } from '$lib/types/waive';
+	import PatternBar from './PatternBar.svelte';
 
 	export let instrument: Instrument;
-	let bars: number[] = [1, 2, 3, 4, 5];
+	export let bars: Bar[] = [
+		{ index: 0, active: false, instrument: instrument },
+		{ index: 1, active: false, instrument: instrument },
+		{ index: 2, active: false, instrument: instrument },
+		{ index: 3, active: false, instrument: instrument },
+		{ index: 4, active: false, instrument: instrument }
+	];
 </script>
 
-<div class="flex flex-row space-x-1 bg-gray-900 p-1">
+<div class="flex flex-row justify-center place-items-center space-x-1">
 	{#each bars as bar}
-		<div class="rounded-md w-12 h-24 bg-gray-800 my-2">
-			{bar}
-		</div>
+		<PatternBar {bar} />
 	{/each}
 </div>
-
-<!-- <p class="bg-red-500 text-red-600">color placeholder</p>
-
-<p class="bg-orange-500 text-orange-600">color placeholder</p>
-
-<p class="bg-purple-500 text-purple-600">color placeholder</p>
-
-<p class="bg-green-500 text-green-600">color placeholder</p>
-
-<p class="bg-blue-500 text-blue-600">color placeholder</p> -->

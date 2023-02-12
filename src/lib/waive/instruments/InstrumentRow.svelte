@@ -5,8 +5,11 @@
 	import PlayerSection from '../player/PlayerSection.svelte';
 	import PatternControls from '../pattern/PatternControls.svelte';
 	import PatternBars from '../pattern/PatternBars.svelte';
+	import SampleControls from '../sample/SampleControls.svelte';
 
 	export let instrument: Instrument;
+
+	let bars: number[];
 </script>
 
 <!-- Col 1: S&M Controls -->
@@ -17,14 +20,14 @@
 	<h2 class="text-{instrument.color}-600 text-center">pattern</h2>
 </div> -->
 
-<div class="flex flex-row w-full">
+<div class="flex flex-row justify-evenly bg-gray-900">
 	<PatternControls {instrument} />
 	<PatternBars {instrument} />
 </div>
 
 <!-- Col 3: Sample Controls -->
-<div class="bg-gray-900 min-w-48">
-	<h2 class="text-gray-500 text-center">sample</h2>
+<div class="h-full space-y-1 flex flex-col justify-around">
+	<SampleControls />
 </div>
 
 <!-- Col 4-7: Player Display -->
