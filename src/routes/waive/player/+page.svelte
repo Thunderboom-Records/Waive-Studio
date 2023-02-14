@@ -6,11 +6,11 @@
 	import InstrumentHeader from '$lib/waive/instruments/InstrumentHeader.svelte';
 
 	let instruments: Instrument[] = [
-		{ type: InstrumentType.KICK, color: 'red' },
-		{ type: InstrumentType.SNARE, color: 'blue' },
-		{ type: InstrumentType.HIHAT, color: 'purple' },
-		{ type: InstrumentType.BASS, color: 'orange' },
-		{ type: InstrumentType.LEAD, color: 'green' }
+		{ type: InstrumentType.KICK, color: { name: 'red', 500: '#d14132', 600: '#601c13' } },
+		{ type: InstrumentType.SNARE, color: { name: 'blue', 500: '#3484d0', 600: '#273e60' } },
+		{ type: InstrumentType.HIHAT, color: { name: 'purple', 500: '#9352c7', 600: '#632b8d' } },
+		{ type: InstrumentType.BASS, color: { name: 'orange', 500: '#eb7130', 600: '#83371c' } },
+		{ type: InstrumentType.LEAD, color: { name: 'green', 500: '#54ba84', 600: '#326e52' } }
 	];
 </script>
 

@@ -1,16 +1,41 @@
 <script lang="ts">
 	import Canvas from '$lib/components/Canvas.svelte';
-	import type { PlayerCanvas } from '$lib/types/waive';
+	import type { Instrument, PlayerCanvas } from '$lib/types/waive';
+	import { samples } from '../stores/sampleStore';
+
+	export let instrument: Instrument;
 
 	let width: number = 235;
 	let height: number = 100;
 
-	let sections: PlayerCanvas[] = [
-		{ canvas: { w: width, h: height }, canvasColor: '', fillColor: '#d14132' },
-		{ canvas: { w: width, h: height }, canvasColor: '', fillColor: '#d14132' },
-		{ canvas: { w: width, h: height }, canvasColor: '', fillColor: '#d14132' },
-		{ canvas: { w: width, h: height }, canvasColor: '', fillColor: '#d14132' }
+	$: sections = [
+		{
+			canvas: { w: width, h: height },
+			color: instrument.color[600],
+			fill: instrument.color[500],
+			sample: $samples[0]
+		},
+		{
+			canvas: { w: width, h: height },
+			color: instrument.color[600],
+			fill: instrument.color[500],
+			sample: $samples[1]
+		},
+		{
+			canvas: { w: width, h: height },
+			color: instrument.color[600],
+			fill: instrument.color[500],
+			sample: $samples[2]
+		},
+		{
+			canvas: { w: width, h: height },
+			color: instrument.color[600],
+			fill: instrument.color[500],
+			sample: $samples[3]
+		}
 	];
+
+	$: console.log($samples);
 </script>
 
 {#each sections as section}

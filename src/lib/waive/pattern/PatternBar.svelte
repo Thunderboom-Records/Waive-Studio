@@ -1,25 +1,20 @@
 <script lang="ts">
-	import type { Bar } from '$lib/types/waive';
+	import type { Instrument, Pattern } from '$lib/types/waive';
+	import { patterns } from '../stores/patternStore';
 
-	export let bar: Bar;
+	export let instrument: Instrument;
 
-	function remove() {
-		bar.active != bar.active;
-		bar = bar;
+	function remove(pattern: Pattern) {
+		patterns.remove(pattern);
 	}
 </script>
 
-{#if bar.active == true}
-	<div
-		class="flex flex-row justify-between  place-items-start rounded-md w-11 h-28 
-		bg-{bar.instrument.color}-600 "
-	>
-		<p>{bar.index}</p>
-
-		<button on:click={remove} class="w-2">x</button>
-	</div>
-{:else}
-	<div class="rounded-md w-11 h-28 bg-gray-700 ">
-		{bar.index}
-	</div>
-{/if}
+{#each $patterns as pattern}
+	{#if pattern.active}
+		<div class="relative rounded-md w-11 h-28 bg-{instrument.color.name}-600">
+			<button on:click={() => remove(pattern)} class="w-2 absolute right-1 top-0">x</button>
+		</div>
+	{:else}
+		<div class="rounded-md w-11 h-28 bg-gray-700 " />
+	{/if}
+{/each}

@@ -8,7 +8,7 @@ export enum InstrumentType {
 
 export type Instrument = {
     type: InstrumentType,
-    color: string
+    color: Color
 };
 
 export type Bar = {
@@ -16,7 +16,18 @@ export type Bar = {
     active: boolean,
     instrument: Instrument
 };
+
+export type Pattern = {
+    index: number,
+    active: boolean,
+};
  
+export type Color = {
+    name: string,
+    500: string,
+    600: string,
+};
+
 // Canvas Types
 
 export type Canvas = {
@@ -31,8 +42,15 @@ export type Rectangle = {
     h: number
 };
 
+export type Sample = {
+    name: string,
+    active: boolean,
+    index: number
+};
+
 export type PlayerCanvas = {
     canvas: Canvas,
-    canvasColor: string;
-    fillColor: string
+    sample: Sample,
+    color: string,
+    fill: string,
 };

@@ -1,5 +1,12 @@
 <script lang="ts">
+	import { samples } from '../stores/sampleStore';
 	import SampleSelection from './SampleSelection.svelte';
+
+	function add() {
+		samples.add();
+	}
+
+	$: console.log($samples);
 </script>
 
 <div class="flex flex-col p-2 space-y-2 bg-gray-900 h-full justify-center place-items-center">
@@ -24,7 +31,7 @@
 
 		<button class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-12 h-8 text-sm">fx</button>
 
-		<button class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-28 h-8 text-sm"
+		<button on:click={add} class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-28 h-8 text-sm"
 			>new sample</button
 		>
 	</div>

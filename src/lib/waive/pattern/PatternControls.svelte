@@ -1,17 +1,21 @@
 <script lang="ts">
-	import { InstrumentType, type Bar, type Instrument } from '$lib/types/waive';
+	import { InstrumentType, type Bar, type Instrument, type Pattern } from '$lib/types/waive';
+	import { patterns } from '../stores/patternStore';
 
-	export let bars: Bar[];
+	export let instrument: Instrument;
 
-	let instrument = bars[0].instrument;
+	function addPattern() {
+		patterns.add();
+	}
 </script>
 
 <div class="flex flex-col justify-evenly place-items-start">
-	<h3 class="text-{instrument.color}-500 text-xl">
+	<h3 class="text-{instrument.color.name}-500 text-xl">
 		{InstrumentType[instrument.type].toLowerCase()}
 	</h3>
 	<button
-		class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 
+		on:click={addPattern}
+		class="bg-{instrument.color.name}-500 hover:bg-{instrument.color.name}-600 
 				btn rounded-full w-24 h-8 text-xs">new pattern</button
 	>
 	<div class="flex flex-row space-x-3 justify-center place-items-center">
