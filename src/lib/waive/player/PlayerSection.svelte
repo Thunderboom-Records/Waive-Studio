@@ -1,9 +1,11 @@
 <script lang="ts">
 	import Canvas from '$lib/components/Canvas.svelte';
-	import type { Instrument, PlayerCanvas } from '$lib/types/waive';
+	import type { Instrument } from '$lib/types/waive';
+	import { getContext } from 'svelte';
 	import { samples } from '../stores/sampleStore';
 
-	export let instrument: Instrument;
+	const { getInstrument } = getContext('instrument');
+	const instrument: Instrument = getInstrument();
 
 	let width: number = 235;
 	let height: number = 100;

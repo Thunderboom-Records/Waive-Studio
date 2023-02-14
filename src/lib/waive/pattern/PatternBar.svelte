@@ -1,8 +1,10 @@
 <script lang="ts">
 	import type { Instrument, Pattern } from '$lib/types/waive';
+	import { getContext } from 'svelte';
 	import { patterns } from '../stores/patternStore';
 
-	export let instrument: Instrument;
+	const { getInstrument } = getContext('instrument');
+	const instrument: Instrument = getInstrument();
 
 	function remove(pattern: Pattern) {
 		patterns.remove(pattern);

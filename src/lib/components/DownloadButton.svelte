@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { InstrumentType, type Instrument } from '$lib/types/waive';
+	import { getContext } from 'svelte';
 
-	export let instrument: Instrument;
+	const { getInstrument } = getContext('instrument');
+	const instrument: Instrument = getInstrument();
 
 	function download() {
 		console.log(`downloading ${InstrumentType[instrument.type]}`);

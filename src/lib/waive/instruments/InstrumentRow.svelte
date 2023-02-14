@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Bar, Instrument } from '$lib/types/waive';
+	import type { Instrument } from '$lib/types/waive';
 
 	import { patterns } from '../stores/patternStore';
 	import DownloadButton from '$lib/components/DownloadButton.svelte';
@@ -8,8 +8,12 @@
 	import PatternControls from '../pattern/PatternControls.svelte';
 	import PatternBar from '../pattern/PatternBar.svelte';
 	import SampleControls from '../sample/SampleControls.svelte';
+	import { setContext } from 'svelte';
 
 	export let instrument: Instrument;
+	setContext('instrument', {
+		getInstrument: () => instrument
+	});
 
 	$: console.log($patterns);
 </script>
@@ -19,9 +23,9 @@
 
 <!-- Col 2: Pattern Controls -->
 <div class="flex flex-row justify-evenly bg-gray-900">
-	<PatternControls {instrument} />
+	<PatternControls />
 	<div class="flex flex-row justify-center place-items-center space-x-2">
-		<PatternBar {instrument} />
+		<PatternBar />
 	</div>
 </div>
 
@@ -31,7 +35,7 @@
 </div>
 
 <!-- Col 4-7: Player Display -->
-<PlayerSection {instrument} />
+<PlayerSection />
 
 <!-- Col 8: Download Button -->
-<DownloadButton {instrument} />
+<DownloadButton />
