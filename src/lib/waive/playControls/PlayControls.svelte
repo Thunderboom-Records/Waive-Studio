@@ -2,6 +2,11 @@
 	import BpmRythmControls from './BpmRythmControls.svelte';
 	import PlayButtons from './PlayButtons.svelte';
 	import Timer from './Timer.svelte';
+
+	import { Transport } from 'tone';
+
+	Transport.loop = true;
+	Transport.loopEnd = `4:0`;
 </script>
 
 <div class="flex flex-row justify-evenly items-center h-full space-x-8 w-full ">
