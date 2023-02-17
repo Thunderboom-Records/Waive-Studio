@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { Transport } from 'tone';
+
+	let loopBar = 4;
+
 </script>
 
 <!-- Col 1: Placeholder -->
@@ -15,21 +19,15 @@
 </div>
 
 <!-- Col 4-7: PlayerHeader -->
-<div class="bg-gray-900">
-	<span class="text-gray-400 text-xs text-center">1</span>
-</div>
-
-<div class="bg-gray-900">
-	<span class="text-gray-400 text-xs text-center">2</span>
-</div>
-
-<div class="bg-gray-900">
-	<span class="text-gray-400 text-xs text-center">3</span>
-</div>
-
-<div class="bg-gray-900">
-	<span class="text-gray-400 text-xs text-center">4</span>
-</div>
+{#each [1, 2, 3, 4] as barNumber}
+	<div class="bg-gray-900">
+		{#if barNumber <= loopBar}
+			<span class="text-white text-xs text-center">{barNumber}</span>
+		{:else}
+			<span class="text-gray-600 text-xs text-center">{barNumber}</span>
+		{/if}
+	</div>
+{/each}
 
 <!-- Col 8: Placeholder-->
 <div class="bg-gray-900" />

@@ -8,7 +8,6 @@
         	formattedTime = (Transport.position as string).slice(0, 5);
     	}, time)
 	}, "32n");
-	
 	transportControlsLoop.start(0);
 </script>
 
