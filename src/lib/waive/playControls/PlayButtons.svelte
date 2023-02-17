@@ -1,41 +1,32 @@
 <script lang="ts">
+	import * as Tone from 'tone';
+
 	enum PlayingState {
 		NEW,
 		RUNNING,
 		PAUSED
 	}
 
-	export let elapsedTime: number = 0;
-
 	let state: PlayingState = PlayingState.NEW;
-	let startTime: number = 0;
-	let pausedTime: number = 0;
 
 	const start = () => {
-		startTime = Date.now();
+		Tone.start();  // TODO: put in splash page
+		Tone.Transport.start();
 		state = PlayingState.RUNNING;
-		setInterval(() => {
-			if (state === PlayingState.RUNNING) {
-				const endTime = Date.now();
-				elapsedTime = endTime - startTime + pausedTime;
-			}
-		});
 	};
 
 	const pause = () => {
+		Tone.Transport.pause();
 		state = PlayingState.PAUSED;
-		pausedTime = elapsedTime;
 	};
 
 	const resume = () => {
-		startTime = Date.now();
+		Tone.Transport.start();
 		state = PlayingState.RUNNING;
 	};
 
 	const stop = () => {
-		startTime = 0;
-		pausedTime = 0;
-		elapsedTime = 0;
+		Tone.Transport.stop();
 		state = PlayingState.NEW;
 	};
 </script>
