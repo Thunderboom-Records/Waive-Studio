@@ -5,10 +5,10 @@
 	export let patterns: string[];
 </script>
 
-<section class="flex flex-col space-y-1 bg-gray-800 h-full">
+<section class="flex h-full flex-col space-y-1 bg-gray-800">
 	<SampleHeader />
 
-	<div class="h-full space-y-1 flex flex-col justify-around">
+	<div class="flex h-full flex-col justify-around space-y-1">
 		{#each patterns as pattern}
 			<SampleControls {pattern} />
 		{/each}

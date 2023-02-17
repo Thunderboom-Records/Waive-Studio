@@ -55,10 +55,10 @@
 	{#if section.sample != undefined}
 		<label
 			for="canvas"
-			class="absolute z-10 top-1 text-gray-400 text-xs bg-gray-800/60 rounded-xl px-1"
+			class="absolute top-1 z-10 rounded-xl bg-gray-800/60 px-1 text-xs text-gray-400"
 			>{section.sample.name}</label
 		>
-		<canvas bind:this={canvas} style:background-color={section.color} class="opacity-80 rounded-xl">
+		<canvas bind:this={canvas} style:background-color={section.color} class="rounded-xl opacity-80">
 			<slot />
 		</canvas>
 	{:else}

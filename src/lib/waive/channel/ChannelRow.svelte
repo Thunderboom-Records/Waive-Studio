@@ -1,36 +1,32 @@
 <script lang="ts">
-	import type { Instrument } from '$lib/types/waive';
-
-	import { patterns } from '../stores/patternStore';
+	import type { ChannelStore } from '$lib/types/waive';
 	import DownloadButton from '$lib/components/DownloadButton.svelte';
 	import SmToggles from '../pattern/SmControls.svelte';
 	import PlayerSection from '../player/PlayerSection.svelte';
 	import PatternControls from '../pattern/PatternControls.svelte';
-	import PatternBar from '../pattern/PatternBar.svelte';
+	import PatternCollection from '../pattern/PatternCollection.svelte';
 	import SampleControls from '../sample/SampleControls.svelte';
 	import { setContext } from 'svelte';
 
-	export let instrument: Instrument;
-	setContext('instrument', {
-		getInstrument: () => instrument
-	});
+	export let channel: ChannelStore;
+	setContext('channel', channel);
 
-	$: console.log($patterns);
+	$: console.log($channel.name);
 </script>
 
 <!-- Col 1: S&M Controls -->
-<SmToggles color={instrument.color.name} />
+<SmToggles />
 
 <!-- Col 2: Pattern Controls -->
 <div class="flex flex-row justify-evenly bg-gray-900">
 	<PatternControls />
-	<div class="flex flex-row justify-center place-items-center space-x-2">
-		<PatternBar />
+	<div class="flex flex-row place-items-center justify-center space-x-2">
+		<PatternCollection />
 	</div>
 </div>
 
 <!-- Col 3: Sample Controls -->
-<div class="h-full space-y-1 flex flex-col justify-around">
+<div class="flex h-full flex-col justify-around space-y-1">
 	<SampleControls />
 </div>
 

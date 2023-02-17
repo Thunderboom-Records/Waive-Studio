@@ -19,8 +19,8 @@
 <div>
 	<Header {routes} />
 
-	<main class="min-h-screen min-w-screen bg-gray-800 p-6 ">
-		<div class="rounded-xl bg-gray-800 p-6 shadow-2xl shadow-gray-600 border border-gray-500">
+	<main class="min-w-screen min-h-screen bg-gray-800 p-6 ">
+		<div class="rounded-xl border border-gray-500 bg-gray-800 p-6 shadow-2xl shadow-gray-600">
 			<slot />
 		</div>
 	</main>

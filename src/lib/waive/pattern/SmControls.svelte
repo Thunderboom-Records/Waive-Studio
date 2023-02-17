@@ -1,10 +1,13 @@
 <script lang="ts">
+	import type { Channel, ChannelStore } from '$lib/types/waive';
+	import { getContext } from 'svelte';
 	import SmToggle from './SmToggle.svelte';
 
-	export let color: string;
+	const channelStore: ChannelStore = getContext('channel');
+	let channel: Channel = $channelStore;
 </script>
 
-<div class="bg-gray-800 text-gray-500 text-sm space-y-1 w-full">
-	<SmToggle {color}>S</SmToggle>
-	<SmToggle {color}>M</SmToggle>
+<div class="w-full space-y-1 bg-gray-800 text-sm text-gray-500">
+	<SmToggle color={channel.color.name}>S</SmToggle>
+	<SmToggle color={channel.color.name}>M</SmToggle>
 </div>

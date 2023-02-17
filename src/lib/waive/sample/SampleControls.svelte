@@ -1,25 +1,23 @@
 <script lang="ts">
-	import { samples } from '../stores/sampleStore';
+	import { samples } from '../stores/sample';
 	import SampleSelection from './SampleSelection.svelte';
 
 	function add() {
 		samples.add();
 	}
-
-	$: console.log($samples);
 </script>
 
-<div class="flex flex-col p-2 space-y-2 bg-gray-900 h-full justify-center place-items-center">
-	<div class="flex flex-row justify-between w-60">
+<div class="flex h-full flex-col place-items-center justify-center space-y-2 bg-gray-900 p-2">
+	<div class="flex w-60 flex-row justify-between">
 		<button
-			class="flex flex-row justify-center place-items-center 
-					bg-gray-500 hover:bg-gray-600 btn rounded-full w-12 h-8 text-sm"
+			class="btn flex h-8 w-12 
+					flex-row place-items-center justify-center rounded-full bg-gray-500 text-sm hover:bg-gray-600"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
 				fill="currentColor"
-				class="w-4 h-4"
+				class="h-4 w-4"
 			>
 				<path
 					fill-rule="evenodd"
@@ -29,9 +27,9 @@
 			</svg>
 		</button>
 
-		<button class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-12 h-8 text-sm">fx</button>
+		<button class="btn h-8 w-12 rounded-full bg-gray-500 text-sm hover:bg-gray-600">fx</button>
 
-		<button on:click={add} class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-28 h-8 text-sm"
+		<button on:click={add} class="btn h-8 w-28 rounded-full bg-gray-500 text-sm hover:bg-gray-600"
 			>new sample</button
 		>
 	</div>

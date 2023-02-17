@@ -5,9 +5,9 @@ const config = {
 
 	theme: {
 		colors: {
-			'white': '#ffffff',
-			'black': '#010101',
-			'gray': {
+			white: '#ffffff',
+			black: '#010101',
+			gray: {
 				400: '#cccccc',
 				500: '#818181',
 				600: '#333333',
@@ -15,37 +15,37 @@ const config = {
 				800: '#1a1a1a',
 				900: '#141414'
 			},
-			'red': {
+			red: {
 				500: '#d14132',
-				600: '#601c13',
+				600: '#601c13'
 			},
-			'blue': {
+			blue: {
 				500: '#3484d0',
-				600: '#273e60',
+				600: '#273e60'
 			},
-			'purple': {
+			purple: {
 				500: '#9352c7',
-				600: '#632b8d',
+				600: '#632b8d'
 			},
-			'orange': {
+			orange: {
 				500: '#eb7130',
-				600: '#83371c',
+				600: '#83371c'
 			},
-			'green': {
+			green: {
 				500: '#54ba84',
-				600: '#326e52',
+				600: '#326e52'
 			}
 		},
-		extend: {	
+		extend: {
 			fontFamily: {
-				'sans': ['VG5000', ...defaultTheme.fontFamily.sans]
+				sans: ['VG5000', ...defaultTheme.fontFamily.sans]
 			},
 			width: {
-				'128': '28rem'
+				128: '28rem'
 			},
 			gridTemplateColumns: {
 				'instrument-grid': '4rem, 24rem, 18rem, repeat(4, minmax(12rem ,1fr)), 5rem'
-			},
+			}
 		}
 	},
 

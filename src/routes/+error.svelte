@@ -13,14 +13,14 @@
 		<div class="py-16">
 			<div class="text-center">
 				<p class="text-base font-semibold text-white">404</p>
-				<h1 class="mt-2 text-4xl font-bold tracking-tight text-indigo-600 sm:text-5xl">
+				<h1 class="text-indigo-600 mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
 					Page not found.
 				</h1>
 				<p class="mt-2 text-base text-white">
 					Sorry, we couldn’t find the page you’re looking for.
 				</p>
 				<div class="mt-6">
-					<a href="/" class="text-base font-medium text-white hover:text-gray-200">
+					<a href="/" class="hover:text-gray-200 text-base font-medium text-white">
 						Go back home
 						<span aria-hidden="true"> &rarr;</span>
 					</a>

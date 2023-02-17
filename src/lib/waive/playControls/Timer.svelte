@@ -7,6 +7,6 @@
 	$: formattedTime = `${min}:${sec}.${ms}`;
 </script>
 
-<div class="badge badge-lg text-white bg-gray-800 rounded-full py-1 w-32 text-center">
+<div class="badge badge-lg w-32 rounded-full bg-gray-800 py-1 text-center text-white">
 	{formattedTime}
 </div>

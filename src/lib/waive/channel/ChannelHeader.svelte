@@ -6,29 +6,29 @@
 
 <!-- Col 2: PatternHeader -->
 <div class="bg-gray-900">
-	<h2 class="text-gray-400 text-center">pattern</h2>
+	<h2 class="text-center text-gray-400">pattern</h2>
 </div>
 
 <!-- Col 3: SampleHeader-->
 <div class="bg-gray-900">
-	<h2 class="text-gray-400 text-center">sample</h2>
+	<h2 class="text-center text-gray-400">sample</h2>
 </div>
 
 <!-- Col 4-7: PlayerHeader -->
 <div class="bg-gray-900">
-	<span class="text-gray-400 text-xs text-center">1</span>
+	<span class="text-center text-xs text-gray-400">1</span>
 </div>
 
 <div class="bg-gray-900">
-	<span class="text-gray-400 text-xs text-center">2</span>
+	<span class="text-center text-xs text-gray-400">2</span>
 </div>
 
 <div class="bg-gray-900">
-	<span class="text-gray-400 text-xs text-center">3</span>
+	<span class="text-center text-xs text-gray-400">3</span>
 </div>
 
 <div class="bg-gray-900">
-	<span class="text-gray-400 text-xs text-center">4</span>
+	<span class="text-center text-xs text-gray-400">4</span>
 </div>
 
 <!-- Col 8: Placeholder-->

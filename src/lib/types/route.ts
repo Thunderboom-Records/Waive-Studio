@@ -1,4 +1,4 @@
 export type Route = {
-    href: string;
-    label: string;
+	href: string;
+	label: string;
 };

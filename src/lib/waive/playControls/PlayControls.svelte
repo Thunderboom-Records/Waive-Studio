@@ -6,7 +6,7 @@
 	export let elapsedTime: number = 0;
 </script>
 
-<div class="flex flex-row justify-evenly items-center h-full space-x-8 w-full ">
+<div class="flex h-full w-full flex-row items-center justify-evenly space-x-8 ">
 	<!-- Timer -->
 	<div class="self-center">
 		<Timer {elapsedTime} />
@@ -18,7 +18,7 @@
 	</div>
 
 	<!-- BPM & Rythm -->
-	<div class="text-white text-xs text-center space-y-1">
+	<div class="space-y-1 text-center text-xs text-white">
 		<BpmRythmControls />
 	</div>
 </div>

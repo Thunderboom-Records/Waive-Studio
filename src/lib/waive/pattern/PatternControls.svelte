@@ -1,26 +1,26 @@
 <script lang="ts">
-	import { InstrumentType, type Bar, type Instrument, type Pattern } from '$lib/types/waive';
+	import { ChannelType, type ChannelStore } from '$lib/types/waive';
 	import { getContext } from 'svelte';
-	import { patterns } from '../stores/patternStore';
 
-	const { getInstrument } = getContext('instrument');
-	const instrument = getInstrument();
+	let channelStore: ChannelStore = getContext('channel');
+	let channel = $channelStore;
+	let patternStore = channel.patterns;
 
 	function addPattern() {
-		patterns.add();
+		patternStore.add();
 	}
 </script>
 
-<div class="flex flex-col justify-evenly place-items-start">
-	<h3 class="text-{instrument.color.name}-500 text-xl">
-		{InstrumentType[instrument.type].toLowerCase()}
+<div class="flex flex-col place-items-start justify-evenly">
+	<h3 class="text-{channel.color.name}-500 text-xl">
+		{ChannelType[channel.type].toString().toLowerCase()}
 	</h3>
 	<button
 		on:click={addPattern}
-		class="bg-{instrument.color.name}-500 hover:bg-{instrument.color.name}-600 
-				btn rounded-full w-24 h-8 text-xs">new pattern</button
+		class="bg-{channel.color.name}-500 hover:bg-{channel.color.name}-600 
+				btn h-8 w-24 rounded-full text-xs">new pattern</button
 	>
-	<div class="flex flex-row space-x-3 justify-center place-items-center">
+	<div class="flex flex-row place-items-center justify-center space-x-3">
 		<button class="btn rounded-full bg-gray-500">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

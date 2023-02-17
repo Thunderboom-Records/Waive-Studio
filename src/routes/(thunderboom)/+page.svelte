@@ -38,13 +38,13 @@
 				<h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
 					Music meets AI.<br />Start using Waive Studio.
 				</h2>
-				<p class="mt-6 text-lg leading-8 text-gray-300">
+				<p class="text-gray-300 mt-6 text-lg leading-8">
 					With free samples provided by Beeld & Geluid.
 				</p>
 				<div class="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
 					<a
 						href="/waive/player"
-						class="rounded-md bg-white px-3.5 py-1.5 text-base font-semibold leading-7 text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+						class="hover:bg-gray-100 rounded-md bg-white px-3.5 py-1.5 text-base font-semibold leading-7 text-gray-900 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 						>Go to demo</a
 					>
 					<a href="/about" class="text-base font-semibold leading-7 text-white">

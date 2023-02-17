@@ -7,14 +7,14 @@
 	export let patterns: string[];
 </script>
 
-<section class="flex flex-col space-y-1 bg-gray-800 h-full">
+<section class="flex h-full flex-col space-y-1 bg-gray-800">
 	<PatternHeader />
 
 	{#each patterns as pattern}
 		<div class="flex flex-row space-x-1">
 			<SmToggles />
 
-			<div class="flex flex-row w-full">
+			<div class="flex w-full flex-row">
 				<PatternControls {pattern} />
 				<PatternBars />
 			</div>

@@ -8,7 +8,7 @@
 <header class="bg-gray-900">
 	<nav class="mx-auto max-w-7xl px-6 lg:px-8" aria-label="Top">
 		<div
-			class="flex w-full items-center justify-between border-b border-indigo-500 py-6 lg:border-none"
+			class="border-indigo-500 flex w-full items-center justify-between border-b py-6 lg:border-none"
 		>
 			<div class="flex items-center">
 				<a href="/">

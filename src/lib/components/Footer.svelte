@@ -13,19 +13,19 @@
 						<h3 class="text-sm font-semibold leading-6 text-white">Solutions</h3>
 						<ul role="list" class="mt-6 space-y-4">
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Marketing</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Marketing</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Analytics</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Analytics</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Commerce</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Commerce</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Insights</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Insights</a>
 							</li>
 						</ul>
 					</div>
@@ -33,21 +33,21 @@
 						<h3 class="text-sm font-semibold leading-6 text-white">Support</h3>
 						<ul role="list" class="mt-6 space-y-4">
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Pricing</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Pricing</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white"
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white"
 									>Documentation</a
 								>
 							</li>
 
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Guides</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Guides</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">API Status</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">API Status</a>
 							</li>
 						</ul>
 					</div>
@@ -57,23 +57,23 @@
 						<h3 class="text-sm font-semibold leading-6 text-white">Company</h3>
 						<ul role="list" class="mt-6 space-y-4">
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">About</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">About</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Blog</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Blog</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Jobs</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Jobs</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Press</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Press</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Partners</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Partners</a>
 							</li>
 						</ul>
 					</div>
@@ -81,15 +81,15 @@
 						<h3 class="text-sm font-semibold leading-6 text-white">Legal</h3>
 						<ul role="list" class="mt-6 space-y-4">
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Claim</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Claim</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Privacy</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Privacy</a>
 							</li>
 
 							<li>
-								<a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Terms</a>
+								<a href="#" class="text-gray-300 text-sm leading-6 hover:text-white">Terms</a>
 							</li>
 						</ul>
 					</div>
@@ -101,7 +101,7 @@
 		>
 			<div>
 				<h3 class="text-sm font-semibold leading-6 text-white">Subscribe to our newsletter</h3>
-				<p class="mt-2 text-sm leading-6 text-gray-300">
+				<p class="text-gray-300 mt-2 text-sm leading-6">
 					The latest news, articles, and resources, sent to your inbox weekly.
 				</p>
 			</div>
@@ -113,13 +113,13 @@
 					id="email-address"
 					autocomplete="email"
 					required
-					class="w-full min-w-0 appearance-none rounded-md border-white/10 bg-gray-400/10 px-[calc(theme(spacing.3)-1px)] py-[calc(theme(spacing[1.5])-1px)] text-base leading-7 text-white placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:w-56 sm:text-sm sm:leading-6"
+					class="focus:border-indigo-500 focus:ring-indigo-500 w-full min-w-0 appearance-none rounded-md border-white/10 bg-gray-400/10 px-[calc(theme(spacing.3)-1px)] py-[calc(theme(spacing[1.5])-1px)] text-base leading-7 text-white placeholder-gray-500 shadow-sm sm:w-56 sm:text-sm sm:leading-6"
 					placeholder="Enter your email"
 				/>
 				<div class="mt-4 rounded-md sm:mt-0 sm:ml-4 sm:flex-shrink-0">
 					<button
 						type="submit"
-						class="flex w-full items-center justify-center rounded-md bg-indigo-500 py-1.5 px-3 text-base font-semibold leading-7 text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 sm:text-sm sm:leading-6"
+						class="bg-indigo-500 hover:bg-indigo-400 focus-visible:outline-indigo-400 flex w-full items-center justify-center rounded-md py-1.5 px-3 text-base font-semibold leading-7 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:text-sm sm:leading-6"
 						>Subscribe</button
 					>
 				</div>

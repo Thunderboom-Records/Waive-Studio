@@ -1,37 +1,31 @@
 <script lang="ts">
-	import { InstrumentType, type Instrument } from '$lib/types/waive';
 	import PlayControls from '$lib/waive/playControls/PlayControls.svelte';
 	import FxControls from '$lib/waive/fxControls/FxControls.svelte';
-	import InstrumentRow from '$lib/waive/instruments/InstrumentRow.svelte';
-	import InstrumentHeader from '$lib/waive/instruments/InstrumentHeader.svelte';
-
-	let instruments: Instrument[] = [
-		{ type: InstrumentType.KICK, color: { name: 'red', 500: '#d14132', 600: '#601c13' } },
-		{ type: InstrumentType.SNARE, color: { name: 'blue', 500: '#3484d0', 600: '#273e60' } },
-		{ type: InstrumentType.HIHAT, color: { name: 'purple', 500: '#9352c7', 600: '#632b8d' } },
-		{ type: InstrumentType.BASS, color: { name: 'orange', 500: '#eb7130', 600: '#83371c' } },
-		{ type: InstrumentType.LEAD, color: { name: 'green', 500: '#54ba84', 600: '#326e52' } }
-	];
+	import ChannelRow from '$lib/waive/channel/ChannelRow.svelte';
+	import ChannelHeader from '$lib/waive/channel/ChannelHeader.svelte';
+	import { master, kick, snare, hihat, bass, lead } from '$lib/waive/stores/channel';
 </script>
 
-<div class="flex flex-col bg-gray-800 space-y-1 ">
-	<div class="grid grid-cols-instrument-grid bg-gray-800 w-full gap-1">
+<div class="flex flex-col space-y-1 bg-gray-800 ">
+	<div class="grid w-full grid-cols-instrument-grid gap-1 bg-gray-800">
 		<!-- Row 1 -->
-		<div class=" bg-gray-900 col-span-2">
+		<div class=" col-span-2 bg-gray-900">
 			<PlayControls />
 		</div>
-		<div class="bg-gray-900 col-span-6">
+		<div class="col-span-6 bg-gray-900">
 			<FxControls />
 		</div>
 
 		<!-- Row 2 -->
-		<InstrumentHeader />
+		<ChannelHeader />
 
 		<!-- Row 3+ -->
-		{#each instruments as instrument}
-			<InstrumentRow {instrument} />
-		{/each}
+		<ChannelRow channel={kick} />
+		<ChannelRow channel={snare} />
+		<ChannelRow channel={hihat} />
+		<ChannelRow channel={bass} />
+		<ChannelRow channel={lead} />
 	</div>
 
-	<div class="bg-gray-900 w-full h-4" />
+	<div class="h-4 w-full bg-gray-900" />
 </div>

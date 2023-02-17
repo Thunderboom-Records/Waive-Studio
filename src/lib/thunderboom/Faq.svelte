@@ -59,7 +59,7 @@
 						</button>
 					</dt>
 					<dd class="mt-2 pr-12" id="faq-0">
-						<p class="text-base leading-7 text-gray-300">
+						<p class="text-gray-300 text-base leading-7">
 							I don&#039;t know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur
 							adipisicing elit. Quas cupiditate laboriosam fugiat.
 						</p>
