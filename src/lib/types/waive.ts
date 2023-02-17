@@ -16,6 +16,16 @@ export type Bar = {
     active: boolean,
     instrument: Instrument
 };
+
+export type NoteEvent = {
+    time: string,
+    note: number,
+    length: string,
+    velocity: number,
+    fn?: string,
+}
+
+export type SynthCallback = (event: NoteEvent, time: string) => void;
  
 // Canvas Types
 
