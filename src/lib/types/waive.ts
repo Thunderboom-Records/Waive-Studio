@@ -25,7 +25,7 @@ export type NoteEvent = {
     fn?: string,
 }
 
-export type SynthCallback = (event: NoteEvent, time: string) => void;
+export type SynthCallback = (event: NoteEvent, time: number) => void;
  
 // Canvas Types
 
