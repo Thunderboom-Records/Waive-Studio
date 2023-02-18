@@ -2,26 +2,7 @@ import * as Tone from 'tone';
 import type { Part } from 'tone';
 import type { BarData } from './barData';
 import type { NoteEvent, SynthCallback } from '$lib/types/waive';
-
-
-function splitTimeString(time: string){
-    let bbs = time.split(":");
-    let bar = 0;
-    let beat = 0;
-    let sixteenth = 0;
-    if(bbs.length == 3){
-        bar = parseInt(bbs[0]);
-        beat = parseInt(bbs[1]);
-        sixteenth = parseInt(bbs[2]);
-    } else if(bbs.length == 2){
-        beat = parseInt(bbs[0]);
-        sixteenth = parseInt(bbs[1]);
-    } else if(bbs.length == 1){
-        sixteenth = parseInt(bbs[0]);
-    }
-
-    return {bar, beat, sixteenth}
-}
+import { splitTimeString } from '$lib/scripts/utils';
 
 
 export class Arrangement {
@@ -125,6 +106,7 @@ export class Arrangement {
             return this.midi;
         }
 
-        return "";
+        this.midi = "";
+        return this.midi;
     }
 }

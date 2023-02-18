@@ -17,7 +17,7 @@ export class BypassableFX extends Tone.ToneAudioNode {
     constructor(fx: Tone.ToneAudioNode, bypass=false) {
       super();
       this.effect = fx;
-      this.name = fx.name;
+      this.name = "bypassable " + fx.name;
       this._bypass = bypass;
       this._lastBypass = bypass;
 
