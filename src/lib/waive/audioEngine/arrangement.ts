@@ -90,10 +90,7 @@ export class Arrangement {
                 let bbs = splitTimeString(n.time);
                 let time = `${bbs.bar + i}:${bbs.beat}:${bbs.sixteenth}`;
 
-                const velocity = n.velocity;
-                const length = n.length;
-
-                this.timings.push({time, length, velocity, note});
+                this.timings.push({note, time, length: n.length, velocity: n.velocity});
             }
         }
 
