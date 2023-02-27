@@ -1,3 +1,5 @@
+import type { Arrangement } from '$lib/waive/audioEngine/arrangement'
+
 export enum InstrumentType {
     KICK,
     SNARE,
@@ -9,6 +11,8 @@ export enum InstrumentType {
 export type Instrument = {
     type: InstrumentType,
     color: string,
+    apiPatternRequest: string,
+    arrangement: Arrangement,
 };
 
 export enum FXType {
@@ -44,9 +48,9 @@ export type FXParameter = {
 }
 
 export type Bar = {
-    index: number,
     active: boolean,
-    instrument: Instrument,
+    z: number[],
+    notes: number[],
 };
 
 export type NoteEvent = {

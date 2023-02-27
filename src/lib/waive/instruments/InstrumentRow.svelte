@@ -9,13 +9,7 @@
 
 	export let instrument: Instrument;
 
-	let bars: Bar[] = [
-		{ index: 0, active: true, instrument: instrument },
-		{ index: 1, active: true, instrument: instrument },
-		{ index: 2, active: false, instrument: instrument },
-		{ index: 3, active: false, instrument: instrument },
-		{ index: 4, active: false, instrument: instrument }
-	];
+	let bars: Bar[] = [];
 </script>
 
 <!-- Col 1: S&M Controls -->
@@ -23,8 +17,8 @@
 
 <!-- Col 2: Pattern Controls -->
 <div class="flex flex-row justify-evenly bg-gray-900">
-	<PatternControls {bars} />
-	<PatternBars {bars} />
+	<PatternControls bind:bars={bars} {instrument} />
+	<PatternBars {bars} {instrument}/>
 </div>
 
 <!-- Col 3: Sample Controls -->

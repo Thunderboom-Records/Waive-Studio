@@ -1,9 +1,31 @@
 <script lang="ts">
 	import { InstrumentType, type Bar, type Instrument } from '$lib/types/waive';
+	import { getRequest, ROOT_URL } from '$lib/scripts/utils';
 
 	export let bars: Bar[];
 
-	let instrument = bars[0].instrument;
+	// let instrument = bars[0].instrument;
+	export let instrument: Instrument;
+
+	function requestPattern(){
+		getRequest(ROOT_URL, instrument.apiPatternRequest, {})
+		.then(data => {
+			if(!data || !data.ok){
+				console.log("no pattern data");
+				return
+			}
+			console.log(data);
+
+			let bar = { 
+				active: true,
+				z: data.z,
+				notes: data.notes,
+			}
+
+			bars.push(bar);
+			bars = bars;
+		});
+	}
 </script>
 
 <div class="flex flex-col justify-evenly place-items-start">
@@ -11,6 +33,7 @@
 		{InstrumentType[instrument.type].toLowerCase()}
 	</h3>
 	<button
+		on:click={requestPattern}
 		class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 
 				btn rounded-full w-24 h-8 text-xs">new pattern</button
 	>

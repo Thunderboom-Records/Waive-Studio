@@ -4,13 +4,14 @@
 	import FxControls from '$lib/waive/fxControls/FxControls.svelte';
 	import InstrumentRow from '$lib/waive/instruments/InstrumentRow.svelte';
 	import InstrumentHeader from '$lib/waive/instruments/InstrumentHeader.svelte';
+	import { Arrangement } from '$lib/waive/audioEngine/arrangement';
 
 	let instruments: Instrument[] = [
-		{ type: InstrumentType.KICK, color: 'red' },
-		{ type: InstrumentType.SNARE, color: 'blue' },
-		{ type: InstrumentType.HIHAT, color: 'purple' },
-		{ type: InstrumentType.BASS, color: 'orange' },
-		{ type: InstrumentType.LEAD, color: 'green' }
+		{ type: InstrumentType.KICK, color: 'red', apiPatternRequest: 'requestDrumPattern', arrangement: new Arrangement()},
+		// { type: InstrumentType.SNARE, color: 'blue', apiPatternRequest: 'requestDrumPattern' },
+		// { type: InstrumentType.HIHAT, color: 'purple', apiPatternRequest: 'requestDrumPattern' },
+		{ type: InstrumentType.BASS, color: 'orange', apiPatternRequest: 'requestBassline', arrangement: new Arrangement() },
+		{ type: InstrumentType.LEAD, color: 'green', apiPatternRequest: 'requestMelody', arrangement: new Arrangement() },
 	];
 </script>
 
