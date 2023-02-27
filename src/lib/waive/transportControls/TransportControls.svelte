@@ -1,5 +1,5 @@
 <script lang="ts">
-	import BpmRythmControls from './BpmRythmControls.svelte';
+	import BpmRhythmControls from './BpmRhythmControls.svelte';
 	import PlayButtons from './PlayButtons.svelte';
 	import Timer from './Timer.svelte';
 
@@ -20,8 +20,8 @@
 		<PlayButtons />
 	</div>
 
-	<!-- BPM & Rythm -->
+	<!-- BPM & Rhythm -->
 	<div class="text-white text-xs text-center space-y-1">
-		<BpmRythmControls />
+		<BpmRhythmControls />
 	</div>
 </div>

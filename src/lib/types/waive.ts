@@ -50,7 +50,7 @@ export type FXParameter = {
 export type Bar = {
     active: boolean,
     z: number[],
-    notes: number[],
+    notes: number[][],
 };
 
 export type NoteEvent = {
@@ -64,6 +64,11 @@ export type NoteEvent = {
 export type SynthCallback = (event: NoteEvent, time: number) => void;
  
 // Canvas Types
+
+export enum CanvasType {
+    DRUM,
+    MELODY,
+}
 
 export type Canvas = {
     w: number,

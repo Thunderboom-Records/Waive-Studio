@@ -33,19 +33,22 @@ export class Arrangement {
         return true;
     }
 
-    add(bar: BarData, i: null | number){
-        if(i !== null){
-            this.arrangement[i] = bar;
-        } else {
-            // add to first avaliable slot
-            for(let i = 0; i < this.length; i++){
-                if(!this.arrangement[i]){
-                    this.arrangement[i] = bar;
+    add(bar: BarData, i?: number){
+        if(typeof i === 'undefined'){
+            for(let idx = 0; idx < this.length; idx++){
+                if(!this.arrangement[idx]){
+                    i = idx;
                     break;
                 }
-            }
+            } 
         }
 
+        if(typeof i === 'undefined'){
+            return
+        }
+
+        this.arrangement[i] = bar;
+        console.log(`added to ${i}`);
         this.updatePart();
     }
 

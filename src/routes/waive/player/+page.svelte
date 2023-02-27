@@ -5,13 +5,33 @@
 	import InstrumentRow from '$lib/waive/instruments/InstrumentRow.svelte';
 	import InstrumentHeader from '$lib/waive/instruments/InstrumentHeader.svelte';
 	import { Arrangement } from '$lib/waive/audioEngine/arrangement';
+	import { bassCallback, bassSynth } from '$lib/waive/audioEngine/synths';
+
+	const bassArrangement = new Arrangement();
+	// bassSynth.toDestination();
+	bassArrangement.synthCallback = bassCallback;
 
 	let instruments: Instrument[] = [
-		{ type: InstrumentType.KICK, color: 'red', apiPatternRequest: 'requestDrumPattern', arrangement: new Arrangement()},
+		{
+			type: InstrumentType.KICK,
+			color: 'red',
+			apiPatternRequest: 'requestDrumPattern',
+			arrangement: new Arrangement()
+		},
 		// { type: InstrumentType.SNARE, color: 'blue', apiPatternRequest: 'requestDrumPattern' },
 		// { type: InstrumentType.HIHAT, color: 'purple', apiPatternRequest: 'requestDrumPattern' },
-		{ type: InstrumentType.BASS, color: 'orange', apiPatternRequest: 'requestBassline', arrangement: new Arrangement() },
-		{ type: InstrumentType.LEAD, color: 'green', apiPatternRequest: 'requestMelody', arrangement: new Arrangement() },
+		{
+			type: InstrumentType.BASS,
+			color: 'orange',
+			apiPatternRequest: 'requestBassline',
+			arrangement: bassArrangement,
+		},
+		{
+			type: InstrumentType.LEAD,
+			color: 'green',
+			apiPatternRequest: 'requestMelody',
+			arrangement: new Arrangement()
+		}
 	];
 </script>
 

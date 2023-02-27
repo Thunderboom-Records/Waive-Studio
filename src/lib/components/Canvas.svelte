@@ -44,7 +44,7 @@
 		});
 	});
 
-	// Use seperate helper functions to draw the shapes we need
+	// Use separate helper functions to draw the shapes we need
 	function drawRect(ctx: CanvasRenderingContext2D, rect: Rectangle, fill: string) {
 		ctx.fillStyle = fill;
 		ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
