@@ -14,36 +14,36 @@ export class Arrangement {
     timings: NoteEvent[] | null;
     midiOffset: number;
 
-    constructor(length: number = 4){
+    constructor(length: number = 4) {
         this.length = length;
         this.arrangement = [];
         this.part = null;
-        this.synthCallback = () => {};
+        this.synthCallback = () => { };
         this.midi = null;
         this.timings = null;
         this.midiOffset = 0;
     }
 
-    isEmpty(){
-        for(let i = 0; i < this.length; i++){
-            if(this.arrangement[i]){
+    isEmpty() {
+        for (let i = 0; i < this.length; i++) {
+            if (this.arrangement[i]) {
                 return false;
             }
         }
         return true;
     }
 
-    add(bar: BarData, i?: number){
-        if(typeof i === 'undefined'){
-            for(let idx = 0; idx < this.length; idx++){
-                if(!this.arrangement[idx]){
+    add(bar: BarData, i?: number) {
+        if (typeof i === 'undefined') {
+            for (let idx = 0; idx < this.length; idx++) {
+                if (!this.arrangement[idx]) {
                     i = idx;
                     break;
                 }
-            } 
+            }
         }
 
-        if(typeof i === 'undefined'){
+        if (typeof i === 'undefined') {
             return
         }
 
@@ -52,35 +52,46 @@ export class Arrangement {
         this.updatePart();
     }
 
-    remove(i: number){
+    move(from: number, to: number) {
+        this.arrangement[to] = this.arrangement[from];
+        this.arrangement[from] = null;
+        this.updatePart();
+    }
+
+    copy(from: number, to: number) {
+        this.arrangement[to] = this.arrangement[from];
+        this.updatePart();
+    }
+
+    remove(i: number) {
         this.arrangement[i] = null;
         this.updatePart();
     }
 
-    at(i: number){
+    at(i: number) {
         return this.arrangement[i];
     }
 
     updatePart() {
         this.timings = [];
-        for(let i = 0; i < this.length; i++){
+        for (let i = 0; i < this.length; i++) {
             let notes = this.arrangement[i]?.notes;
-            if(!notes){
+            if (!notes) {
                 continue;
             }
-            for(let n of notes){
+            for (let n of notes) {
                 const note = n.note + this.midiOffset;
 
                 let bbs = splitTimeString(n.time);
                 let time = `${bbs.bar + i}:${bbs.beat}:${bbs.sixteenth}`;
 
-                this.timings.push({note, time, length: n.length, velocity: n.velocity});
+                this.timings.push({ note, time, length: n.length, velocity: n.velocity });
             }
         }
 
         this.midi = null;
 
-        if(this.part){
+        if (this.part) {
             this.part.dispose();
         }
 
@@ -91,21 +102,21 @@ export class Arrangement {
         this.part.start(0);
     }
 
-    start(time: number = 0){
-        if(!this.part) return;
-        
+    start(time: number = 0) {
+        if (!this.part) return;
+
         this.part.start(time);
     }
 
-    stop(){
-        if(!this.part) return;
-        
+    stop() {
+        if (!this.part) return;
+
         this.part.stop();
     }
 
-    toMidi(){
+    toMidi() {
         // TODO
-        if(this.midi){
+        if (this.midi) {
             return this.midi;
         }
 

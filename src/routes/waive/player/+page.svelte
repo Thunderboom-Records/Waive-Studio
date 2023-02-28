@@ -5,10 +5,9 @@
 	import InstrumentRow from '$lib/waive/instruments/InstrumentRow.svelte';
 	import InstrumentHeader from '$lib/waive/instruments/InstrumentHeader.svelte';
 	import { Arrangement } from '$lib/waive/audioEngine/arrangement';
-	import { bassCallback, bassSynth } from '$lib/waive/audioEngine/synths';
+	import { bassCallback } from '$lib/waive/audioEngine/synths';
 
 	const bassArrangement = new Arrangement();
-	// bassSynth.toDestination();
 	bassArrangement.synthCallback = bassCallback;
 
 	let instruments: Instrument[] = [

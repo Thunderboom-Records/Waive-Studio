@@ -1,26 +1,40 @@
 <script lang="ts">
 	import { InstrumentType, type Bar, type Instrument } from '$lib/types/waive';
 	import { getRequest, ROOT_URL } from '$lib/scripts/utils';
+	import {
+		BarData,
+		convertDrumNotesToNoteEvents,
+		convertMelodyNotesToNoteEvents
+	} from '../audioEngine/barData';
 
 	export let bars: Bar[];
-
-	// let instrument = bars[0].instrument;
 	export let instrument: Instrument;
 
-	function requestPattern(){
-		getRequest(ROOT_URL, instrument.apiPatternRequest, {})
-		.then(data => {
-			if(!data || !data.ok){
-				console.log("no pattern data");
-				return
+	function requestPattern() {
+		getRequest(ROOT_URL, instrument.apiPatternRequest, {}).then((data) => {
+			if (!data || !data.ok) {
+				console.log('no pattern data');
+				return;
 			}
-			console.log(data);
 
-			let bar = { 
-				active: true,
-				z: data.z,
-				notes: data.notes,
+			let barNotes;
+			if (
+				instrument.type == InstrumentType.KICK ||
+				instrument.type == InstrumentType.HIHAT ||
+				instrument.type == InstrumentType.SNARE
+			) {
+				barNotes = convertDrumNotesToNoteEvents(data.notes);
+			} else {
+				barNotes = convertMelodyNotesToNoteEvents(data.notes, 24);
 			}
+
+			const barData = new BarData(barNotes);
+			barData.z = data.z;
+
+			let bar = {
+				active: true,
+				barData: barData
+			};
 
 			bars.push(bar);
 			bars = bars;
