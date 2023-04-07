@@ -12,6 +12,7 @@
 	}
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
 	on:click={addBar}
 	class="flex flex-row justify-between  place-items-start rounded-md w-11 h-28 
