@@ -43,10 +43,10 @@
 
 <!-- Loop Controls -->
 <div class="flex flex-row space-x-1 justify-center place-items-center">
-	<select bind:value={Transport.loopEnd} class="select max-w-xs rounded-full text-center text-white bg-gray-800 h-6">
+	<span class="badge flex place-items-center justify-center rounded-l-full  bg-gray-800 h-6 w-20">loop:</span>
+	<select bind:value={Transport.loopEnd} class="select max-w-xs rounded-r-full text-center bg-gray-800 h-6">
 		<!-- TODO: find out why text is invisible?? -->
-		<option disabled selected value="4:0">loop length</option>
-		{#each loopOptions as option}
+		{#each loopOptions as option, i}
 			<option value={option.value}>{option.name}</option>
 		{/each}
 	</select>

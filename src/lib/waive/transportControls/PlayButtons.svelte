@@ -10,7 +10,7 @@
 	let state: PlayingState = PlayingState.NEW;
 
 	const start = () => {
-		Tone.start();  // TODO: put in splash page
+		Tone.start();  // TODO: put in splash page?
 		Tone.Transport.start();
 		state = PlayingState.RUNNING;
 	};
@@ -31,14 +31,14 @@
 	};
 </script>
 
-<div class="space-x-2">
+<div class="flex flex-row space-x-2 items-center">
 	{#if state === PlayingState.NEW}
 		<button on:click={start} class="btn btn-circle text-white">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
 				fill="currentColor"
-				class="w-6 h-6"
+				class="w-8 h-8"
 			>
 				<path
 					fill-rule="evenodd"
@@ -53,7 +53,7 @@
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
 				fill="currentColor"
-				class="w-6 h-6"
+				class="w-8 h-8"
 			>
 				<path
 					fill-rule="evenodd"
@@ -68,7 +68,7 @@
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
 				fill="currentColor"
-				class="w-6 h-6"
+				class="w-8 h-8"
 			>
 				<path
 					fill-rule="evenodd"
@@ -80,7 +80,12 @@
 	{/if}
 
 	<button on:click={stop} class="btn btn-circle text-white">
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+		<svg 
+			xmlns="http://www.w3.org/2000/svg" 
+			viewBox="0 0 24 24" 
+			fill="currentColor" 
+			class="w-8 h-8"
+		>
 			<path
 				fill-rule="evenodd"
 				d="M4.5 7.5a3 3 0 013-3h9a3 3 0 013 3v9a3 3 0 01-3 3h-9a3 3 0 01-3-3v-9z"
