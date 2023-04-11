@@ -2,6 +2,7 @@ import type { Arrangement } from '$lib/waive/audioEngine/arrangement'
 import type { BarData } from '$lib/waive/audioEngine/barData';
 
 export enum InstrumentType {
+    DRUMS,
     KICK,
     SNARE,
     HIHAT,

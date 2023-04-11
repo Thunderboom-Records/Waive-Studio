@@ -2,7 +2,6 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 const config = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
-
 	theme: {
 		colors: {
 			'white': '#ffffff',
@@ -35,6 +34,9 @@ const config = {
 				500: '#54ba84',
 				600: '#326e52',
 			}
+		},
+		minWidth: {
+			'pattern': '50px',
 		},
 		extend: {	
 			fontFamily: {

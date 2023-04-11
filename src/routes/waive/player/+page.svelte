@@ -18,7 +18,7 @@
 
 	let instruments: Instrument[] = [
 		{
-			type: InstrumentType.KICK,
+			type: InstrumentType.DRUMS,
 			color: 'red',
 			apiPatternRequest: 'requestDrumPattern',
 			apiInstrumentName: '00_KD',

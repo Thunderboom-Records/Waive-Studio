@@ -1,58 +1,38 @@
 <script lang="ts">
-	import { InstrumentType, type Bar, type Instrument } from '$lib/types/waive';
-	import { getRequest, ROOT_URL } from '$lib/scripts/utils';
-	import {
-		BarData,
-		convertDrumNotesToNoteEvents,
-		convertMelodyNotesToNoteEvents
-	} from '../audioEngine/barData';
-
-	export let bars: Bar[];
+	import { createEventDispatcher } from 'svelte'
+	import { InstrumentType, type Instrument } from '$lib/types/waive';
+	
 	export let instrument: Instrument;
+	
+	const dispatch = createEventDispatcher()
 
-	function requestPattern() {
-		getRequest(ROOT_URL, instrument.apiPatternRequest, {}).then((data) => {
-			if (!data || !data.ok) {
-				console.log('no pattern data');
-				return;
-			}
-
-			let barNotes;
-			if (
-				instrument.type == InstrumentType.KICK ||
-				instrument.type == InstrumentType.HIHAT ||
-				instrument.type == InstrumentType.SNARE
-			) {
-				barNotes = convertDrumNotesToNoteEvents(data.notes);
-			} else {
-				barNotes = convertMelodyNotesToNoteEvents(data.notes, 24);
-			}
-
-			const barData = new BarData(barNotes);
-			barData.z = data.z;
-
-			let bar = {
-				active: true,
-				barData: barData
-			};
-
-			bars.push(bar);
-			bars = bars;
-		});
+	function newBar(){
+		dispatch("newbar");
 	}
+
 </script>
 
-<div class="flex flex-col justify-evenly place-items-start">
-	<h3 class="text-{instrument.color}-500 text-xl">
+<div class="flex flex-col gap-2 w-full p-2 my-auto">
+	<h3 class="text-{instrument.color}-500 text-xl capitalize">
 		{InstrumentType[instrument.type].toLowerCase()}
 	</h3>
-	<button
-		on:click={requestPattern}
-		class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 
-				btn rounded-full w-24 h-8 text-xs">new pattern</button
-	>
-	<div class="flex flex-row space-x-3 justify-center place-items-center">
+	<div class="flex flex-row gap-x-1">
+		<button
+			on:click={newBar}
+			class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 btn rounded-full w-12 h-6 text-xs"
+		>
+			new
+		</button>
+		<button
+			on:click={newBar}
+			class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 btn rounded-full w-12 h-6 text-xs"
+		>
+			var
+		</button>
+	</div>
+	<div class="flex flex-row space-x-1 justify-center place-items-center">
 		<button class="btn rounded-full bg-gray-500">
+			<!-- knob icon -->
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="h-6 w-6"
@@ -67,6 +47,6 @@
 				/></svg
 			>
 		</button>
-		<p class="text-xs text-gray-400">complex</p>
+		<p class="text-xs text-gray-400">complexity</p>
 	</div>
 </div>
