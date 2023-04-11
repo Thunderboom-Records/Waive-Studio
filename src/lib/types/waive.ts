@@ -13,6 +13,7 @@ export type Instrument = {
     type: InstrumentType,
     color: string,
     apiPatternRequest: string,
+    apiInstrumentName: string,
     arrangement: Arrangement,
 };
 
@@ -59,6 +60,12 @@ export type NoteEvent = {
     length: string,
     velocity: number,
     fn?: string,
+}
+
+export type Sample = {
+    url: string,
+    source: string,
+    name: string,
 }
 
 export type SynthCallback = (event: NoteEvent, time: number) => void;

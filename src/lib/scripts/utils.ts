@@ -1,5 +1,14 @@
 export const ROOT_URL = "https://arranlyon.com/waive/";
 
+export function cleanName(name: string){
+    let result = name;
+	result = result.replace(/_+|-/g, " ");
+	// result = result.replace(/[0-9]/g, "");
+	result = result.replace(/.wav|.mp3/, "");
+	result = result.trim();
+	return result;
+}
+
 export function splitTimeString(time: string){
     let bbs = time.split(":");
     let bar = 0;
@@ -45,15 +54,16 @@ export async function getRequest(root: string, m_type: string, data: any){
 
 export async function postRequest(root: string, m_type:string, data:any){
     const req = {
-        method: "GET",
+        method: "POST",
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json; charset=UTF=8'
         },
-        // body: JSON.stringify({
-        //     "type": m_type,
-        //     "data": data,
-        // })
+        body: JSON.stringify({
+            "type": m_type,
+            "data": data,
+            "id": "test",
+        })
     }
 
     const url = root + "apipost";

@@ -23,7 +23,7 @@
 
 <!-- Col 3: Sample Controls -->
 <div class="h-full space-y-1 flex flex-col justify-around">
-	<SampleControls />
+	<SampleControls {instrument} />
 </div>
 
 <!-- Col 4-7: Player Display -->

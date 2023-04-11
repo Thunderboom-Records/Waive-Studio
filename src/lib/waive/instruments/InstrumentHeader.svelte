@@ -1,8 +1,5 @@
 <script lang="ts">
-	import { Transport } from 'tone';
-
 	let loopBar = 4;
-
 </script>
 
 <!-- Col 1: Placeholder -->

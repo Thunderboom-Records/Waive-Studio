@@ -15,6 +15,7 @@
 			type: InstrumentType.KICK,
 			color: 'red',
 			apiPatternRequest: 'requestDrumPattern',
+			apiInstrumentName: '00_KD',
 			arrangement: new Arrangement()
 		},
 		// { type: InstrumentType.SNARE, color: 'blue', apiPatternRequest: 'requestDrumPattern' },
@@ -23,12 +24,14 @@
 			type: InstrumentType.BASS,
 			color: 'orange',
 			apiPatternRequest: 'requestBassline',
+			apiInstrumentName: 'BASS',
 			arrangement: bassArrangement,
 		},
 		{
 			type: InstrumentType.LEAD,
 			color: 'green',
 			apiPatternRequest: 'requestMelody',
+			apiInstrumentName: 'LEAD',
 			arrangement: new Arrangement()
 		}
 	];
