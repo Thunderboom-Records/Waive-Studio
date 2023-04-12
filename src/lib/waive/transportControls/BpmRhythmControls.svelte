@@ -12,6 +12,8 @@
 		{id: 5, name: "1/8", value: "0:0:2"},
 	];
 
+	let loopEnd: string;
+
 	$: bpm = Math.floor(Transport.bpm.value);
 	function updateBPM(d: number){
 		Transport.bpm.value = Math.max(30, Math.min(200, Transport.bpm.value + d));
@@ -44,7 +46,7 @@
 <!-- Loop Controls -->
 <div class="flex flex-row space-x-1 justify-center place-items-center">
 	<span class="badge flex place-items-center justify-center rounded-l-full  bg-gray-800 h-6 w-20">loop:</span>
-	<select bind:value={Transport.loopEnd} class="select max-w-xs rounded-r-full text-center bg-gray-800 h-6">
+	<select bind:value={loopEnd} on:change={() => Transport.loopEnd = loopEnd} class="select max-w-xs rounded-r-full text-center bg-gray-800 h-6">
 		<!-- TODO: find out why text is invisible?? -->
 		{#each loopOptions as option, i}
 			<option value={option.value}>{option.name}</option>
