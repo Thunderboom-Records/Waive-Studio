@@ -7,7 +7,7 @@
 	const dispatch = createEventDispatcher()
 
 	function newBar(){
-		dispatch("newbar");
+		dispatch("newBar");
 	}
 
 </script>

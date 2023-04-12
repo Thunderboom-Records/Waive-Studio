@@ -36,12 +36,13 @@
 
 </script>
 
-<div class="flex flex-col p-2 space-y-2 bg-gray-900 h-full justify-center place-items-center">
-	<div class="flex flex-row justify-between w-60">
+<div class="flex flex-col p-2 space-y-2 bg-gray-900 h-full w-full justify-center place-items-center">
+	<div class="flex flex-row justify-between w-60 gap-x-2">
 		<button
 			class="flex flex-row justify-center place-items-center 
 					bg-gray-500 hover:bg-gray-600 btn rounded-full w-12 h-8 text-sm"
 		>
+			<!-- Play button -->
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
@@ -56,13 +57,17 @@
 			</svg>
 		</button>
 
-		<button class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-12 h-8 text-sm">fx</button>
-
 		<button 
 			class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-28 h-8 text-sm"
 			on:click={requestSample}
 		>
-			new sample
+			new
+		</button>
+		<button 
+			class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-28 h-8 text-sm"
+			on:click={requestSample}
+		>
+			var
 		</button>
 	</div>
 

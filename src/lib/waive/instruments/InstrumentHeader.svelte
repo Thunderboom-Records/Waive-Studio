@@ -12,7 +12,7 @@
 
 <!-- Col 3: SampleHeader-->
 <div class="bg-gray-900">
-	<h2 class="text-gray-400 text-center">sample</h2>
+	<h2 class="text-gray-400 text-center">controls</h2>
 </div>
 
 <!-- Col 4-7: PlayerHeader -->

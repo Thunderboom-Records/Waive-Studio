@@ -5,7 +5,6 @@
 	import PlayerSection from '../player/PlayerSection.svelte';
 	import PatternControls from '../pattern/PatternControls.svelte';
 	import PatternBars from '../pattern/PatternBars.svelte';
-	import SampleControls from '../sample/SampleControls.svelte';
 	import { getRequest, ROOT_URL } from '$lib/scripts/utils';
 	import {
 		BarData,
@@ -19,18 +18,14 @@
 	let selectedIndex: number | null = null;
 
 	function requestPattern() {
-		getRequest(ROOT_URL, instrument.apiPatternRequest, {}).then((data) => {
+		getRequest(ROOT_URL, instrument.apiPatternRequest, {}).then((data: any) => {
 			if (!data || !data.ok) {
 				console.log('no pattern data');
 				return;
 			}
 
 			let barNotes;
-			if (
-				instrument.type == InstrumentType.KICK ||
-				instrument.type == InstrumentType.HIHAT ||
-				instrument.type == InstrumentType.SNARE
-			) {
+			if (instrument.type == InstrumentType.DRUMS) {
 				barNotes = convertDrumNotesToNoteEvents(data.notes);
 			} else {
 				barNotes = convertMelodyNotesToNoteEvents(data.notes, 24);
@@ -66,8 +61,16 @@
 </div>
 
 <!-- Col 3: Sample Controls -->
-<div class="h-full space-y-1 flex flex-col justify-around">
-	<SampleControls {instrument} />
+<div class="flex flex-row flex-wrap bg-gray-900 p-2 content-evenly gap-x-2">
+	{#if instrument.type == InstrumentType.DRUMS}
+		<button class="bg-gray-600 hover:bg-gray-500 btn rounded-full w-20 h-8 text-sm">kick</button>
+		<button class="bg-gray-600 hover:bg-gray-500 btn rounded-full w-20 h-8 text-sm">snare</button>
+		<button class="bg-gray-600 hover:bg-gray-500 btn rounded-full w-20 h-8 text-sm">hihat</button>
+		<button class="bg-gray-600 hover:bg-gray-500 btn rounded-full w-20 h-8 text-sm">clap</button>
+		<button class="bg-gray-600 hover:bg-gray-500 btn rounded-full w-20 h-8 text-sm">tom</button>
+	{:else}
+		<button class="bg-gray-600 hover:bg-gray-500 btn rounded-full w-20 h-8 text-sm">edit</button>
+	{/if}
 </div>
 
 <!-- Col 4-7: Player Display -->

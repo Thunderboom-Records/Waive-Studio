@@ -18,8 +18,10 @@
 	}
 </script>
 
+<!-- TODO: why border color only works sometimes?? -->
+
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div 
 	on:click={select}
-	class="flex flex-row rounded-md w-11 h-28 bg-{instrument.color}-600 border-{instrument.color}-500 min-width-pattern {i === selectedIndex ? 'border-2 border-solid': 'border-none'}"
+	class="flex flex-row rounded-md w-11 h-28 bg-{instrument.color}-600 border-{instrument.color}-500 min-width-pattern border-2 {i === selectedIndex ? 'border-solid': 'border-none'}"
 />

@@ -1,13 +1,20 @@
 import type { Arrangement } from '$lib/waive/audioEngine/arrangement'
 import type { BarData } from '$lib/waive/audioEngine/barData';
+import type { ToneAudioNode } from 'tone';
 
 export enum InstrumentType {
     DRUMS,
+    BASS,
+    LEAD,
+    MASTER,
+};
+
+export enum DrumType {
     KICK,
     SNARE,
     HIHAT,
-    BASS,
-    LEAD,
+    CLAP,
+    TOM,
 };
 
 export type Instrument = {
@@ -18,8 +25,11 @@ export type Instrument = {
     arrangement: Arrangement,
 };
 
-export enum FXType {
+export enum NodeType {
+    SAMPLER,
+    SYNTH,
     GAIN,
+    EQ3,
     CHANNEL,
     METER,
     DELAY,
@@ -31,9 +41,11 @@ export enum FXType {
 }
 
 export type FX = {
-    type: FXType,
+    type: NodeType,
+    node: ToneAudioNode,
     label: string,
     bypassable: boolean,
+    enabled: boolean,
     parameters: FXParameter[],
 }
 
@@ -45,9 +57,12 @@ export enum FXParameterType {
 
 export type FXParameter = {
     name: string,
-    value: number,
+    value: number | string,
     type: FXParameterType,
-    callback: (value: number) => {},
+    range?: number[],
+    exponential?: boolean,
+    options?: string[],
+    callback: ((value: number) => void) | ((value: string) => void),
 }
 
 export type Bar = {

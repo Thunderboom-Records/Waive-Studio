@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { Transport } from 'tone';
-	import { InstrumentType, type Instrument } from '$lib/types/waive';
+	import { InstrumentType, type Instrument, NodeType, DrumType } from '$lib/types/waive';
 	import Logo from '$lib/waive/transportControls/Logo.svelte';
 	import HistoryButtons from '$lib/waive/transportControls/HistoryButtons.svelte';
-	import FxControls from '$lib/waive/fxControls/FxControls.svelte';
 	import InstrumentRow from '$lib/waive/instruments/InstrumentRow.svelte';
 	import InstrumentHeader from '$lib/waive/instruments/InstrumentHeader.svelte';
+	import InstrumentControls from '$lib/waive/instruments/InstrumentControls.svelte';
 	import { Arrangement } from '$lib/waive/audioEngine/arrangement';
 	import { bassCallback } from '$lib/waive/audioEngine/synths';
 	import Timer from '$lib/waive/transportControls/Timer.svelte';
@@ -22,7 +22,7 @@
 			color: 'red',
 			apiPatternRequest: 'requestDrumPattern',
 			apiInstrumentName: '00_KD',
-			arrangement: new Arrangement()
+			arrangement: new Arrangement(),
 		},
 		{
 			type: InstrumentType.BASS,
@@ -36,10 +36,11 @@
 			color: 'green',
 			apiPatternRequest: 'requestMelody',
 			apiInstrumentName: 'LEAD',
-			arrangement: new Arrangement()
+			arrangement: new Arrangement(),
 		}
 	];
 
+	let selectedChain: InstrumentType | DrumType = InstrumentType.BASS;
 
 	Transport.loop = true;
 	Transport.loopEnd = `4:0`;
@@ -62,7 +63,7 @@
 		{/each}
 	</div>
 	<div class="bg-gray-900">
-		<FxControls />
+		<InstrumentControls {instruments} {selectedChain}/>
 	</div>
 </div>
 

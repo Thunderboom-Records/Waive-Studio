@@ -1,4 +1,6 @@
 import * as Tone from 'tone';
+import type { ToneWithContextOptions } from 'tone/build/esm/core/context/ToneWithContext';
+import type { RecursivePartial } from 'tone/build/esm/core/util/Interface';
 
 
 /**  
@@ -57,6 +59,11 @@ export class BypassableFX extends Tone.ToneAudioNode {
     dispose() {
       super.dispose();
       this.effect.dispose();
+      return this;
+    }
+
+    set(props: RecursivePartial<ToneWithContextOptions>){
+      this.effect.set(props);
       return this;
     }
   }
