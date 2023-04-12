@@ -1,7 +1,7 @@
-import type { NoteEvent } from '$lib/types/waive';
 import type { ToneAudioBuffer } from 'tone';
 import * as Tone from 'tone';
 
+import type { NoteEvent } from '$lib/types/waive';
 
 const KD_Buffer = new Tone.ToneAudioBuffer();
 const SD_Buffer = new Tone.ToneAudioBuffer();
@@ -52,7 +52,11 @@ export const bassSynth = new Tone.MonoSynth({
 	}
 }).toDestination();
 
-export function bassCallback(event: NoteEvent, time: number) {
-	bassSynth.triggerAttackRelease(Tone.Frequency(event.note, "midi").toFrequency(), event.length, time);
-	return;
+
+export function makeBassCallback(synth: any){
+	let callback = (event: NoteEvent, time: number) => {
+		synth.triggerAttackRelease(Tone.Frequency(event.note, "midi").toFrequency(), event.length, time);
+	}
+
+	return callback;
 }

@@ -35,9 +35,6 @@ const config = {
 				600: '#326e52',
 			}
 		},
-		minWidth: {
-			'pattern': '50px',
-		},
 		extend: {	
 			fontFamily: {
 				'sans': ['VG5000', ...defaultTheme.fontFamily.sans]
@@ -47,6 +44,9 @@ const config = {
 			},
 			gridTemplateColumns: {
 				'instrument-grid': '4rem, 24rem, 18rem, repeat(4, minmax(12rem ,1fr)), 5rem'
+			},
+			minWidth: {
+				'pattern': '2.75rem',
 			},
 		}
 	},

@@ -62,7 +62,7 @@ export type FXParameter = {
     range?: number[],
     exponential?: boolean,
     options?: string[],
-    callback: ((value: number) => void) | ((value: string) => void),
+    callback?: ((value: any) => void),
 }
 
 export type Bar = {

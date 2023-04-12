@@ -21,13 +21,10 @@
 	{/each}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div 
-		class="flex flex-row justify-around items-center place-items-start rounded-md w-11 h-28 bg-gray-600 cursor-pointer hover:bg-gray-500 min-width-pattern"
+		class="flex flex-row justify-around items-center place-items-start rounded-md w-11 h-28 bg-gray-600 cursor-pointer hover:bg-gray-500 min-w-pattern"
 		on:click={newBar}
 	>
 		<span class="text-3xl text-gray-800">+</span>
 	</div>
-	{#each {length: 4 - bars.length} as _, i}
-		<div class="rounded-md w-11 h-28 bg-gray-800 min-width-pattern"/>
-	{/each}
-	
+	<div class="rounded-md w-11 h-28 bg-gray-800 min-w-pattern"/>	
 </div>

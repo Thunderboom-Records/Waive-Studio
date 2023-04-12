@@ -3,42 +3,6 @@ import { DrumType, FXParameterType, NodeType, type FX } from "$lib/types/waive";
 import type { ToneAudioNode } from 'tone';
 import { BypassableFX } from './bypassableFX';
 
-export const masterFXChain: NodeType[] = [
-    NodeType.DELAY,
-    NodeType.REVERB,
-    NodeType.FILTER,
-    NodeType.EQ3,
-    NodeType.COMPRESSOR,
-    NodeType.LIMITER,
-    NodeType.GAIN,
-];
-
-export const bassFXChain: NodeType[] = [
-    NodeType.SYNTH,
-    NodeType.FILTER, 
-    NodeType.DELAY
-];
-
-const drumChannelFXChain: NodeType[] = [
-    NodeType.SAMPLER,
-    NodeType.EQ3, 
-    NodeType.FILTER, 
-    NodeType.REVERB,
-];
-
-const drumChannels = [
-    DrumType.KICK,
-    DrumType.SNARE,
-    DrumType.HIHAT,
-    DrumType.CLAP,
-    DrumType.TOM,
-];
-
-export const drumFXChains: any = {};
-
-for(let drumType of drumChannels){
-    drumFXChains[drumType] = drumChannelFXChain;
-}
 
 
 function createValueParameter(
@@ -126,7 +90,7 @@ function addFXFilter(){
 
     let freqParam = createValueParameter("frequency", 2000, 20, 20000, node);
     let qParam = createValueParameter("Q", 1.0, 0.0, 4.0, node);
-    let typeParam = createListParameter("type", "lowpass", ["lowpass", "highpass", "bandpass"], node);
+    let typeParam = createListParameter("type", "highpass", ["lowpass", "highpass", "bandpass"], node);
 
     return {
         type: NodeType.FILTER,
@@ -149,7 +113,7 @@ function addFXReverb(){
         node: node,
         bypassable: true,
         enabled: false,
-        label: 'Filter',
+        label: 'Reverb',
         parameters: [decayParam, wetParam],
     }
 }
@@ -187,7 +151,7 @@ function addFXLimiter(){
 }
 
 function addFXCompressor(){
-    let node: ToneAudioNode = new Tone.Compressor({attack: 0.01, release: 0.1, ratio: 3, threshold: -300});
+    let node: ToneAudioNode = new Tone.Compressor({attack: 0.01, release: 0.1, ratio: 3, threshold: -30});
 
     let attackParam = createValueParameter("attack", 0.01, 0.0, 0.3, node);
     let releaseParam = createValueParameter("release", 0.1, 0.0, 0.3, node);
@@ -214,6 +178,41 @@ function addSampler(){
         label: 'Sampler',
         parameters: [],
     };
+}
+
+function addSynth(){
+    let node = new Tone.MonoSynth({
+        "portamento": 0.2,
+        "oscillator": {
+            "type": "sawtooth",
+        },
+        "envelope": {
+            "attack": 0.01,
+            "decay": 0.2,
+            "sustain": 0.2,
+            "release": 1.0,
+        },
+        "filterEnvelope": {
+            "attack": 0.01,
+            "decay": 0.2,
+            "sustain": 0.2,
+            "release": 1.0,
+            "octaves": 3.0,
+        },
+        "filter": {
+            "type": "lowpass",
+            "Q": 1.0,
+        }
+    });
+
+    return {
+        type: NodeType.SYNTH,
+        node: node,
+        bypassable: false,
+        enabled: true,
+        label: 'MonoSynth',
+        parameters: [],
+    }
 }
 
 export function buildFXChain(chain: NodeType[]){
@@ -245,8 +244,11 @@ export function buildFXChain(chain: NodeType[]){
             case NodeType.SAMPLER:
                 node = addSampler();
                 break
+            case NodeType.SYNTH:
+                node = addSynth();
+                break
             default:
-                console.log("unknown FX type");
+                console.log("unknown FX type: " + NodeType[nodeType]);
                 continue;
         }
 
@@ -263,5 +265,44 @@ export function buildFXChain(chain: NodeType[]){
     }
 
     return nodes;
+}
+
+export const masterFXChain: FX[] = buildFXChain([
+    NodeType.DELAY,
+    NodeType.REVERB,
+    NodeType.FILTER,
+    NodeType.EQ3,
+    NodeType.COMPRESSOR,
+    NodeType.LIMITER,
+    NodeType.CHANNEL,
+]);
+
+export const bassFXChain: FX[] = buildFXChain([
+    NodeType.SYNTH,
+    NodeType.FILTER, 
+    NodeType.DELAY,
+    NodeType.CHANNEL,
+]);
+
+const drumChannelFXChain: NodeType[] = [
+    NodeType.SAMPLER,
+    NodeType.EQ3, 
+    NodeType.FILTER, 
+    NodeType.REVERB,
+    NodeType.CHANNEL,
+];
+
+const drumChannels = [
+    DrumType.KICK,
+    DrumType.SNARE,
+    DrumType.HIHAT,
+    DrumType.CLAP,
+    DrumType.TOM,
+];
+
+export const drumFXChains: Record<number, FX[]> = {};
+
+for(let drumType of drumChannels){
+    drumFXChains[drumType] = buildFXChain(drumChannelFXChain);
 }
 
