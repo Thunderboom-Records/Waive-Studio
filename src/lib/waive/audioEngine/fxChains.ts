@@ -1,8 +1,8 @@
 import * as Tone from 'tone';
-import { DrumType, FXParameterType, InstrumentType, NodeType, type FX, type FXParameter, type Sample } from "$lib/types/waive";
+import { DrumType, FXParameterType, InstrumentType, NodeType, type FX, apiInstrumentNames } from "$lib/types/waive";
 import type { ToneAudioNode } from 'tone';
 import { BypassableFX } from './bypassableFX';
-import { ROOT_URL } from '$lib/scripts/utils';
+import { Sampler } from './sampler';
 
 
 
@@ -169,49 +169,6 @@ function addFXCompressor(){
     }
 }
 
-
-export class Sampler {
-    type: NodeType = NodeType.SAMPLER;
-    bypassable: boolean = false;
-    enabled: boolean = true;
-    label: string = 'Sampler';
-    parameters: FXParameter[] = [];
-    options: Sample[] = [];
-    current?: Sample;
-    node: Tone.Player;
-    buffer: Tone.ToneAudioBuffer;
-    velocity: Tone.Gain;
-
-    constructor(){
-        this.velocity = new Tone.Gain();
-        this.buffer = new Tone.ToneAudioBuffer();
-        this.node = new Tone.Player(this.buffer);
-    }
-
-    addSample(sample?: Sample){
-        // if(this.current === sample){
-        //     return
-        // }
-        if(typeof(sample) === 'undefined' || typeof(sample.url) === 'undefined'){
-            return;
-        }
-        this.current = sample;
-        let url = ROOT_URL + "drum/" + sample.url
-        console.log("url: " + url);
-        this.node.stop();
-        this.buffer.load(url).then(() => {
-        });
-    }
-
-    play(){
-        if(this.buffer.loaded){
-            this.node.start(0);
-        } else {
-            console.log("buffer not loaded");
-        }
-    }
-}
-
 function addSynth(){
     let node = new Tone.MonoSynth({
         "portamento": 0.2,
@@ -247,7 +204,7 @@ function addSynth(){
     }
 }
 
-export function buildFXChain(chain: NodeType[]){
+export function buildFXChain(chain: NodeType[], props?: any){
     let nodes: FX[] = [];
     for(let nodeType of chain){
         let node: FX;
@@ -316,6 +273,13 @@ const bassFXChain: FX[] = buildFXChain([
     NodeType.CHANNEL,
 ]);
 
+const leadFXChain: FX[] = buildFXChain([
+    NodeType.SAMPLER,
+    NodeType.FILTER, 
+    NodeType.DELAY,
+    NodeType.CHANNEL,
+]);
+
 const drumChannelFXChain: NodeType[] = [
     NodeType.SAMPLER,
     NodeType.EQ3, 
@@ -333,12 +297,15 @@ const drumChannels = [
 ];
 
 
-export const FXChains: Partial<Record<InstrumentType|DrumType, FX[]>> = {};
+export const FXChains: Partial<Record<InstrumentType|DrumType, (FX|Sampler)[]>> = {};
 FXChains[InstrumentType.MASTER] = masterFXChain;
 FXChains[InstrumentType.BASS] = bassFXChain;
 
 for(let drumType of drumChannels){
     let drumChain = buildFXChain(drumChannelFXChain);
+    if(drumChain[0] instanceof Sampler){
+        drumChain[0].apiInstrumentName = apiInstrumentNames[drumType];
+    }
     drumChain[drumChain.length - 1].node.connect(masterFXChain[0].node);
     FXChains[drumType] = drumChain;
 }

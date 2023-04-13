@@ -17,6 +17,13 @@ export enum DrumType {
     TOM = "TOM",
 };
 
+export let apiInstrumentNames: Record<string, string> = {};
+apiInstrumentNames[DrumType.KICK] = "00_KD";
+apiInstrumentNames[DrumType.SNARE] = "01_SD";
+apiInstrumentNames[DrumType.HIHAT] = "02_HH";
+apiInstrumentNames[DrumType.CLAP] = "03_CL";
+apiInstrumentNames[DrumType.TOM] = "06_TH";
+
 export type Instrument = {
     type: InstrumentType,
     color: string,

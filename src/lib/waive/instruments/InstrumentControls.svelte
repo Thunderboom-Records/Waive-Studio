@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { FX, InstrumentType, DrumType } from "$lib/types/waive";
 	import FxBox from "$lib/waive/fxControls/FX_Box.svelte";
-	import { Sampler } from "../audioEngine/fxChains";
+	import { Sampler } from "$lib/waive/audioEngine/sampler";
 	import ChainLabel from "../fxControls/ChainLabel.svelte";
 	import SampleControls from "../sample/SampleControls.svelte";
     
@@ -16,7 +16,7 @@
         {#each selectedFX as fx}
             {#key fx}
                 {#if fx instanceof Sampler}
-                    <SampleControls apiInstrument={'00_KD'} sampler={fx}/>                 
+                    <SampleControls sampler={fx}/>                 
                 <!-- {:else if fx.type === NodeType.SYNTH}
                     <FxBox {fx} /> -->
                 {:else}

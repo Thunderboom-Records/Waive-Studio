@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { afterUpdate } from "svelte";
-	import type { Sampler } from "../audioEngine/fxChains";
+	import type { Sampler } from "$lib/waive/audioEngine/sampler";
 
 	export let sampler: Sampler;
 	

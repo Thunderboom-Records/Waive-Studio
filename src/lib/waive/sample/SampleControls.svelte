@@ -2,16 +2,16 @@
 	import SampleSelection from './SampleSelection.svelte';
 	import { cleanName, postRequest, ROOT_URL } from '$lib/scripts/utils';
 	import type { Sample } from '$lib/types/waive';
-	import type { Sampler } from '$lib/waive/audioEngine/fxChains';
+	import type { Sampler } from '$lib/waive/audioEngine/sampler';
 
-	export let apiInstrument: string;
 	export let sampler: Sampler;
+	// let apiInstrumentName = '00_KD';
 
 	let z: number[] | null = null;
 
 	function requestSample(){
 		postRequest(ROOT_URL, 'requestDrumSample', {
-			instrument: apiInstrument, 
+			instrument: sampler.apiInstrumentName, 
 			z: z
 		}).then((data) => {
 			if(!data.ok){

@@ -11,7 +11,7 @@
 			}
         	formattedTime = digits.join(' : ');
     	}, time)
-	}, "32n");
+	}, "16n");
 	transportControlsLoop.start(0);
 </script>
 

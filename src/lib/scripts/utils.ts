@@ -52,7 +52,7 @@ export async function getRequest(root: string, m_type: string, data: any){
 }
 
 
-export async function postRequest(root: string, m_type:string, data:any){
+export async function postRequest(root: string, m_type: string, data: any){
     const req = {
         method: "POST",
         headers: {
