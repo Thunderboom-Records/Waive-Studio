@@ -12,7 +12,9 @@
     {#if typeof(selectedFX) !== 'undefined'}
         <ChainLabel>{selectedChain}</ChainLabel>
         {#each selectedFX as fx}
-            <FxBox {fx} />
+            {#key fx}
+                <FxBox {fx} />
+            {/key}
         {/each}
     {/if}
 </div>

@@ -27,8 +27,8 @@
 
 <!-- BPM -->
 <div class="flex flex-row space-x-1 justify-center place-items-center">
-	<span class="badge flex place-items-center justify-center rounded-l-full bg-gray-800 h-6 w-24">{bpm} bpm</span>
-	<div class="flex space-x-3 justify-center place-items-center bg-gray-800 rounded-r-full h-6 w-12">
+	<span class="badge flex place-items-center justify-center rounded-l-full bg-gray-800 h-8 w-24">{bpm} bpm</span>
+	<div class="flex space-x-3 justify-center place-items-center bg-gray-800 rounded-r-full h-8 w-12">
 		<button class="btn btn-sm" on:click={() => updateBPM(-1)}> - </button>
 		<button class="btn btn-sm" on:click={() => updateBPM(1)}> + </button>
 	</div>
@@ -36,8 +36,8 @@
 
 <!-- Swing Controls -->
 <div class="flex flex-row space-x-1 justify-center place-items-center">
-	<span class="badge flex place-items-center justify-center rounded-l-full  bg-gray-800 h-6 w-24">{swing}% swing</span>
-	<div class="flex space-x-3 justify-center place-items-center bg-gray-800 rounded-r-full h-6 w-12">
+	<span class="badge flex place-items-center justify-center rounded-l-full  bg-gray-800 h-8 w-24">{swing}% swing</span>
+	<div class="flex space-x-3 justify-center place-items-center bg-gray-800 rounded-r-full h-8 w-12">
 		<button class="btn btn-sm" on:click={() => updateSwing(-0.01)}> - </button>
 		<button class="btn btn-sm" on:click={() => updateSwing(0.01)}> + </button>
 	</div>
@@ -45,8 +45,8 @@
 
 <!-- Loop Controls -->
 <div class="flex flex-row space-x-1 justify-center place-items-center">
-	<span class="badge flex place-items-center justify-center rounded-l-full  bg-gray-800 h-6 w-20">loop:</span>
-	<select bind:value={loopEnd} on:change={() => Transport.loopEnd = loopEnd} class="select max-w-xs rounded-r-full text-center bg-gray-800 h-6">
+	<span class="badge flex place-items-center justify-center rounded-l-full  bg-gray-800 h-8 w-20">loop:</span>
+	<select bind:value={loopEnd} on:change={() => Transport.loopEnd = loopEnd} class="select max-w-xs rounded-r-full text-center bg-gray-800 h-8">
 		<!-- TODO: find out why text is invisible?? -->
 		{#each loopOptions as option, i}
 			<option value={option.value}>{option.name}</option>

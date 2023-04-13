@@ -8,6 +8,7 @@
     function update(){
         if(typeof(parameter.callback) !== 'undefined'){
             parameter.callback(selected);
+            parameter.value = selected;
         }
     }
 
@@ -18,7 +19,11 @@
         <option disabled>---</option>
     {:else}
         {#each parameter.options as option}
-            <option value={option}>{option}</option>
+            <!-- {#if option === parameter.value}
+                <option selected value={option}>{option}</option>
+            {:else} -->
+                <option value={option}>{option}</option>
+            <!-- {/if} -->
         {/each}
     {/if}
 </select>
