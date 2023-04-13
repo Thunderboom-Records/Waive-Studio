@@ -32,7 +32,7 @@
 				barNotes = convertMelodyNotesToNoteEvents(data.notes, 24);
 			}
 
-			const barData = new BarData(barNotes);
+			const barData = new BarData(barNotes, data.notes);
 			barData.z = data.z;
 
 			let bar = {

@@ -1,14 +1,14 @@
 import type { NoteEvent } from "$lib/types/waive";
 
-// /!\ Possibly redundant for transition to svelte/stores...
-
 export class BarData {
     z: number[] | null;
     notes: NoteEvent[];
+    gridNotes: number[][];
 
-    constructor(notes: NoteEvent[]){
+    constructor(notes: NoteEvent[], gridNotes: number[][]){
         this.z = null;
         this.notes = notes;
+        this.gridNotes = gridNotes;
     }
 
     renderToCanvas() {
