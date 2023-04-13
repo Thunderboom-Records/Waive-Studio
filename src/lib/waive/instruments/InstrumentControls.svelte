@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { FX } from "$lib/types/waive";
-	import FxBox from "../fxControls/FX_Box.svelte";
+	import FxBox from "$lib/waive/fxControls/FX_Box.svelte";
     
     export let selectedFX: FX[];
 

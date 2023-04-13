@@ -10,18 +10,17 @@
             parameter.callback(selected);
         }
     }
+
+    selected = parameter.value as string;
+
 </script>
 
  <select bind:value={selected} on:change={update} class="select max-w-xs rounded-full text-center bg-gray-400 h-6 px-4"> -->
 	{#if typeof(parameter.options) === 'undefined'}
-        <option disabled selected>---</option>
+        <option disabled>---</option>
     {:else}
         {#each parameter.options as option}
-            {#if option == parameter.value}
-                <option value={option} selected>{option}</option>
-            {:else}
-                <option value={option}>{option}</option>
-            {/if}
+            <option value={option}>{option}</option>
         {/each}
     {/if}
 </select>
