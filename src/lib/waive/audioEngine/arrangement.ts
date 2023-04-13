@@ -17,6 +17,7 @@ export class Arrangement {
     constructor(length: number = 4) {
         this.length = length;
         this.arrangement = [];
+        this.arrangement.length = 4;
         this.part = null;
         this.synthCallback = () => { };
         this.midi = null;
@@ -48,7 +49,7 @@ export class Arrangement {
         }
 
         this.arrangement[i] = bar;
-        console.log(`added to ${i}`);
+        console.log(`added to ${i}, (length now ${this.arrangement.length})`);
         this.updatePart();
     }
 

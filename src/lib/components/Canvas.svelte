@@ -1,22 +1,38 @@
 <script lang="ts">
-	import type { PlayerCanvas, Rectangle } from '$lib/types/waive';
+	import { createEventDispatcher } from 'svelte';
+
+	import type { Instrument, PlayerCanvas, Rectangle } from '$lib/types/waive';
+	import type { BarData } from '$lib/waive/audioEngine/barData';
 	import { onMount } from 'svelte';
 
-	// Allow parent to explicitly set height and width
 	export let section: PlayerCanvas;
+	let barData: BarData | null;
+	export let instrument: Instrument;
+	export let i: number;
 
-	// export let width: number;
-	// export let height: number;
-	// export let color: string = '#d14132';
+	const dispatch = createEventDispatcher();
 
 	let canvas: HTMLCanvasElement;
+	let ctx: CanvasRenderingContext2D | null;
+
+	let dragHover: boolean = false;
 
 	// Need to setup the canvas and the context in the onMount
 	onMount(() => {
-		let ctx = canvas.getContext('2d');
+		ctx = canvas.getContext('2d');
 
 		canvas.width = section.canvas.w;
 		canvas.height = section.canvas.h;
+
+		drawBar();
+	})
+
+	function drawBar() {
+		if(ctx === null || typeof(barData) === 'undefined'){
+			return;
+		}
+
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		// For each inner bar we need to draw, call drawRect
 		let rects = [
@@ -42,17 +58,49 @@
 				drawRect(ctx, rect, section.fillColor);
 			}
 		});
-	});
+	};
 
 	// Use separate helper functions to draw the shapes we need
 	function drawRect(ctx: CanvasRenderingContext2D, rect: Rectangle, fill: string) {
 		ctx.fillStyle = fill;
 		ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
 	}
+
+	function dragEnter(event: any){
+		event.preventDefault;
+		const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+
+		if(data.type === instrument.type){
+			dragHover = true;
+		}
+	}
+
+	function dropped(event: any){
+		event.preventDefault;
+		const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+		dragHover = false;
+
+		if(data.type !== instrument.type){
+			return
+		}
+
+		data.i = i;
+
+		dispatch("addBar", data);
+		barData = instrument.arrangement.arrangement[i];
+		// console.log();
+		drawBar();
+	}
+
 </script>
 
-<div>
-	<canvas bind:this={canvas} class="bg-red-600/60 rounded-xl">
-		<slot />
+<div
+	on:dragenter={dragEnter}
+	on:dragleave={() => {dragHover = false}}
+	on:drop={dropped}
+	on:dragover={(event) => {event.preventDefault()}}
+	class="border-white {dragHover ? 'border-2' : 'border-none'}"
+>
+	<canvas bind:this={canvas} class="bg-red-600/60 rounded">
 	</canvas>
 </div>

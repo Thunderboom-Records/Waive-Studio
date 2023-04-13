@@ -12,6 +12,7 @@ export class BarData {
     }
 
     renderToCanvas() {
+        // not where this should be...
         return;
     }
 }

@@ -46,13 +46,25 @@
 		});
 	}
 
+	function addBar(event: any){
+		let data = event.detail;
+		if(data.type !== instrument.type){
+			return;
+		}
+
+		let barData = bars[data.index].barData;
+		instrument.arrangement.add(barData, data.i);
+	}
+
 </script>
 
 <!-- Col 1: S&M Controls -->
-<SmToggles color={instrument.color} />
+<div class="col-start-1">
+	<SmToggles color={instrument.color} />
+</div>
 
 <!-- Col 2: Pattern Controls -->
-<div class="grid grid-cols-4 bg-gray-900 py-2">
+<div class="grid grid-cols-4 bg-gray-900 py-2 col-start-2">
 	<div class="col-span-1">
 		<PatternControls on:newBar={requestPattern} {instrument}/>
 	</div>
@@ -62,7 +74,7 @@
 </div>
 
 <!-- Col 3: Sample Controls -->
-<div class="flex flex-row flex-wrap bg-gray-900 p-2 content-evenly gap-x-2">
+<div class="flex flex-row flex-wrap bg-gray-900 p-2 content-evenly gap-x-2 col-start-3">
 	{#if instrument.type == InstrumentType.DRUMS}
 		<ChainSelect key={DrumType.KICK} on:switch>Kick FX</ChainSelect>
 		<ChainSelect key={DrumType.SNARE} on:switch>Snare FX</ChainSelect>
@@ -75,7 +87,9 @@
 </div>
 
 <!-- Col 4-7: Player Display -->
-<PlayerSection />
+<PlayerSection bind:instrument={instrument} on:addBar={addBar} />
 
 <!-- Col 8: Download Button -->
-<DownloadButton {instrument} />
+<div class="col-start-8">
+	<DownloadButton {instrument} />
+</div>

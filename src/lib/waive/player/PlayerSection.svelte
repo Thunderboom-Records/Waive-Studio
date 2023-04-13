@@ -1,20 +1,17 @@
 <script lang="ts">
 	import Canvas from '$lib/components/Canvas.svelte';
-	import type { PlayerCanvas } from '$lib/types/waive';
+	import type { Instrument, PlayerCanvas } from '$lib/types/waive';
 
 	let width: number = 235;
 	let height: number = 100;
 
-	let sections: PlayerCanvas[] = [
-		{ canvas: { w: width, h: height }, canvasColor: '', fillColor: '#d14132' },
-		{ canvas: { w: width, h: height }, canvasColor: '', fillColor: '#d14132' },
-		{ canvas: { w: width, h: height }, canvasColor: '', fillColor: '#d14132' },
-		{ canvas: { w: width, h: height }, canvasColor: '', fillColor: '#d14132' }
-	];
+	export let instrument: Instrument;
+
+	let section: PlayerCanvas = { canvas: { w: width, h: height }, canvasColor: '', fillColor: '#d14132' };
 </script>
 
-{#each sections as section}
-	<div class="bg-gray-900 flex flex-row justify-center place-items-center">
-		<Canvas {section} />
+{#each instrument.arrangement.arrangement as barData, i}
+	<div class="col-start-{i + 4} bg-gray-900 flex flex-row justify-center place-items-center">
+		<Canvas {section} bind:instrument={instrument} {i} on:addBar />
 	</div>
 {/each}

@@ -5,7 +5,6 @@
 	import type { Sampler } from '$lib/waive/audioEngine/sampler';
 
 	export let sampler: Sampler;
-	// let apiInstrumentName = '00_KD';
 
 	let z: number[] | null = null;
 

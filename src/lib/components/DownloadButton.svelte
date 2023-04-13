@@ -8,11 +8,12 @@
 	}
 </script>
 
-<div class="flex flex-row justify-center items-center bg-gray-900 ">
+<div class="flex flex-row justify-center items-center bg-gray-900 h-full">
 	<button
 		on:click={download}
 		class="flex flex-row justify-center place-items-center w-12 h-8 rounded-full bg-gray-600 hover:bg-gray-500 "
 	>
+		<!-- Download icon -->
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
 			<path
 				fill-rule="evenodd"
