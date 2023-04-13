@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { InstrumentType, type Bar, type Instrument } from '$lib/types/waive';
+	import { InstrumentType, type Bar, type Instrument, type FX, DrumType } from '$lib/types/waive';
 	import DownloadButton from '$lib/components/DownloadButton.svelte';
 	import SmToggles from '../pattern/SmControls.svelte';
 	import PlayerSection from '../player/PlayerSection.svelte';
@@ -11,6 +11,7 @@
 		convertDrumNotesToNoteEvents,
 		convertMelodyNotesToNoteEvents
 	} from '../audioEngine/barData';
+	import ChainSelect from './ChainSelect.svelte';
 
 	export let instrument: Instrument;
 
@@ -63,13 +64,13 @@
 <!-- Col 3: Sample Controls -->
 <div class="flex flex-row flex-wrap bg-gray-900 p-2 content-evenly gap-x-2">
 	{#if instrument.type == InstrumentType.DRUMS}
-		<button class="bg-gray-600 hover:bg-gray-500 btn rounded-full w-20 h-8 text-sm">kick</button>
-		<button class="bg-gray-600 hover:bg-gray-500 btn rounded-full w-20 h-8 text-sm">snare</button>
-		<button class="bg-gray-600 hover:bg-gray-500 btn rounded-full w-20 h-8 text-sm">hihat</button>
-		<button class="bg-gray-600 hover:bg-gray-500 btn rounded-full w-20 h-8 text-sm">clap</button>
-		<button class="bg-gray-600 hover:bg-gray-500 btn rounded-full w-20 h-8 text-sm">tom</button>
+		<ChainSelect key={DrumType.KICK} on:switch>Kick FX</ChainSelect>
+		<ChainSelect key={DrumType.SNARE} on:switch>Snare FX</ChainSelect>
+		<ChainSelect key={DrumType.HIHAT} on:switch>Hihat FX</ChainSelect>
+		<ChainSelect key={DrumType.CLAP} on:switch>Clap FX</ChainSelect>
+		<ChainSelect key={DrumType.TOM} on:switch>Tom FX</ChainSelect>
 	{:else}
-		<button class="bg-gray-600 hover:bg-gray-500 btn rounded-full w-20 h-8 text-sm">edit</button>
+		<ChainSelect key={instrument.type} on:switch>Edit FX</ChainSelect>
 	{/if}
 </div>
 

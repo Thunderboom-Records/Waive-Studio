@@ -3,18 +3,18 @@ import type { BarData } from '$lib/waive/audioEngine/barData';
 import type { ToneAudioNode } from 'tone';
 
 export enum InstrumentType {
-    DRUMS,
-    BASS,
-    LEAD,
-    MASTER,
+    DRUMS = "DRUMS",
+    BASS = "BASS",
+    LEAD = "LEAD",
+    MASTER = "MASTER",
 };
 
 export enum DrumType {
-    KICK,
-    SNARE,
-    HIHAT,
-    CLAP,
-    TOM,
+    KICK = "KICK",
+    SNARE = "SNARE",
+    HIHAT = "HIHAT",
+    CLAP = "CLAP",
+    TOM = "TOM",
 };
 
 export type Instrument = {

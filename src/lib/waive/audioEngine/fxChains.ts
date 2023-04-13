@@ -1,5 +1,5 @@
 import * as Tone from 'tone';
-import { DrumType, FXParameterType, NodeType, type FX } from "$lib/types/waive";
+import { DrumType, FXParameterType, InstrumentType, NodeType, type FX } from "$lib/types/waive";
 import type { ToneAudioNode } from 'tone';
 import { BypassableFX } from './bypassableFX';
 
@@ -267,7 +267,7 @@ export function buildFXChain(chain: NodeType[]){
     return nodes;
 }
 
-export const masterFXChain: FX[] = buildFXChain([
+const masterFXChain: FX[] = buildFXChain([
     NodeType.DELAY,
     NodeType.REVERB,
     NodeType.FILTER,
@@ -277,7 +277,7 @@ export const masterFXChain: FX[] = buildFXChain([
     NodeType.CHANNEL,
 ]);
 
-export const bassFXChain: FX[] = buildFXChain([
+const bassFXChain: FX[] = buildFXChain([
     NodeType.SYNTH,
     NodeType.FILTER, 
     NodeType.DELAY,
@@ -300,9 +300,16 @@ const drumChannels = [
     DrumType.TOM,
 ];
 
-export const drumFXChains: Record<number, FX[]> = {};
+
+export const FXChains: Partial<Record<InstrumentType|DrumType, FX[]>> = {};
+FXChains[InstrumentType.MASTER] = masterFXChain;
+FXChains[InstrumentType.BASS] = bassFXChain;
 
 for(let drumType of drumChannels){
-    drumFXChains[drumType] = buildFXChain(drumChannelFXChain);
+    let drumChain = buildFXChain(drumChannelFXChain);
+    drumChain[drumChain.length - 1].node.connect(masterFXChain[0].node);
+    FXChains[drumType] = drumChain;
 }
 
+bassFXChain[bassFXChain.length - 1].node.connect(masterFXChain[0].node);
+masterFXChain[masterFXChain.length - 1].node.toDestination();

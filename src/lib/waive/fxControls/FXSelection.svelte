@@ -3,15 +3,13 @@
 
     export let parameter: FXParameter;
 
-    let selected: string;
+    let selected: string = parameter.value as string;
 
     function update(){
         if(typeof(parameter.callback) !== 'undefined'){
             parameter.callback(selected);
         }
     }
-
-    selected = parameter.value as string;
 
 </script>
 
