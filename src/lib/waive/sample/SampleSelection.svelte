@@ -1,18 +1,23 @@
 <script lang="ts">
-	import type { Sample } from "$lib/types/waive";
+	import { afterUpdate } from "svelte";
+	import type { Sampler } from "../audioEngine/fxChains";
 
-	export let options: Sample[];
+	export let sampler: Sampler;
+	
+	function selectSample(){
+		console.log("selectSample");
+		sampler.addSample(sampler.current);
+	}
+
+	afterUpdate(() => selectSample());
+
 </script>
 
-<select class="select w-60 rounded-full pl-4 text-start bg-gray-400 h-8">
-	{#if options.length == 0}
+<select bind:value={sampler.current} on:change={selectSample} class="select w-60 rounded-full pl-4 text-start bg-gray-400 h-8">
+	{#if sampler.options.length == 0}
 	<option disabled selected>---</option>
 	{/if}
-	{#each options as option, i}
-		{#if i == 0}
-		<option selected>{option.name}</option>
-		{:else}
-		<option>{option.name}</option>
-		{/if}
+	{#each sampler.options as option}
+		<option value={option}>{option.name}</option>
 	{/each}
 </select>

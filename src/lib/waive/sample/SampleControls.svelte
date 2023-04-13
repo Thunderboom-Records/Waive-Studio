@@ -1,16 +1,17 @@
 <script lang="ts">
 	import SampleSelection from './SampleSelection.svelte';
 	import { cleanName, postRequest, ROOT_URL } from '$lib/scripts/utils';
-	import type { Instrument, Sample } from '$lib/types/waive';
+	import type { Sample } from '$lib/types/waive';
+	import type { Sampler } from '$lib/waive/audioEngine/fxChains';
 
-	export let instrument: Instrument;
+	export let apiInstrument: string;
+	export let sampler: Sampler;
 
 	let z: number[] | null = null;
-	let options: Sample[] = [];
 
 	function requestSample(){
 		postRequest(ROOT_URL, 'requestDrumSample', {
-			instrument: instrument.apiInstrumentName, 
+			instrument: apiInstrument, 
 			z: z
 		}).then((data) => {
 			if(!data.ok){
@@ -18,7 +19,7 @@
 				return
 			}
 			let name = cleanName(data.filename);
-			for(let s of options){
+			for(let s of sampler.options){
 				if(s.name == name){
 					return;
 				}
@@ -28,19 +29,22 @@
 				url: data.drum_samples,
 				source: data.source,
 				name: name,
+				z: data.z,
 			}
-			options = [sample, ...options];
+			sampler.options = [sample, ...sampler.options];
+			sampler.current = sample;
 			z = data.z;
 		})
 	}
 
 </script>
 
-<div class="flex flex-col p-2 space-y-2 bg-gray-900 h-full w-full justify-center place-items-center">
+<div class="flex flex-col p-2 space-y-2 h-full justify-center place-items-center bg-gray-700 rounded-lg">
 	<div class="flex flex-row justify-between w-60 gap-x-2">
 		<button
 			class="flex flex-row justify-center place-items-center 
 					bg-gray-500 hover:bg-gray-600 btn rounded-full w-12 h-8 text-sm"
+			on:click={() => sampler.play()}
 		>
 			<!-- Play button -->
 			<svg
@@ -71,5 +75,7 @@
 		</button>
 	</div>
 
-	<SampleSelection {options}/>
+	{#key sampler}
+		<SampleSelection {sampler}/>
+	{/key}
 </div>

@@ -19,11 +19,7 @@
         <option disabled>---</option>
     {:else}
         {#each parameter.options as option}
-            <!-- {#if option === parameter.value}
-                <option selected value={option}>{option}</option>
-            {:else} -->
-                <option value={option}>{option}</option>
-            <!-- {/if} -->
+            <option value={option}>{option}</option>
         {/each}
     {/if}
 </select>

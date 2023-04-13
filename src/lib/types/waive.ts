@@ -82,6 +82,7 @@ export type Sample = {
     url: string,
     source: string,
     name: string,
+    z: number[],
 }
 
 export type SynthCallback = (event: NoteEvent, time: number) => void;

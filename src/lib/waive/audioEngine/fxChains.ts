@@ -1,7 +1,8 @@
 import * as Tone from 'tone';
-import { DrumType, FXParameterType, InstrumentType, NodeType, type FX } from "$lib/types/waive";
+import { DrumType, FXParameterType, InstrumentType, NodeType, type FX, type FXParameter, type Sample } from "$lib/types/waive";
 import type { ToneAudioNode } from 'tone';
 import { BypassableFX } from './bypassableFX';
+import { ROOT_URL } from '$lib/scripts/utils';
 
 
 
@@ -168,16 +169,47 @@ function addFXCompressor(){
     }
 }
 
-function addSampler(){
-    let node = new Tone.Sampler()
-    return {
-        type: NodeType.SAMPLER,
-        node: node,
-        bypassable: false,
-        enabled: true,
-        label: 'Sampler',
-        parameters: [],
-    };
+
+export class Sampler {
+    type: NodeType = NodeType.SAMPLER;
+    bypassable: boolean = false;
+    enabled: boolean = true;
+    label: string = 'Sampler';
+    parameters: FXParameter[] = [];
+    options: Sample[] = [];
+    current?: Sample;
+    node: Tone.Player;
+    buffer: Tone.ToneAudioBuffer;
+    velocity: Tone.Gain;
+
+    constructor(){
+        this.velocity = new Tone.Gain();
+        this.buffer = new Tone.ToneAudioBuffer();
+        this.node = new Tone.Player(this.buffer);
+    }
+
+    addSample(sample?: Sample){
+        // if(this.current === sample){
+        //     return
+        // }
+        if(typeof(sample) === 'undefined' || typeof(sample.url) === 'undefined'){
+            return;
+        }
+        this.current = sample;
+        let url = ROOT_URL + "drum/" + sample.url
+        console.log("url: " + url);
+        this.node.stop();
+        this.buffer.load(url).then(() => {
+        });
+    }
+
+    play(){
+        if(this.buffer.loaded){
+            this.node.start(0);
+        } else {
+            console.log("buffer not loaded");
+        }
+    }
 }
 
 function addSynth(){
@@ -242,7 +274,7 @@ export function buildFXChain(chain: NodeType[]){
                 node = addFXCompressor();
                 break
             case NodeType.SAMPLER:
-                node = addSampler();
+                node = new Sampler();
                 break
             case NodeType.SYNTH:
                 node = addSynth();
