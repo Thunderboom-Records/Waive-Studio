@@ -12,6 +12,7 @@
 	const dispatch = createEventDispatcher();
 	
 	let barData: BarData | null;
+	let barIndex: number;
 	let canvas: HTMLCanvasElement;
 
 	let dragHover: boolean = false;
@@ -21,7 +22,6 @@
 		color = colors[instrument.color][500];
 	}
 
-	// Need to setup the canvas and the context in the onMount
 	onMount(() => {
 		canvas.width = section.canvas.w;
 		canvas.height = section.canvas.h;
@@ -46,6 +46,15 @@
 		}
 	}
 
+	function dragStart(event: any){
+		event.preventDefault;
+		const data = {
+			index: barIndex, 
+			type: instrument.type
+		}
+		event.dataTransfer.setData('text/plain', JSON.stringify(data));
+	}
+
 	function dropped(event: any){
 		event.preventDefault;
 		const data = JSON.parse(event.dataTransfer.getData("text/plain"));
@@ -56,6 +65,7 @@
 		}
 
 		data.i = i;
+		barIndex = data.index;
 
 		dispatch("addBar", data);
 		barData = instrument.arrangement.arrangement[i];
@@ -65,6 +75,8 @@
 </script>
 
 <div
+	draggable={barData ? "true" : "false"}
+	on:dragstart={dragStart}
 	on:dragenter={dragEnter}
 	on:dragleave={() => {dragHover = false}}
 	on:drop={dropped}

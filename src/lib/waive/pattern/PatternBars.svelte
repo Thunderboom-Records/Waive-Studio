@@ -17,7 +17,7 @@
 
 <div class="flex flex-row space-x-2 overflow-x-auto w-full">
 	{#each bars as bar, i}
-		<PatternBar {bar} {instrument} {i} bind:selectedIndex={selectedIndex}/>
+		<PatternBar {instrument} {i} bind:selectedIndex={selectedIndex}/>
 	{/each}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div 
