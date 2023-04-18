@@ -34,7 +34,7 @@ export class Arrangement {
         return true;
     }
 
-    add(bar: BarData, i?: number) {
+    add(bar: BarData | null, i?: number) {
         if (typeof i === 'undefined') {
             for (let idx = 0; idx < this.length; idx++) {
                 if (!this.arrangement[idx]) {

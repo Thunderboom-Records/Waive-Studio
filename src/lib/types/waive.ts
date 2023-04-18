@@ -2,6 +2,7 @@ import type { Arrangement } from '$lib/waive/audioEngine/arrangement'
 import type { BarData } from '$lib/waive/audioEngine/barData';
 import type { ToneAudioNode } from 'tone';
 
+
 export enum InstrumentType {
     DRUMS = "DRUMS",
     BASS = "BASS",
@@ -28,7 +29,6 @@ export type Instrument = {
     type: InstrumentType,
     color: string,
     apiPatternRequest: string,
-    apiInstrumentName: string,
     arrangement: Arrangement,
 };
 
@@ -94,8 +94,15 @@ export type Sample = {
 
 export type SynthCallback = (event: NoteEvent, time: number) => void;
  
-// Canvas Types
+export type UndoableAction = {
+    name: string,
+    description: string,
+    action: () => void,
+    undo: () => void,
+}
 
+
+// Canvas Types
 export enum CanvasType {
     DRUM,
     MELODY,

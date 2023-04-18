@@ -10,7 +10,7 @@ export class Sampler {
     enabled: boolean = true;
     label: string = 'Sampler';
     parameters: FXParameter[] = [];
-    options: Sample[] = [];
+    // options: Sample[] = [];
     current?: Sample;
     node: Tone.AmplitudeEnvelope;
     buffer: Tone.ToneAudioBuffer;
@@ -30,20 +30,26 @@ export class Sampler {
         this.player.connect(this.node);
     }
 
-    addSample(sample?: Sample){
+    selectSample(sample?: Sample){
         if(typeof sample === 'undefined' || typeof sample.url === 'undefined'){
+            this.removeSample();
             return;
         }
         this.current = sample;
         let url = ROOT_URL + "drum/" + sample.url
 
         this.player.stop();
-        this.buffer.load(url).then(() => {
-        });
+        this.buffer.load(url).then(() => {console.log("sample loaded")});
+    }
+
+    removeSample(){
+        this.current = undefined;
+        this.buffer.dispose();
+        this.buffer = new Tone.ToneAudioBuffer();
+        this.player.buffer = this.buffer;
     }
 
     play(velocity?: number | undefined, time?: Time | undefined){
-        console.log("play", velocity, time);
         if(this.buffer.loaded){
             this.player.start(time);
             this.node.triggerAttackRelease(1.0, time, velocity)
