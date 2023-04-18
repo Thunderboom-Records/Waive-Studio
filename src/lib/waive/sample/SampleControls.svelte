@@ -6,9 +6,7 @@
 
 	export let sampler: Sampler;
 
-	let z: number[] | null = null;
-
-	function requestSample(){
+	function requestSample(z: number[] | null | undefined = null){
 		postRequest(ROOT_URL, 'requestDrumSample', {
 			instrument: sampler.apiInstrumentName, 
 			z: z
@@ -31,7 +29,7 @@
 				z: data.z,
 			}
 			sampler.options = [sample, ...sampler.options];
-			sampler.current = sample;
+			sampler.addSample(sample);
 			z = data.z;
 		})
 	}
@@ -62,19 +60,17 @@
 
 		<button 
 			class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-28 h-8 text-sm"
-			on:click={requestSample}
+			on:click={() => requestSample()}
 		>
 			new
 		</button>
 		<button 
 			class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-28 h-8 text-sm"
-			on:click={requestSample}
+			on:click={() => requestSample(sampler.current?.z)}
 		>
 			var
 		</button>
 	</div>
 
-	{#key sampler}
-		<SampleSelection {sampler}/>
-	{/key}
+	<SampleSelection {sampler}/>
 </div>

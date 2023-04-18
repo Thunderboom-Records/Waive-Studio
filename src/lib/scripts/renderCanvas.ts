@@ -44,11 +44,15 @@ function floatToHex(x: number){
 
 export function drawNoteBar(canvas: HTMLCanvasElement, barData:  BarData | null, fillColor: string = "#1e1e1e") {
     let ctx = canvas.getContext('2d');
-    if(ctx === null || typeof(barData) === 'undefined' || barData === null){
+    if(ctx === null){
         return;
     }
-
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    if(typeof barData === 'undefined' || barData === null){
+        return;
+    }
 
     // /!\ Assumes `fillColor` is in hex format, without alpha!!
     let bgColor = fillColor + floatToHex(0.5);
@@ -74,9 +78,10 @@ export function drawDrumBar(canvas: HTMLCanvasElement, barData:  BarData | null,
     if(ctx === null){
         return;
     }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    if(typeof(barData) === 'undefined' || barData === null){
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if(typeof barData === 'undefined' || barData === null){
         return;
     }
 

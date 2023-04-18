@@ -8,7 +8,7 @@
 	import InstrumentHeader from '$lib/waive/instruments/InstrumentHeader.svelte';
 	import InstrumentControls from '$lib/waive/instruments/InstrumentControls.svelte';
 	import { Arrangement } from '$lib/waive/audioEngine/arrangement';
-	import { makeBassCallback } from '$lib/waive/audioEngine/synths';
+	import { makeBassCallback, makeDrumsCallback } from '$lib/waive/audioEngine/synths';
 	import ChainSelect from '$lib/waive/instruments/ChainSelect.svelte';
 	import Timer from '$lib/waive/transportControls/Timer.svelte';
 	import PlayButtons from '$lib/waive/transportControls/PlayButtons.svelte';
@@ -17,8 +17,11 @@
 
 	import { FXChains } from '$lib/waive/audioEngine/fxChains';
 
+	const drumArrangement = new Arrangement();
+	drumArrangement.synthCallback = makeDrumsCallback(FXChains)
+
 	const bassArrangement = new Arrangement();
-	if(typeof(FXChains[InstrumentType.BASS]) != 'undefined'){
+	if(typeof FXChains[InstrumentType.BASS] !== 'undefined'){
 		bassArrangement.synthCallback = makeBassCallback(FXChains[InstrumentType.BASS][0].node);
 	}
 
@@ -28,7 +31,7 @@
 			color: 'red',
 			apiPatternRequest: 'requestDrumPattern',
 			apiInstrumentName: '00_KD',
-			arrangement: new Arrangement(),
+			arrangement: drumArrangement,
 		},
 		{
 			type: InstrumentType.BASS,

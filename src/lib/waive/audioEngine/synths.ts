@@ -1,63 +1,45 @@
-import type { ToneAudioBuffer } from 'tone';
 import * as Tone from 'tone';
 
-import type { NoteEvent } from '$lib/types/waive';
-
-// /!\ Possibly all redundant!
-
-// const KD_Buffer = new Tone.ToneAudioBuffer();
-// const SD_Buffer = new Tone.ToneAudioBuffer();
-// const HH_Buffer = new Tone.ToneAudioBuffer();
-// const CL_Buffer = new Tone.ToneAudioBuffer();
-// const TH_Buffer = new Tone.ToneAudioBuffer();
-
-// export const drumBuffers: Record<string, ToneAudioBuffer> = {
-// 	'00_KD': KD_Buffer,
-// 	'01_SD': SD_Buffer,
-// 	'02_HH': HH_Buffer,
-// 	'03_CL': CL_Buffer,
-// 	'04_TH': TH_Buffer,
-// };
-
-// TODO: make each drum channel separate Samplers 
-// for individual wave shaping/FX chains
-// export const drumSampler = new Tone.Sampler({
-// 	36: KD_Buffer,
-// 	38: SD_Buffer,
-// 	42: HH_Buffer,
-// 	39: CL_Buffer,
-// 	43: TH_Buffer,
-// }).toDestination();
+import { DrumType, NodeType, type FX, type InstrumentType, type NoteEvent } from '$lib/types/waive';
+import type { Sampler } from './sampler';
 
 
-export const bassSynth = new Tone.MonoSynth({
-	"portamento": 0.2,
-	"oscillator": {
-		"type": "sawtooth",
-	},
-	"envelope": {
-		"attack": 0.01,
-		"decay": 0.2,
-		"sustain": 0.2,
-		"release": 1.0,
-	},
-	"filterEnvelope": {
-		"attack": 0.01,
-		"decay": 0.2,
-		"sustain": 0.2,
-		"release": 1.0,
-		"octaves": 3.0,
-	},
-	"filter": {
-		"type": "lowpass",
-		"Q": 1.0,
-	}
-}).toDestination();
-
+const midiDrumMap: Record<number, DrumType> = {
+	36: DrumType.KICK,
+	38: DrumType.SNARE,
+	42: DrumType.HIHAT,
+	39: DrumType.CLAP,
+	43: DrumType.TOM,
+}
 
 export function makeBassCallback(synth: any){
 	let callback = (event: NoteEvent, time: number) => {
 		synth.triggerAttackRelease(Tone.Frequency(event.note, "midi").toFrequency(), event.length, time);
+	}
+
+	return callback;
+}
+
+export function makeDrumsCallback(drumSynths: Record<string, (FX | Sampler)[]>){
+	let synths: Record<string, Sampler> = {};
+	for(const key in drumSynths){
+		let FXChain = drumSynths[key];
+		if(FXChain[0].type == NodeType.SAMPLER){
+			synths[key] = FXChain[0] as Sampler;
+		}
+	}
+
+	let callback = (event: NoteEvent, time: number) => {
+		if(typeof midiDrumMap[event.note] === 'undefined'){
+			return;
+		}
+
+		let type = midiDrumMap[event.note];
+		if(typeof synths[type] === 'undefined'){
+			return;
+		}
+
+		synths[type].play(event.velocity, time);
 	}
 
 	return callback;

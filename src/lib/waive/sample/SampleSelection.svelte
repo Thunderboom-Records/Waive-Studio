@@ -5,7 +5,6 @@
 	export let sampler: Sampler;
 	
 	function selectSample(){
-		console.log("selectSample");
 		sampler.addSample(sampler.current);
 	}
 

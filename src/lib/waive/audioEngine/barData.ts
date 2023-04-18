@@ -22,7 +22,7 @@ export const drumChannelMidiMap: Record<number, number> = {
     1: 38,  // 01_SD
     2: 42,  // 02_HH
     3: 39,  // 03_CL
-    4: 43,  // 04_TH
+    4: 43,  // 06_TH
 }
 
 export function convertDrumNotesToNoteEvents(notes: number[][], threshold: number = 0.5){

@@ -1,6 +1,8 @@
 import * as Tone from 'tone';
 import { ROOT_URL } from "$lib/scripts/utils";
 import { NodeType, type FXParameter, type Sample } from "$lib/types/waive";
+import type { Time } from 'tone/build/esm/core/type/Units';
+
 
 export class Sampler {
     type: NodeType = NodeType.SAMPLER;
@@ -10,35 +12,41 @@ export class Sampler {
     parameters: FXParameter[] = [];
     options: Sample[] = [];
     current?: Sample;
-    node: Tone.Player;
+    node: Tone.AmplitudeEnvelope;
     buffer: Tone.ToneAudioBuffer;
-    velocity: Tone.Gain;
+    player: Tone.Player;
     apiInstrumentName?: string;
 
     constructor(){
-        this.velocity = new Tone.Gain();
+        this.node = new Tone.AmplitudeEnvelope({
+            attack: 0.0,
+            decay: 0.0,
+            sustain: 1.0,
+            release: 1.0,
+        })
         this.buffer = new Tone.ToneAudioBuffer();
-        this.node = new Tone.Player(this.buffer);
+        this.player = new Tone.Player(this.buffer);
+
+        this.player.connect(this.node);
     }
 
     addSample(sample?: Sample){
-        // if(this.current === sample){
-        //     return
-        // }
-        if(typeof(sample) === 'undefined' || typeof(sample.url) === 'undefined'){
+        if(typeof sample === 'undefined' || typeof sample.url === 'undefined'){
             return;
         }
         this.current = sample;
         let url = ROOT_URL + "drum/" + sample.url
 
-        this.node.stop();
+        this.player.stop();
         this.buffer.load(url).then(() => {
         });
     }
 
-    play(){
+    play(velocity?: number | undefined, time?: Time | undefined){
+        console.log("play", velocity, time);
         if(this.buffer.loaded){
-            this.node.start(0);
+            this.player.start(time);
+            this.node.triggerAttackRelease(1.0, time, velocity)
         }
     }
 }
