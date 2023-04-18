@@ -96,9 +96,11 @@
 	on:mouseleave={(event) => mouseOver = false}
 	class="relative border-white {dragHover ? 'border-2' : 'border-none'}"
 >
-	<canvas bind:this={canvas} class="bg-{instrument.color}-500 bg-opacity-10 rounded">
-	</canvas>
+	<canvas bind:this={canvas} class="bg-{instrument.color}-500 bg-opacity-10 rounded" />
 	{#if barData && mouseOver}
-	<button class="absolute bottom-0 right-2" on:click={deleteBar}>delete</button>
+	<button 
+		class="absolute bottom-0 right-0 text-gray-400 bg-gray-800 bg-opacity-80 py-0 px-2" 
+		on:click={deleteBar}
+	>delete</button>
 	{/if}
 </div>

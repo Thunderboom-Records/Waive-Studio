@@ -49,7 +49,6 @@ export class Arrangement {
         }
 
         this.arrangement[i] = bar;
-        console.log(`added to ${i}, (length now ${this.arrangement.length})`);
         this.updatePart();
     }
 
