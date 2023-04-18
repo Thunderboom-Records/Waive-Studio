@@ -15,6 +15,6 @@
 
 {#each instrument.arrangement.arrangement as barData, i}
 	<div class="col-start-{i + 4} bg-gray-900 flex flex-row justify-center place-items-center">
-		<Canvas {section} bind:instrument={instrument} {i} bind:arrangementStore={arrangementStore} on:addBar />
+		<Canvas {section} bind:instrument={instrument} {i} bind:arrangementStore={arrangementStore} on:addBar on:removeBar />
 	</div>
 {/each}

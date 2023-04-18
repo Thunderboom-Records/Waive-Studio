@@ -89,6 +89,34 @@
 		history.newAction(action);	
 	}
 
+	function removeBar(event: any){
+		let data = event.detail;
+		if(data.type !== instrument.type){
+			return;
+		}
+
+		let oldBarData = instrument.arrangement.at(data.i)
+
+		let action: UndoableAction = {
+			name: 'removeBar',
+			description: `removing bar from position ${data.i} in ${data.type}`,
+			action: () => {
+				arrangements[instrument.type].update(v => {
+					v.remove(data.i);
+					return v;
+				})
+			},
+			undo: () => {
+				arrangements[instrument.type].update(v => {
+					v.add(oldBarData, data.i);
+					return v;
+				})
+			}
+		}
+
+		history.newAction(action);
+	}
+
 </script>
 
 <!-- Col 1: S&M Controls -->
@@ -120,7 +148,7 @@
 </div>
 
 <!-- Col 4-7: Player Display -->
-<PlayerSection bind:instrument={instrument} on:addBar={addBar} />
+<PlayerSection bind:instrument={instrument} on:addBar={addBar} on:removeBar={removeBar}/>
 
 <!-- Col 8: Download Button -->
 <div class="col-start-8">

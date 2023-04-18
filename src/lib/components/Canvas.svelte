@@ -80,9 +80,7 @@
 	}
 
 	function deleteBar(){
-		barData = null;
-		instrument.arrangement.remove(i);
-		updateCanvas();
+		dispatch("removeBar", {i, type: instrument.type})
 	}
 
 </script>
