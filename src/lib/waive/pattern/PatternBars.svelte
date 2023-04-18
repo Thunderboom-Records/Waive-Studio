@@ -17,14 +17,15 @@
 
 <div class="flex flex-row space-x-2 overflow-x-auto w-full">
 	{#each bars as bar, i}
-		<PatternBar {instrument} {i} bind:selectedIndex={selectedIndex}/>
+		<PatternBar {bar} {instrument} {i} bind:selectedIndex={selectedIndex}/>
 	{/each}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<div 
-		class="flex flex-row justify-around items-center place-items-start rounded-md w-11 h-28 bg-gray-600 cursor-pointer hover:bg-gray-500 min-w-pattern"
+	<button
+		class="flex flex-row justify-around items-center place-items-start rounded-md h-28 bg-gray-600 cursor-pointer hover:bg-gray-500 min-w-pattern w-pattern"
 		on:click={newBar}
 	>
 		<span class="text-3xl text-gray-800">+</span>
-	</div>
-	<div class="rounded-md w-11 h-28 bg-gray-800 min-w-pattern"/>	
+	</button>
+	{#each {length: Math.max(0, 3 - bars.length)} as _, i}
+	<div class="rounded-md h-28 bg-gray-800 min-w-pattern w-pattern"/>	
+	{/each}
 </div>

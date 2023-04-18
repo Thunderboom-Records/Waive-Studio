@@ -46,8 +46,11 @@ const config = {
 				'instrument-grid': '4rem, 24rem, 18rem, repeat(4, minmax(12rem ,1fr)), 5rem'
 			},
 			minWidth: {
-				'pattern': '2.75rem',
+				'pattern': '3.75rem',
 			},
+			width: {
+				'pattern': '3.75rem',
+			}
 		}
 	},
 
