@@ -16,6 +16,7 @@
 	let canvas: HTMLCanvasElement;
 
 	let dragHover: boolean = false;
+	let mouseOver: boolean = false;
 
 	let color: string = "white";
 	if(typeof instrument.color == 'string') {
@@ -72,6 +73,12 @@
 		updateCanvas();
 	}
 
+	function deleteBar(){
+		barData = null;
+		instrument.arrangement.remove(i);
+		updateCanvas();
+	}
+
 </script>
 
 <div
@@ -81,8 +88,13 @@
 	on:dragleave={() => {dragHover = false}}
 	on:drop={dropped}
 	on:dragover={(event) => {event.preventDefault()}}
-	class="border-white {dragHover ? 'border-2' : 'border-none'}"
+	on:mouseenter={(event) => mouseOver = true}
+	on:mouseleave={(event) => mouseOver = false}
+	class="relative border-white {dragHover ? 'border-2' : 'border-none'}"
 >
 	<canvas bind:this={canvas} class="bg-{instrument.color}-500 bg-opacity-10 rounded">
 	</canvas>
+	{#if barData && mouseOver}
+	<button class="absolute bottom-0 right-2" on:click={deleteBar}>delete</button>
+	{/if}
 </div>
