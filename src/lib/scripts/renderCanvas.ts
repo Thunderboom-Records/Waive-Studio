@@ -100,6 +100,10 @@ export function drawDrumBar(canvas: HTMLCanvasElement, barData:  BarData | null,
 
             const velocity = barData.gridNotes[i][j];
 
+            if(velocity < 0.2){
+                continue
+            }
+
             const noteColor = fillColor + floatToHex(velocity);
 
             const rect = {

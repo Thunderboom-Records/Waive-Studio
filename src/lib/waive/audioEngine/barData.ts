@@ -25,7 +25,7 @@ export const drumChannelMidiMap: Record<number, number> = {
     4: 43,  // 06_TH
 }
 
-export function convertDrumNotesToNoteEvents(notes: number[][], threshold: number = 0.5){
+export function convertDrumNotesToNoteEvents(notes: number[][], threshold: number = 0.2){
     let noteEvents: NoteEvent[] = [];
     for(let drumChannel = 0; drumChannel < notes.length; drumChannel++){
         for(let i = 0; i < notes[drumChannel].length; i++){
