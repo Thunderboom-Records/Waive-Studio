@@ -16,41 +16,46 @@
 	import MasterVolume from '$lib/waive/transportControls/MasterVolume.svelte';
 
 	import { FXChains } from '$lib/waive/audioEngine/fxChains';
+	import { arrangements } from '$lib/waive/stores/stores';
+	import { writable } from 'svelte/store';
 
 	const drumArrangement = new Arrangement();
 	drumArrangement.synthCallback = makeDrumsCallback(FXChains)
+	arrangements[InstrumentType.DRUMS] = writable(drumArrangement);
 
 	const bassArrangement = new Arrangement();
 	if(typeof FXChains[InstrumentType.BASS] !== 'undefined'){
 		bassArrangement.synthCallback = makeBassCallback(FXChains[InstrumentType.BASS][0].node);
 	}
+	arrangements[InstrumentType.BASS] = writable(bassArrangement);
+
+	const leadArrangement = new Arrangement();
+	arrangements[InstrumentType.LEAD] = writable(leadArrangement);
 
 	let instruments: Instrument[] = [
 		{
 			type: InstrumentType.DRUMS,
 			color: 'red',
 			apiPatternRequest: 'requestDrumPattern',
-			apiInstrumentName: '00_KD',
 			arrangement: drumArrangement,
 		},
 		{
 			type: InstrumentType.BASS,
 			color: 'orange',
 			apiPatternRequest: 'requestBassline',
-			apiInstrumentName: 'BASS',
 			arrangement: bassArrangement,
 		},
 		{
 			type: InstrumentType.LEAD,
 			color: 'green',
 			apiPatternRequest: 'requestMelody',
-			apiInstrumentName: 'LEAD',
-			arrangement: new Arrangement(),
+			arrangement: leadArrangement,
 		}
 	];
 
 	Transport.loop = true;
 	Transport.loopEnd = `4:0`;
+
 </script>
 
 

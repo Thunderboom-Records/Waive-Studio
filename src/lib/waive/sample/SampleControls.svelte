@@ -1,10 +1,16 @@
 <script lang="ts">
+	import { get, writable } from 'svelte/store';
 	import SampleSelection from './SampleSelection.svelte';
 	import { cleanName, postRequest, ROOT_URL } from '$lib/scripts/utils';
-	import type { Sample } from '$lib/types/waive';
+	import type { DrumType, InstrumentType, Sample, UndoableAction } from '$lib/types/waive';
 	import type { Sampler } from '$lib/waive/audioEngine/sampler';
+	import { history } from '$lib/waive/stores/undo';
+	import { selectedChain, sampleOptions } from '../stores/stores';
 
 	export let sampler: Sampler;
+	export let sampleOptionsKey: InstrumentType | DrumType;
+
+	let options = sampleOptions[sampleOptionsKey];
 
 	function requestSample(z: number[] | null | undefined = null){
 		postRequest(ROOT_URL, 'requestDrumSample', {
@@ -15,22 +21,51 @@
 				console.log("no data");
 				return
 			}
-			let name = cleanName(data.filename);
-			for(let s of sampler.options){
+
+			if(typeof options === 'undefined'){
+				return;
+			}
+
+			const name = cleanName(data.filename);
+			for(let s of get(options)){
 				if(s.name == name){
 					return;
 				}
 			}
 
-			let sample: Sample = {
+			const sample: Sample = {
 				url: data.drum_samples,
 				source: data.source,
 				name: name,
 				z: data.z,
 			}
-			sampler.options = [sample, ...sampler.options];
-			sampler.addSample(sample);
-			z = data.z;
+
+			const prevSample = sampler.current;
+			const prevOptions = [...get(options)];
+			const thisView = get(selectedChain);
+
+			let action: UndoableAction = {
+				name: "new sample",
+				description: `new sample called ${sample.name}`,
+				action: () => {
+					if(typeof options === 'undefined'){
+						return;
+					}
+					options.update(v => [sample, ...v]);
+					sampler.selectSample(sample);
+					selectedChain.set(thisView);
+				},
+				undo: () => {
+					if(typeof options === 'undefined'){
+						return;
+					}
+					options.set(prevOptions);
+					sampler.selectSample(prevSample);
+					selectedChain.set(thisView);
+				}
+			}
+
+			history.newAction(action);
 		})
 	}
 
@@ -72,5 +107,5 @@
 		</button>
 	</div>
 
-	<SampleSelection {sampler}/>
+	<SampleSelection {sampler} bind:sampleOptionsKey={sampleOptionsKey}/>
 </div>

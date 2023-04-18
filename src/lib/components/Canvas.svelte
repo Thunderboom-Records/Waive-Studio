@@ -4,10 +4,14 @@
 	import { InstrumentType, type Instrument, type PlayerCanvas, type Rectangle } from '$lib/types/waive';
 	import type { BarData } from '$lib/waive/audioEngine/barData';
 	import { drawNoteBar, drawDrumBar, colors } from '$lib/scripts/renderCanvas';
+	import type { Writable } from 'svelte/store';
+	import type { Arrangement } from '$lib/waive/audioEngine/arrangement';
 
 	export let section: PlayerCanvas;
 	export let instrument: Instrument;
 	export let i: number;
+
+	export let arrangementStore: Writable<Arrangement>;
 	
 	const dispatch = createEventDispatcher();
 	
@@ -26,6 +30,11 @@
 	onMount(() => {
 		canvas.width = section.canvas.w;
 		canvas.height = section.canvas.h;
+
+		arrangementStore.subscribe(v => {
+			barData = v.arrangement[i];
+			updateCanvas();
+		});
 
 		updateCanvas();
 	})
@@ -67,10 +76,7 @@
 
 		data.i = i;
 		barIndex = data.index;
-
 		dispatch("addBar", data);
-		barData = instrument.arrangement.arrangement[i];
-		updateCanvas();
 	}
 
 	function deleteBar(){

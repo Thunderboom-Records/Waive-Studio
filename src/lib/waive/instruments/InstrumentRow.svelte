@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { InstrumentType, type Bar, type Instrument, type FX, DrumType } from '$lib/types/waive';
+	import { InstrumentType, type Bar, type Instrument, type FX, DrumType, type UndoableAction } from '$lib/types/waive';
 	import DownloadButton from '$lib/components/DownloadButton.svelte';
 	import SmToggles from '../pattern/SmControls.svelte';
 	import PlayerSection from '../player/PlayerSection.svelte';
@@ -12,11 +12,13 @@
 		convertMelodyNotesToNoteEvents
 	} from '../audioEngine/barData';
 	import ChainSelect from './ChainSelect.svelte';
+	import { history } from '$lib/waive/stores/undo';
+	import { arrangements } from '../stores/stores';
 
 	export let instrument: Instrument;
 
 	let bars: Bar[] = [];
-	let selectedIndex: number | null = null;
+	let selectedIndex: number = -1;
 
 	function requestPattern() {
 		getRequest(ROOT_URL, instrument.apiPatternRequest, {}).then((data: any) => {
@@ -40,9 +42,21 @@
 				barData: barData
 			};
 
-			bars.push(bar);
-			bars = bars;
-			selectedIndex = bars.length - 1;
+			let action: UndoableAction = {
+				name: 'requested bar',
+				description: `new bar received for ${instrument.type}`,
+				action: () => {
+					bars.push(bar);
+					bars = bars;
+					selectedIndex = bars.length - 1;
+				},
+				undo: () => {
+					bars = bars.slice(0, bars.length - 1);
+					selectedIndex = bars.length - 1;
+				}
+			}
+
+			history.newAction(action);
 		});
 	}
 
@@ -51,9 +65,28 @@
 		if(data.type !== instrument.type){
 			return;
 		}
-
+		
 		let barData = bars[data.index].barData;
-		instrument.arrangement.add(barData, data.i);
+		let oldBarData = instrument.arrangement.at(data.i)
+
+		let action: UndoableAction = {
+			name: 'add pattern',
+			description: 'adding a new pattern',
+			action: () => {
+				arrangements[instrument.type].update(v => {
+					v.add(barData, data.i);
+					return v;
+				})
+			},
+			undo: () => {
+				arrangements[instrument.type].update(v => {
+					v.add(oldBarData, data.i);
+					return v;
+				})
+			}
+		}
+
+		history.newAction(action);	
 	}
 
 </script>
