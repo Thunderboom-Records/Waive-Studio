@@ -1,29 +1,24 @@
 <script lang="ts">
-	import { afterUpdate } from "svelte";
-	import type { Sampler } from "$lib/waive/audioEngine/sampler";
-	import { sampleOptions } from "../stores/stores";
-	import type { DrumType, InstrumentType, Sample } from "$lib/types/waive";
+	import { createEventDispatcher } from "svelte";
+	import type { Sample } from "$lib/types/waive";
 
-	export let sampler: Sampler;
-	export let sampleOptionsKey: InstrumentType | DrumType;
+	export let current: Sample | undefined;
+	export let options: Sample[] | undefined;
 
-	let options: Sample[] = []
+	const dispatch = createEventDispatcher();
 
-	sampleOptions[sampleOptionsKey]?.subscribe(value => options = value);
-	
 	function selectSample(){
-		sampler.selectSample(sampler.current);
+		dispatch("selection", current);
 	}
-
-	afterUpdate(() => selectSample());
 
 </script>
 
-<select bind:value={sampler.current} on:change={selectSample} class="select w-60 rounded-full pl-4 text-start bg-gray-400 h-8">
-	{#if options.length == 0}
+<select bind:value={current} on:change={selectSample} class="select w-60 rounded-full pl-4 text-start bg-gray-400 h-8">
+	{#if typeof options === 'undefined' || options.length == 0}
 	<option disabled selected value={undefined}>---</option>
+	{:else}
+		{#each options as option}
+			<option value={option}>{option.name}</option>
+		{/each}
 	{/if}
-	{#each options as option}
-		<option value={option}>{option.name}</option>
-	{/each}
 </select>

@@ -1,16 +1,26 @@
 <script lang="ts">
-	import { get, writable } from 'svelte/store';
-	import SampleSelection from './SampleSelection.svelte';
-	import { cleanName, postRequest, ROOT_URL } from '$lib/scripts/utils';
 	import type { DrumType, InstrumentType, Sample, UndoableAction } from '$lib/types/waive';
 	import type { Sampler } from '$lib/waive/audioEngine/sampler';
+	import { get } from 'svelte/store';
 	import { history } from '$lib/waive/stores/undo';
 	import { selectedChain, sampleOptions } from '../stores/stores';
+	import SampleSelection from './SampleSelection.svelte';
+	import Waveform from '$lib/components/Waveform.svelte';
+	import { cleanName, postRequest, ROOT_URL } from '$lib/scripts/utils';
 
 	export let sampler: Sampler;
 	export let sampleOptionsKey: InstrumentType | DrumType;
 
 	let options = sampleOptions[sampleOptionsKey];
+	let current = sampler.current;
+	let waveform = sampler.getWaveform();
+
+	let currentOptions: Sample[] | undefined;
+
+	sampleOptions[sampleOptionsKey]?.subscribe(value => {
+		currentOptions = value;
+	});
+
 
 	function requestSample(z: number[] | null | undefined = null){
 		postRequest(ROOT_URL, 'requestDrumSample', {
@@ -40,33 +50,42 @@
 				z: data.z,
 			}
 
-			const prevSample = sampler.current;
+			const prevSample = current;
 			const prevOptions = [...get(options)];
+			const newOptions = [sample, ...prevOptions];
 			const thisView = get(selectedChain);
 
 			let action: UndoableAction = {
 				name: "new sample",
-				description: `new sample called ${sample.name}`,
+				description: `new sample called "${sample.name}" added to options`,
 				action: () => {
 					if(typeof options === 'undefined'){
 						return;
 					}
-					options.update(v => [sample, ...v]);
-					sampler.selectSample(sample);
 					selectedChain.set(thisView);
+					options.set(newOptions);
+					selection(sample);
 				},
 				undo: () => {
 					if(typeof options === 'undefined'){
 						return;
 					}
-					options.set(prevOptions);
-					sampler.selectSample(prevSample);
 					selectedChain.set(thisView);
+					options.set(prevOptions);
+					selection(prevSample);
 				}
 			}
 
 			history.newAction(action);
 		})
+	}
+
+	function selection(sample: Sample | undefined){
+		console.log("selection", sample?.name, sample?.url)
+		current = sample;
+		sampler.selectSample(current, () => {
+			waveform = sampler.getWaveform();
+		});
 	}
 
 </script>
@@ -94,18 +113,35 @@
 		</button>
 
 		<button 
-			class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-28 h-8 text-sm"
+			class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-20 h-8 text-sm"
 			on:click={() => requestSample()}
 		>
 			new
 		</button>
 		<button 
-			class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-28 h-8 text-sm"
+			class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-20 h-8 text-sm"
 			on:click={() => requestSample(sampler.current?.z)}
 		>
 			var
 		</button>
+		<button 
+			class="flex flex-row justify-center place-items-center bg-gray-500 hover:bg-gray-600 btn rounded-full w-20 h-8 text-sm"
+		>
+			<!-- Download icon -->
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+				<path
+					fill-rule="evenodd"
+					d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z"
+					clip-rule="evenodd"
+				/>
+			</svg>
+		</button>
 	</div>
 
-	<SampleSelection {sampler} bind:sampleOptionsKey={sampleOptionsKey}/>
+	<SampleSelection 
+		bind:current={current} 
+		bind:options={currentOptions} 
+		on:selection={(event) => selection(event.detail)}
+	/>
+	<Waveform bind:waveform={waveform} />
 </div>

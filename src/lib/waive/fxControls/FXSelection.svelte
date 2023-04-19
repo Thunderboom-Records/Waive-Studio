@@ -6,7 +6,7 @@
     let selected: string = parameter.value as string;
 
     function update(){
-        if(typeof(parameter.callback) !== 'undefined'){
+        if(typeof parameter.callback !== 'undefined'){
             parameter.callback(selected);
             parameter.value = selected;
         }
