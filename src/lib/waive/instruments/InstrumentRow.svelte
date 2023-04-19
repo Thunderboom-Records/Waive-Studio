@@ -16,6 +16,7 @@
 	import { arrangements } from '../stores/stores';
 
 	export let instrument: Instrument;
+	export let row: number;
 
 	let bars: Bar[] = [];
 	let selectedIndex: number = -1;
@@ -120,12 +121,12 @@
 </script>
 
 <!-- Col 1: S&M Controls -->
-<div class="col-start-1">
+<div class="col-start-1 row-start-{row}">
 	<SmToggles color={instrument.color} />
 </div>
 
 <!-- Col 2: Pattern Controls -->
-<div class="grid grid-cols-4 bg-gray-900 py-2 col-start-2">
+<div class="grid grid-cols-4 bg-gray-900 py-2 col-start-2 row-start-{row}">
 	<div class="col-span-1">
 		<PatternControls on:newBar={requestPattern} {instrument}/>
 	</div>
@@ -135,7 +136,7 @@
 </div>
 
 <!-- Col 3: Sample Controls -->
-<div class="flex flex-row flex-wrap bg-gray-900 p-2 content-evenly gap-x-2 col-start-3">
+<div class="flex flex-row flex-wrap bg-gray-900 p-2 content-evenly gap-x-2 col-start-3 row-start-{row}">
 	{#if instrument.type == InstrumentType.DRUMS}
 		<ChainSelect key={DrumType.KICK} on:switch>Kick FX</ChainSelect>
 		<ChainSelect key={DrumType.SNARE} on:switch>Snare FX</ChainSelect>
@@ -148,9 +149,9 @@
 </div>
 
 <!-- Col 4-7: Player Display -->
-<PlayerSection bind:instrument={instrument} on:addBar={addBar} on:removeBar={removeBar}/>
+<PlayerSection {row} bind:instrument={instrument} on:addBar={addBar} on:removeBar={removeBar}/>
 
 <!-- Col 8: Download Button -->
-<div class="col-start-8">
+<div class="col-start-8 row-start-{row}">
 	<DownloadButton {instrument} />
 </div>

@@ -16,8 +16,9 @@
 	import MasterVolume from '$lib/waive/transportControls/MasterVolume.svelte';
 
 	import { FXChains } from '$lib/waive/audioEngine/fxChains';
-	import { arrangements } from '$lib/waive/stores/stores';
+	import { arrangements, loopLength } from '$lib/waive/stores/stores';
 	import { writable } from 'svelte/store';
+	import Playhead from '$lib/waive/player/Playhead.svelte';
 
 	const drumArrangement = new Arrangement();
 	drumArrangement.synthCallback = makeDrumsCallback(FXChains)
@@ -54,7 +55,7 @@
 	];
 
 	Transport.loop = true;
-	Transport.loopEnd = `4:0`;
+	loopLength.subscribe(value => Transport.loopEnd = value);
 
 </script>
 
@@ -71,8 +72,9 @@
 	</div>
 	<div class="grid grid-cols-instrument-grid bg-gray-800 w-full gap-1">
 		<InstrumentHeader />
-		{#each instruments as instrument}
-			<InstrumentRow {instrument}/>
+		<Playhead />
+		{#each instruments as instrument, row}
+			<InstrumentRow {instrument} row={row+2}/>
 		{/each}
 	</div>
 	<div class="bg-gray-900">

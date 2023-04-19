@@ -3,6 +3,7 @@
         "apipost",
         "bypassable",
         "HIHAT",
+        "Playhead",
         "redoable"
     ]
 }

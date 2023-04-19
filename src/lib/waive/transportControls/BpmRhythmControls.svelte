@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Transport } from 'tone';
+	import { loopLength } from '../stores/stores';
 
 	let bpm = 120;
 	let swing = 0;
@@ -12,7 +13,7 @@
 		{id: 5, name: "1/8", value: "0:0:2"},
 	];
 
-	let loopEnd: string;
+	let loopSelection: string;
 
 	$: bpm = Math.floor(Transport.bpm.value);
 	function updateBPM(d: number){
@@ -46,7 +47,7 @@
 <!-- Loop Controls -->
 <div class="flex flex-row space-x-1 justify-center place-items-center">
 	<span class="badge flex place-items-center justify-center rounded-l-full  bg-gray-800 h-8 w-20">loop:</span>
-	<select bind:value={loopEnd} on:change={() => Transport.loopEnd = loopEnd} class="select max-w-xs rounded-r-full text-center bg-gray-800 h-8">
+	<select bind:value={loopSelection} on:change={() => loopLength.set(loopSelection)} class="select max-w-xs rounded-r-full text-center bg-gray-800 h-8">
 		{#each loopOptions as option, i}
 			<option value={option.value}>{option.name}</option>
 		{/each}
