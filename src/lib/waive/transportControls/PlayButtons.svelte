@@ -1,38 +1,46 @@
 <script lang="ts">
+	import { splitTimeString } from '$lib/scripts/utils';
 	import * as Tone from 'tone';
+	import type { BarsBeatsSixteenths } from 'tone/build/esm/core/type/Units';
 
 	enum PlayingState {
-		NEW,
-		RUNNING,
-		PAUSED
+		PLAYING,
+		STOPPED,
+		STOPPING
 	}
 
-	let state: PlayingState = PlayingState.NEW;
+	let state: PlayingState = PlayingState.STOPPED;
+	let stopEvent: Tone.ToneEvent = new Tone.ToneEvent();
 
 	const start = () => {
 		Tone.start();  // TODO: put in splash page?
+		
+		stopEvent.dispose();
 		Tone.Transport.start();
-		state = PlayingState.RUNNING;
-	};
-
-	const pause = () => {
-		Tone.Transport.pause();
-		state = PlayingState.PAUSED;
-	};
-
-	const resume = () => {
-		Tone.Transport.start();
-		state = PlayingState.RUNNING;
+		state = PlayingState.PLAYING;
 	};
 
 	const stop = () => {
-		Tone.Transport.stop();
-		state = PlayingState.NEW;
+		const currentPosition = splitTimeString(Tone.Transport.position as BarsBeatsSixteenths);
+
+		stopEvent = new Tone.ToneEvent(() => {
+			Tone.Transport.stop();
+			Tone.Transport.position = "0:0:0";
+			state = PlayingState.STOPPED;
+			stopEvent.dispose();
+		});
+		stopEvent.start({"1m": currentPosition.bar + 1, "64n": 1});
+		state = PlayingState.STOPPING;
+	};
+
+	const record = () => {
+		// TODO
+		console.log("record start");
 	};
 </script>
 
 <div class="flex flex-row space-x-2 items-center">
-	{#if state === PlayingState.NEW}
+	{#if state === PlayingState.STOPPED}
 		<button on:click={start} class="btn btn-circle text-white">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -40,6 +48,7 @@
 				fill="currentColor"
 				class="w-8 h-8"
 			>
+			<!-- Play Button -->
 				<path
 					fill-rule="evenodd"
 					d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
@@ -47,50 +56,63 @@
 				/>
 			</svg>
 		</button>
-	{:else if state === PlayingState.RUNNING}
-		<button on:click={pause} class="btn btn-circle text-white">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 24 24"
-				fill="currentColor"
+	{:else if state === PlayingState.STOPPING}
+		<button on:click={start} class="btn btn-circle text-white pulse">
+			<svg 
+				xmlns="http://www.w3.org/2000/svg" 
+				viewBox="0 0 24 24" 
+				fill="currentColor" 
 				class="w-8 h-8"
 			>
+			<!-- Stop button -->
 				<path
 					fill-rule="evenodd"
-					d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7.5 0A.75.75 0 0115 4.5h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75V5.25z"
+					d="M4.5 7.5a3 3 0 013-3h9a3 3 0 013 3v9a3 3 0 01-3 3h-9a3 3 0 01-3-3v-9z"
 					clip-rule="evenodd"
 				/>
 			</svg>
 		</button>
-	{:else if state === PlayingState.PAUSED}
-		<button on:click={resume} class="btn btn-circle text-white">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 24 24"
-				fill="currentColor"
+	{:else if state === PlayingState.PLAYING}
+		<button on:click={stop} class="btn btn-circle text-white">
+			<svg 
+				xmlns="http://www.w3.org/2000/svg" 
+				viewBox="0 0 24 24" 
+				fill="currentColor" 
 				class="w-8 h-8"
 			>
+			<!-- Stop button -->
 				<path
 					fill-rule="evenodd"
-					d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
+					d="M4.5 7.5a3 3 0 013-3h9a3 3 0 013 3v9a3 3 0 01-3 3h-9a3 3 0 01-3-3v-9z"
 					clip-rule="evenodd"
 				/>
 			</svg>
-		</button>
+		</button> 
 	{/if}
-
-	<button on:click={stop} class="btn btn-circle text-white">
+	<button on:click={record} class="btn btn-circle text-white">
 		<svg 
 			xmlns="http://www.w3.org/2000/svg" 
 			viewBox="0 0 24 24" 
 			fill="currentColor" 
 			class="w-8 h-8"
 		>
-			<path
-				fill-rule="evenodd"
-				d="M4.5 7.5a3 3 0 013-3h9a3 3 0 013 3v9a3 3 0 01-3 3h-9a3 3 0 01-3-3v-9z"
-				clip-rule="evenodd"
-			/>
+		<!-- Record button -->
+			<circle cx="12" cy="12" r="8" />
 		</svg>
-	</button>
+	</button> 
 </div>
+
+<style>
+	.pulse {
+		animation: pulse 0.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	}
+
+	@keyframes pulse {
+	0%, 100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+}
+</style>

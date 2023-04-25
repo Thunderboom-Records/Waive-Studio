@@ -1,3 +1,5 @@
+import type { BarsBeatsSixteenths } from "tone/build/esm/core/type/Units";
+
 export const ROOT_URL = "https://arranlyon.com/waive/";
 
 export function cleanName(name: string){
@@ -9,7 +11,7 @@ export function cleanName(name: string){
 	return result;
 }
 
-export function splitTimeString(time: string){
+export function splitTimeString(time: string | BarsBeatsSixteenths){
     let bbs = time.split(":");
     let bar = 0;
     let beat = 0;
