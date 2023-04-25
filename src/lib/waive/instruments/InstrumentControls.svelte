@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DrumType, FX, InstrumentType } from "$lib/types/waive";
+	import { NodeType, type DrumType, type FX, type InstrumentType } from "$lib/types/waive";
 	import FxBox from "$lib/waive/fxControls/FX_Box.svelte";
 	import { Sampler } from "$lib/waive/audioEngine/sampler";
 	import ChainLabel from "../fxControls/ChainLabel.svelte";
@@ -18,14 +18,14 @@
 </script>
 
 <div class="flex flex-row gap-2 p-2">
-    {#if typeof(selectedFX) !== 'undefined'}
+    {#if typeof selectedFX !== 'undefined'}
         <ChainLabel>{name}</ChainLabel>
         {#each selectedFX as fx}
             {#key fx}
                 {#if fx instanceof Sampler}
                     <SampleControls sampler={fx} sampleOptionsKey={name}/>                 
-                <!-- {:else if fx.type === NodeType.SYNTH}
-                    <FxBox {fx} /> -->
+                {:else if fx.type === NodeType.SYNTH}
+                    <FxBox {fx} />
                 {:else}
                     <FxBox {fx} />
                 {/if}

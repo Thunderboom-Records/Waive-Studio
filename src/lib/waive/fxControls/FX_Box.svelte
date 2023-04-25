@@ -1,8 +1,9 @@
 <script lang="ts">
     import FxHeader from './FxHeader.svelte';
 	import FxKnob from './FxKnob.svelte';
-    import { FXParameterType, type FX } from '$lib/types/waive';
+    import type { FX } from '$lib/types/waive';
 	import FxSelection from './FXSelection.svelte';
+	import { ListParameter, ValueParameter } from '../audioEngine/parameter';
 
     export let fx: FX;
 </script>
@@ -11,9 +12,9 @@
     <FxHeader {fx}>{fx.label}</FxHeader>
     <div class="flex flex-row justify-center items-center h-full space-x-4 p-4">
         {#each fx.parameters as parameter}
-            {#if parameter.type == FXParameterType.VALUE}
-                <FxKnob>{parameter.name}</FxKnob>
-            {:else if parameter.type == FXParameterType.LIST}
+            {#if parameter instanceof ValueParameter}
+                <FxKnob {parameter} />
+            {:else if parameter instanceof ListParameter}
                 <FxSelection {parameter} />
             {/if}
         {/each}

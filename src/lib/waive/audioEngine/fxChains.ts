@@ -1,63 +1,16 @@
 import * as Tone from 'tone';
-import { DrumType, FXParameterType, InstrumentType, NodeType, type FX, apiInstrumentNames } from "$lib/types/waive";
+import { DrumType, InstrumentType, NodeType, type FX, apiInstrumentNames } from "$lib/types/waive";
 import type { ToneAudioNode } from 'tone';
 import { BypassableFX } from './bypassableFX';
 import { Sampler } from './sampler';
-
-
-
-function createValueParameter(
-    name: string, value: number, min: number, max: number, node: ToneAudioNode,
-){
-    
-    let callback = (value: number) => {
-        let valClamped = Math.max(min, Math.min(max, value));
-        let newVal: Record<string, number> = {};
-        newVal[name] = valClamped;
-        node.set(newVal)
-    }
-
-    let parameter = {
-        name: name,
-        value: value,
-        type: FXParameterType.VALUE,
-        range: [min, max],
-        callback: callback,
-    }
-
-    // set node to given value
-    callback(value);
-
-    return parameter;
-}
-
-function createListParameter(
-    name: string, value: string, options: string[], node: ToneAudioNode,
-){
-    let callback = (value: string) => {
-        let newVal: Record<string, string> = {}
-        newVal[name] = value;
-        node.set(newVal);
-    }
-
-    let parameter = {
-        name: name,
-        value: value,
-        type: FXParameterType.LIST,
-        options: options,
-        callback: callback,
-    }
-
-    callback(value);
-    return parameter;
-}
+import { ValueParameter, ListParameter } from './parameter';
 
 
 function addFXChannel(){
     let node = new Tone.PanVol({pan: 0.0, volume: 0.0});
 
-    let panParam = createValueParameter("pan", 0.0, -1.0, 1.0, node);
-    let volParam = createValueParameter("vol", 0.0, -40, 5, node);
+    let panParam = new ValueParameter("pan", 0.0, -1.0, 1.0, node);
+    let volParam = new ValueParameter("vol", 0.0, -40, 5, node);
 
     return {
         type: NodeType.CHANNEL,
@@ -72,9 +25,9 @@ function addFXChannel(){
 function addFXEQ3(){
     let node = new Tone.EQ3({highFrequency: 2000, lowFrequency: 100});
 
-    let lowParam = createValueParameter("low", 1.0, -24.0, 5.0, node);
-    let midParam = createValueParameter("mid", 1.0, -24.0, 5.0, node);
-    let highParam = createValueParameter("high", 1.0, -24.0, 5.0, node);
+    let lowParam = new ValueParameter("low", 1.0, -24.0, 5.0, node);
+    let midParam = new ValueParameter("mid", 1.0, -24.0, 5.0, node);
+    let highParam = new ValueParameter("high", 1.0, -24.0, 5.0, node);
 
     return {
         type: NodeType.EQ3,
@@ -89,9 +42,9 @@ function addFXEQ3(){
 function addFXFilter(){
     let node = new Tone.Filter({frequency: 2000, type: 'lowpass', Q: 1.0});
 
-    let freqParam = createValueParameter("frequency", 2000, 20, 20000, node);
-    let qParam = createValueParameter("Q", 1.0, 0.0, 4.0, node);
-    let typeParam = createListParameter("type", "highpass", ["lowpass", "highpass", "bandpass"], node);
+    let freqParam = new ValueParameter("frequency", 2000, 20, 20000, node);
+    let qParam = new ValueParameter("Q", 1.0, 0.0, 4.0, node);
+    let typeParam = new ListParameter("type", "highpass", ["lowpass", "highpass", "bandpass"], node);
 
     return {
         type: NodeType.FILTER,
@@ -106,8 +59,8 @@ function addFXFilter(){
 function addFXReverb(){
     let node = new Tone.Reverb({decay: 1.0, wet: 0.7});
     
-    let decayParam = createValueParameter("decay", 1.0, 0.0, 1.0, node);
-    let wetParam = createValueParameter("wet", 0.0, 0.0, 1.0, node);
+    let decayParam = new ValueParameter("decay", 1.0, 0.0, 1.0, node);
+    let wetParam = new ValueParameter("wet", 0.0, 0.0, 1.0, node);
 
     return {
         type: NodeType.REVERB,
@@ -122,9 +75,9 @@ function addFXReverb(){
 function addFXDelay(){
     let node = new Tone.FeedbackDelay({feedback: 0.0, delayTime: 0.2, wet: 0.5});
 
-    let fbParam = createValueParameter("feedback", 0.0, 0.0, 1.0, node);
-    let delayParam = createListParameter("delayTime", "16n", ["64n", "32n", "16n", "8n"], node);
-    let wetParam = createValueParameter("wet", 0.3, 0.0, 1.0, node);
+    let fbParam = new ValueParameter("feedback", 0.0, 0.0, 1.0, node);
+    let delayParam = new ListParameter("delayTime", "16n", ["64n", "32n", "16n", "8n"], node);
+    let wetParam = new ValueParameter("wet", 0.3, 0.0, 1.0, node);
 
     return {
         type: NodeType.DELAY,
@@ -139,7 +92,7 @@ function addFXDelay(){
 function addFXLimiter(){
     let node = new Tone.Limiter({threshold: -10.0});
 
-    let thresholdParam = createValueParameter("threshold", -10.0, -40.0, 0.0, node);
+    let thresholdParam = new ValueParameter("threshold", -10.0, -40.0, 0.0, node);
     
     return {
         type: NodeType.LIMITER,
@@ -154,10 +107,10 @@ function addFXLimiter(){
 function addFXCompressor(){
     let node: ToneAudioNode = new Tone.Compressor({attack: 0.01, release: 0.1, ratio: 3, threshold: -30});
 
-    let attackParam = createValueParameter("attack", 0.01, 0.0, 0.3, node);
-    let releaseParam = createValueParameter("release", 0.1, 0.0, 0.3, node);
-    let ratioParam = createValueParameter("ratio", 3, 1, 10, node);
-    let thresholdParam = createValueParameter("threshold", -30, -60, 0, node);
+    let attackParam = new ValueParameter("attack", 0.01, 0.0, 0.3, node);
+    let releaseParam = new ValueParameter("release", 0.1, 0.0, 0.3, node);
+    let ratioParam = new ValueParameter("ratio", 3, 1, 10, node);
+    let thresholdParam = new ValueParameter("threshold", -30, -60, 0, node);
 
     return {
         type: NodeType.COMPRESSOR,

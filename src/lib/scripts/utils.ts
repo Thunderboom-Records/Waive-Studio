@@ -11,6 +11,14 @@ export function cleanName(name: string){
 	return result;
 }
 
+export function map(x: number, xMin: number, xMax: number, rangeMin: number, rangeMax: number){
+    return rangeMin + ((x - xMin) / (xMax - xMin)) * (rangeMax - rangeMin);
+}
+
+export function clamp(num: number, min: number, max: number) {
+    return Math.max(min, Math.min(num, max));
+}
+
 export function splitTimeString(time: string | BarsBeatsSixteenths){
     let bbs = time.split(":");
     let bar = 0;

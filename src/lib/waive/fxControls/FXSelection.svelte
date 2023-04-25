@@ -1,25 +1,37 @@
 <script lang="ts">
-    import type { FXParameter } from "$lib/types/waive";
+	import type { UndoableAction } from "$lib/types/waive";
+	import type { ListParameter } from "../audioEngine/parameter";
+	import { history } from "../stores/undo";
 
-    export let parameter: FXParameter;
+    export let parameter: ListParameter;
 
-    let selected: string = parameter.value as string;
+    let selected: string = parameter.value;
+    let prevSelected: string = parameter.value;
 
     function update(){
-        if(typeof parameter.callback !== 'undefined'){
-            parameter.callback(selected);
-            parameter.value = selected;
+        const newVal = selected;
+        const oldVal = prevSelected;
+
+        let action: UndoableAction = {
+            name: "set parameter",
+            description: `set ${parameter.name} to ${newVal}`,
+            action: () => {
+                parameter.set(selected);
+                prevSelected = selected;
+                selected = newVal;
+            },
+            undo: () => {
+                selected = oldVal;
+                parameter.set(oldVal);
+            }
         }
+        history.newAction(action);
     }
 
 </script>
 
  <select bind:value={selected} on:change={update} class="select max-w-xs rounded-full text-center bg-gray-400 h-6 px-4"> -->
-	{#if typeof(parameter.options) === 'undefined'}
-        <option disabled>---</option>
-    {:else}
-        {#each parameter.options as option}
-            <option value={option}>{option}</option>
-        {/each}
-    {/if}
+    {#each parameter.options as option}
+        <option value={option}>{option}</option>
+    {/each}
 </select>

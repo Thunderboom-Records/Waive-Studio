@@ -11,8 +11,10 @@ class UndoHistory {
     set: any;
     update: any;
 
-    newAction(action: UndoableAction){
-        action.action();
+    newAction(action: UndoableAction, doAction: boolean = true){
+        if(doAction){
+            action.action();
+        }
         this.undoStack.update(v => [...v, action]);
         this.redoStack.set([]);
     }
