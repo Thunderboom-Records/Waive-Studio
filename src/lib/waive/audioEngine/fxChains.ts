@@ -266,4 +266,8 @@ for(let drumType of drumChannels){
 
 bassFXChain[bassFXChain.length - 1].node.connect(masterFXChain[0].node);
 leadFXChain[leadFXChain.length - 1].node.connect(masterFXChain[0].node);
-masterFXChain[masterFXChain.length - 1].node.toDestination();
+
+export const masterGain = new Tone.Gain();
+masterGain.toDestination();
+
+masterFXChain[masterFXChain.length - 1].node.connect(masterGain);
