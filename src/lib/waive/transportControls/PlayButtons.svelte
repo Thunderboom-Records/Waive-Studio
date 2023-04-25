@@ -21,7 +21,13 @@
 	};
 
 	const stop = () => {
-		const currentPosition = splitTimeString(Tone.Transport.position as BarsBeatsSixteenths);
+		const currentPosition = splitTimeString(Tone.Transport.position.toString());
+		const currentLoopEnd = splitTimeString(Tone.Time(Tone.Transport.loopEnd).toBarsBeatsSixteenths());
+		let stopTime = currentPosition.bar + 1;
+
+		if(stopTime >= currentLoopEnd.bar){
+			stopTime = 0;
+		}
 
 		stopEvent = new Tone.ToneEvent(() => {
 			Tone.Transport.stop();
@@ -29,7 +35,7 @@
 			state = PlayingState.STOPPED;
 			stopEvent.dispose();
 		});
-		stopEvent.start({"1m": currentPosition.bar + 1, "64n": 1});
+		stopEvent.start({"1m": stopTime, "64n": 1});
 		state = PlayingState.STOPPING;
 	};
 
