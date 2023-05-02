@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 
-import { DrumType, NodeType, type FX, type InstrumentType, type NoteEvent } from '$lib/types/waive';
-import type { Sampler } from './sampler';
+import { DrumType, type FX, type NoteEvent } from '$lib/types/waive';
+import { Sampler } from './sampler';
 
 
 const midiDrumMap: Record<number, DrumType> = {
@@ -24,12 +24,14 @@ export function makeDrumsCallback(drumSynths: Record<string, (FX | Sampler)[]>){
 	let synths: Record<string, Sampler> = {};
 	for(const key in drumSynths){
 		let FXChain = drumSynths[key];
-		if(FXChain[0].type == NodeType.SAMPLER){
+		if(FXChain[0] instanceof Sampler){
 			synths[key] = FXChain[0] as Sampler;
 		}
 	}
 
 	let callback = (event: NoteEvent, time: number) => {
+		console.log("drumCallback", event, time);
+
 		if(typeof midiDrumMap[event.note] === 'undefined'){
 			return;
 		}

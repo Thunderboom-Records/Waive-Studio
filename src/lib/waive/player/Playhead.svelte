@@ -13,7 +13,6 @@
             const loopTicks = Tone.Time(value).toTicks();
     
             const p = loopTicks / fullTicks;
-            console.log(p)
     
             loopRegion.style.width = (p * 100) + "%";
             loopIndicator.style.width = ((1-p) * 100) + "%";

@@ -16,42 +16,48 @@ export class Sampler {
     player: Tone.Player;
     apiInstrumentName?: string;
 
-    constructor(){
-        this.node = new Tone.AmplitudeEnvelope({
-            attack: 0.0,
-            decay: 0.0,
-            sustain: 1.0,
-            release: 1.0,
-        })
+    constructor(context?: Tone.BaseContext, props: any = {}){
+        if(typeof context === 'undefined'){
+            context = Tone.getContext();
+        }
+
+        if(typeof props.ampEnv === 'undefined'){
+            props.ampEnv = {
+                attack: 0.0,
+                decay: 0.0,
+                sustain: 1.0,
+                release: 1.0,
+            }
+        }
+
+        props.ampEnv.context = context;
+
+        this.node = new Tone.AmplitudeEnvelope(props.ampEnv);
         this.buffer = new Tone.ToneAudioBuffer();
-        this.player = new Tone.Player(this.buffer);
+        this.player = new Tone.Player({url:this.buffer, context:context});
 
         this.player.connect(this.node);
+
+        if(typeof props.current !== 'undefined'){
+            this.selectSample(props.current);
+        }
     }
 
-    selectSample(sample?: Sample, callback?: () => void){
+    selectSample(sample: Sample | undefined){
         if(sample === this.current){
-            if(callback){
-                callback();
-            }
-            return;
+            return new Promise(() => {});
         }
 
         if(typeof sample === 'undefined' || sample === null || typeof sample.url === 'undefined'){
             this.removeSample();
-            return;
+            return new Promise(() => {});
         }
 
         this.current = sample;
         let url = ROOT_URL + "drum/" + sample.url
 
         this.player.stop();
-        this.buffer.load(url).then(() => {
-            console.log("sample loaded");
-            if(callback){
-                callback();
-            }
-        });
+        return this.buffer.load(url)
     }
 
     removeSample(){
@@ -70,5 +76,13 @@ export class Sampler {
 
     getWaveform(){
         return this.buffer?.toArray(0) as Float32Array;
+    }
+
+    connect(node: Tone.ToneAudioNode){
+        this.node.connect(node);
+    }
+
+    toDestination(){
+        this.node.toDestination();
     }
 }

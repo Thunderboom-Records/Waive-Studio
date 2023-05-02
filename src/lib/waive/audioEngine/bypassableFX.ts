@@ -15,6 +15,7 @@ export class BypassableFX extends Tone.ToneAudioNode {
     _lastBypass: boolean;
     input: Tone.Gain;
     output: Tone.Gain;
+    context: Tone.BaseContext;
 
     constructor(fx: Tone.ToneAudioNode, bypass=false) {
       super();
@@ -22,9 +23,10 @@ export class BypassableFX extends Tone.ToneAudioNode {
       this.name = "bypassable " + fx.name;
       this._bypass = bypass;
       this._lastBypass = bypass;
+      this.context = fx.context;
 
-      this.input = new Tone.Gain();
-      this.output = new Tone.Gain();
+      this.input = new Tone.Gain({context: fx.context});
+      this.output = new Tone.Gain({context: fx.context});
   
       this.effect.connect(this.output);
   
@@ -62,8 +64,18 @@ export class BypassableFX extends Tone.ToneAudioNode {
       return this;
     }
 
-    set(props: RecursivePartial<ToneWithContextOptions>){
-      this.effect.set(props);
+    // set(props: RecursivePartial<ToneWithContextOptions>){
+    set(props: any){
+      let {bypass, ...fxProps} = props;
+      this.bypass = bypass;
+      this.effect.set(fxProps);
       return this;
+    }
+
+    get() {
+      let props = super.get() as any;
+      props.bypass = this.bypass;
+
+      return props;
     }
   }

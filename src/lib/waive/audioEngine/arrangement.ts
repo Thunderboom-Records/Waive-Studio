@@ -73,7 +73,22 @@ export class Arrangement {
     }
 
     updatePart() {
-        this.timings = [];
+        this.timings = this.getTimings();
+        this.midi = null;
+
+        if (this.part) {
+            this.part.dispose();
+        }
+
+        this.part = new Tone.Part((time, val) => {
+            this.synthCallback(val, time);
+        }, this.timings)
+        
+        this.part.start(0);
+    }
+
+    getTimings(){
+        let timings: NoteEvent[] = [];
         for (let i = 0; i < this.length; i++) {
             let notes = this.arrangement[i]?.notes;
             if (!notes) {
@@ -85,21 +100,11 @@ export class Arrangement {
                 let bbs = splitTimeString(n.time);
                 let time = `${bbs.bar + i}:${bbs.beat}:${bbs.sixteenth}`;
 
-                this.timings.push({ note, time, length: n.length, velocity: n.velocity });
+                timings.push({ note, time, length: n.length, velocity: n.velocity });
             }
         }
 
-        this.midi = null;
-
-        if (this.part) {
-            this.part.dispose();
-        }
-
-        this.part = new Tone.Part((time, val) => {
-            this.synthCallback(val, time);
-        }, this.timings)
-
-        this.part.start(0);
+        return timings;
     }
 
     start(time: number = 0) {

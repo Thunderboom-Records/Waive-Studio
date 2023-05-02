@@ -11,7 +11,7 @@
 	export let pixelRange = 100;
 
 	let startY = 0;
-	let startVal = 0;
+	let startVal = map(parameter.value as number, parameter.range[0], parameter.range[1], 0, 1);
 	
 	let startRotation = -Math.PI * 0.8;
 

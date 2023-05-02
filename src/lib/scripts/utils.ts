@@ -19,6 +19,16 @@ export function clamp(num: number, min: number, max: number) {
     return Math.max(min, Math.min(num, max));
 }
 
+export function download(href: string, filename: string) {
+	let a = document.createElement("a");
+	a.style.display = "none";
+	a.href = href;
+	a.download = filename;
+	document.body.appendChild(a);
+	a.click();
+	a.remove();
+}
+
 export function splitTimeString(time: string | BarsBeatsSixteenths){
     let bbs = time.split(":");
     let bar = 0;

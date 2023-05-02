@@ -54,7 +54,7 @@ export type FX = {
     label: string,
     bypassable: boolean,
     enabled: boolean,
-    parameters: (ValueParameter | ListParameter)[],
+    parameters: FXParameter[],
 }
 
 export enum FXParameterType {
@@ -62,6 +62,8 @@ export enum FXParameterType {
     LIST,
     VALUE,
 }
+
+export type FXParameter = (ValueParameter | ListParameter);
 
 // export type FXParameter = {
 //     name: string,

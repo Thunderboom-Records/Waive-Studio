@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Tone from 'tone';
 	import type { DrumType, InstrumentType, Sample, UndoableAction } from '$lib/types/waive';
 	import type { Sampler } from '$lib/waive/audioEngine/sampler';
 	import { get } from 'svelte/store';
@@ -6,7 +7,9 @@
 	import { selectedChain, sampleOptions } from '../stores/stores';
 	import SampleSelection from './SampleSelection.svelte';
 	import Waveform from '$lib/components/Waveform.svelte';
-	import { cleanName, postRequest, ROOT_URL } from '$lib/scripts/utils';
+	import { cleanName, download, postRequest, ROOT_URL } from '$lib/scripts/utils';
+	import { bufferToWave } from '../audioEngine/record';
+	import type { f } from 'vitest/dist/index-5aad25c1';
 
 	export let sampler: Sampler;
 	export let sampleOptionsKey: InstrumentType | DrumType;
@@ -83,9 +86,25 @@
 	function selection(sample: Sample | undefined){
 		console.log("selection", sample?.name, sample?.url)
 		current = sample;
-		sampler.selectSample(current, () => {
+		sampler.selectSample(current).then(() => {
 			waveform = sampler.getWaveform();
 		});
+	}
+
+	function downloadSample(){
+		const offlineContext = new Tone.OfflineContext(2, sampler.buffer.duration + 0.5, 44100);
+		const playerAttributes = sampler.player.get();
+		playerAttributes.context = offlineContext;
+		playerAttributes.url = sampler.buffer;
+		const player = new Tone.Player(playerAttributes);
+		player.toDestination();
+		player.start(0);
+
+		offlineContext.render().then(buffer => {
+			const href = URL.createObjectURL(bufferToWave(buffer));
+			download(href, sampler.current?.name+".wav");
+		})
+
 	}
 
 </script>
@@ -124,7 +143,8 @@
 		>
 			var
 		</button>
-		<button 
+		<button
+			on:click={downloadSample}
 			class="flex flex-row justify-center place-items-center bg-gray-500 hover:bg-gray-600 btn rounded-full w-20 h-8 text-sm"
 		>
 			<!-- Download icon -->

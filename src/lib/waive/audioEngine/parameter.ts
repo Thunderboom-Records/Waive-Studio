@@ -11,9 +11,9 @@ export class ValueParameter {
     
     constructor(name: string, value: number = 0, min: number, max: number, node: ToneAudioNode){
         this.name = name;
-        this.value = value;
         this.range = [min, max];
         this.node = node;
+        this.value = clamp(value, this.range[0], this.range[1])
     }
 
     set(value: number){

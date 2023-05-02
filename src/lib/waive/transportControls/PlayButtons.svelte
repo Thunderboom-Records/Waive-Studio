@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { splitTimeString } from '$lib/scripts/utils';
 	import * as Tone from 'tone';
-	import type { BarsBeatsSixteenths } from 'tone/build/esm/core/type/Units';
+	import { splitTimeString } from '$lib/scripts/utils';
+	import { record } from '../audioEngine/record';
+	import { recording } from '../stores/stores';
 
 	enum PlayingState {
 		PLAYING,
@@ -39,9 +40,9 @@
 		state = PlayingState.STOPPING;
 	};
 
-	const record = () => {
-		// TODO
-		console.log("record start");
+	function startRecord() {
+		recording.set(true);
+		record();
 	};
 </script>
 
@@ -95,7 +96,7 @@
 			</svg>
 		</button> 
 	{/if}
-	<button on:click={record} class="btn btn-circle text-white">
+	<button on:click={startRecord} class="btn btn-circle text-white">
 		<svg 
 			xmlns="http://www.w3.org/2000/svg" 
 			viewBox="0 0 24 24" 
