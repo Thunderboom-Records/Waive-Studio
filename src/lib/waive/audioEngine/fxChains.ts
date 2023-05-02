@@ -3,6 +3,7 @@ import { DrumType, InstrumentType, NodeType, type FX, apiInstrumentNames } from 
 import { BypassableFX } from './bypassableFX';
 import { Sampler } from './sampler';
 import { ValueParameter, ListParameter } from './parameter';
+import { nearestTimeString } from '$lib/scripts/utils';
 
 
 const defaultProps: Partial<Record<NodeType, any>> = {};
@@ -42,6 +43,8 @@ defaultProps[NodeType.SYNTH] = {
         Q: 1.0,
     }
 }
+
+const DELAY_OPTIONS = ["64n", "32n", "16n", "8n"];
 
 const masterFXChain: NodeType[] = [
     NodeType.DELAY,
@@ -164,7 +167,7 @@ function addFXDelay(props?: any){
     let node = new Tone.FeedbackDelay(fxProps);
 
     let fbParam = new ValueParameter("feedback", node.get().feedback, 0.0, 1.0, node);
-    let delayParam = new ListParameter("delayTime", node.get().delayTime.toString(), ["64n", "32n", "16n", "8n"], node);
+    let delayParam = new ListParameter("delayTime", nearestTimeString(node.get().delayTime, DELAY_OPTIONS), DELAY_OPTIONS, node);
     let wetParam = new ValueParameter("wet", node.get().wet, 0.0, 1.0, node);
 
     return {

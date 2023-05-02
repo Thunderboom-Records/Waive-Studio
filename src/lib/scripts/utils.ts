@@ -1,3 +1,5 @@
+import * as Tone from 'tone';
+
 import type { BarsBeatsSixteenths } from "tone/build/esm/core/type/Units";
 
 export const ROOT_URL = "https://arranlyon.com/waive/";
@@ -9,6 +11,22 @@ export function cleanName(name: string){
 	result = result.replace(/.wav|.mp3/, "");
 	result = result.trim();
 	return result;
+}
+
+export function nearestTimeString(time: Tone.Unit.Time, options: string[]){
+    let best = options[0];
+    let diff = Infinity;
+    const ticks = Tone.Time(time).toTicks();
+
+    options.forEach(item => {
+        const tickOption = Tone.Time(item).toTicks();
+        if(Math.abs(ticks - tickOption) < diff){
+            best = item;
+            diff = Math.abs(ticks - tickOption)
+        }
+    })
+
+    return best;
 }
 
 export function map(x: number, xMin: number, xMax: number, rangeMin: number, rangeMax: number){
