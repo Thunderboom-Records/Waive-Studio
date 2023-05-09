@@ -1,10 +1,15 @@
 <script lang="ts">
-    import { masterGain } from "../audioEngine/fxChains";
+    import * as Tone from 'tone';
+
+	import { InstrumentType } from "$lib/types/waive";
+    import { SMNodes } from "../audioEngine/fxChains";
 
     let value: number = 80;
 
     function onInput(e: any){
-        masterGain.gain.rampTo(value / 100);
+        if(SMNodes[InstrumentType.MASTER] instanceof Tone.Gain){
+            SMNodes[InstrumentType.MASTER].gain.rampTo(value / 100);
+        }
     }
 
 </script>

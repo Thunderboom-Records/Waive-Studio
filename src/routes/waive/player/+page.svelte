@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Transport } from 'tone';
+	import * as Tone from 'tone';
 
 	import { InstrumentType, type Instrument } from '$lib/types/waive';
 	import Logo from '$lib/waive/transportControls/Logo.svelte';
@@ -15,7 +15,7 @@
 	import BpmRhythmControls from '$lib/waive/transportControls/BpmRhythmControls.svelte';
 	import MasterVolume from '$lib/waive/transportControls/MasterVolume.svelte';
 
-	import { FXChains } from '$lib/waive/audioEngine/fxChains';
+	import { FXChains, SMNodes } from '$lib/waive/audioEngine/fxChains';
 	import { arrangements, loopLength } from '$lib/waive/stores/stores';
 	import { writable } from 'svelte/store';
 	import Playhead from '$lib/waive/player/Playhead.svelte';
@@ -54,8 +54,8 @@
 		}
 	];
 
-	Transport.loop = true;
-	loopLength.subscribe(value => Transport.loopEnd = value);
+	Tone.Transport.loop = true;
+	loopLength.subscribe(value => Tone.Transport.loopEnd = value);
 
 </script>
 
@@ -74,7 +74,7 @@
 		<InstrumentHeader />
 		<Playhead />
 		{#each instruments as instrument, row}
-			<InstrumentRow {instrument} row={row+2}/>
+			<InstrumentRow {instrument} row={row+2} channelNode={SMNodes[instrument.type]}/>
 		{/each}
 	</div>
 	<div class="bg-gray-900">

@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { Channel, type ToneAudioNode } from 'tone';
+
 	import { InstrumentType, type Bar, type Instrument, type FX, DrumType, type UndoableAction } from '$lib/types/waive';
-	import DownloadButton from '$lib/components/DownloadButton.svelte';
 	import SmToggles from '../pattern/SmControls.svelte';
 	import PlayerSection from '../player/PlayerSection.svelte';
 	import PatternControls from '../pattern/PatternControls.svelte';
@@ -17,6 +18,7 @@
 
 	export let instrument: Instrument;
 	export let row: number;
+	export let channelNode: ToneAudioNode | undefined;
 
 	let bars: Bar[] = [];
 	let selectedIndex: number = -1;
@@ -120,9 +122,9 @@
 
 </script>
 
-<!-- Col 1: S&M Controls -->
+<!-- Col 1: Placeholder -->
 <div class="col-start-1 row-start-{row}">
-	<SmToggles color={instrument.color} />
+	<div class="bg-gray-900 w-full h-full" />
 </div>
 
 <!-- Col 2: Pattern Controls -->
@@ -151,7 +153,10 @@
 <!-- Col 4-7: Player Display -->
 <PlayerSection {row} bind:instrument={instrument} on:addBar={addBar} on:removeBar={removeBar}/>
 
-<!-- Col 8: Download Button -->
+<!-- Col 8: Channel controls -->
 <div class="col-start-8 row-start-{row}">
-	<DownloadButton {instrument} />
+	{#if channelNode && channelNode instanceof Channel}
+		<SmToggles {channelNode} />
+	{/if}
+	<!-- <DownloadButton {instrument} /> -->
 </div>

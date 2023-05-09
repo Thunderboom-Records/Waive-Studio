@@ -1,5 +1,5 @@
 import * as Tone from 'tone';
-import { DrumType, InstrumentType, NodeType, type FX, apiInstrumentNames } from "$lib/types/waive";
+import { DrumType, InstrumentType, NodeType, type FX, apiInstrumentNames, type ChainType, type Chain, type SMControls } from "$lib/types/waive";
 import { BypassableFX } from './bypassableFX';
 import { Sampler } from './sampler';
 import { ValueParameter, ListParameter } from './parameter';
@@ -293,37 +293,49 @@ export function buildFXChain(chain: NodeType[], context?: Tone.BaseContext, prop
 
 
 export function buildWaiveAudioGraph(context?: Tone.BaseContext, props?: any){
-    const FXChains: Partial<Record<InstrumentType|DrumType, (FX|Sampler)[]>> = {};
+    if(typeof context === 'undefined'){
+        context = Tone.getContext();
+    }
+
+    const FXChains: Partial<Record<ChainType, Chain>> = {};
+    const SMNodes: Partial<Record<InstrumentType, Tone.ToneAudioNode>> = {};
 
     const master = buildFXChain(masterFXChain, context, props?.MASTER);
     const bass = buildFXChain(bassFXChain, context, props?.BASS);
     const lead = buildFXChain(leadFXChain, context, props?.LEAD);
+    
+    SMNodes[InstrumentType.BASS] = new Tone.Channel({context});
+    bass.at(-1)?.node.connect(SMNodes[InstrumentType.BASS]);
+    SMNodes[InstrumentType.LEAD] = new Tone.Channel({context});
+    lead.at(-1)?.node.connect(SMNodes[InstrumentType.LEAD]);
 
     FXChains[InstrumentType.MASTER] = master;
     FXChains[InstrumentType.BASS] = bass;
     FXChains[InstrumentType.LEAD] = lead;
-
+    
+    SMNodes[InstrumentType.DRUMS] = new Tone.Channel({context});
     for(let drumType of drumChannels){
         let drumChain = buildFXChain(drumChannelFXChain, context, props ? props[drumType] : undefined);
         if(drumChain[0] instanceof Sampler){
             drumChain[0].apiInstrumentName = apiInstrumentNames[drumType];
         }
-        drumChain[drumChain.length - 1].node.connect(master[0].node);
+        drumChain.at(-1)?.node.connect(SMNodes[InstrumentType.DRUMS]);
         FXChains[drumType] = drumChain;
     }
-    
-    bass[bass.length - 1].node.connect(master[0].node);
-    lead[lead.length - 1].node.connect(master[0].node);
 
-    const masterGain = new Tone.Gain({context: context ? context : Tone.getContext()});
-    masterGain.toDestination();
-    master[master.length - 1].node.connect(masterGain);
+    SMNodes[InstrumentType.BASS].connect(master[0].node);
+    SMNodes[InstrumentType.LEAD].connect(master[0].node);
+    SMNodes[InstrumentType.DRUMS].connect(master[0].node);
 
-    return { FXChains, masterGain }
+    SMNodes[InstrumentType.MASTER] = new Tone.Gain({context});
+    master.at(-1)?.node.connect(SMNodes[InstrumentType.MASTER]);
+    SMNodes[InstrumentType.MASTER].toDestination();
+
+    return { FXChains, SMNodes }
 }
 
-export function getAudioGraphProps(FXChains: Partial<Record<InstrumentType|DrumType, (FX|Sampler)[]>>){
-    const props: Partial<Record<InstrumentType|DrumType, any>> = {};
+export function getAudioGraphProps(FXChains: Partial<Record<ChainType, Chain>>){
+    const props: Partial<Record<ChainType, any>> = {};
 
     let key: keyof typeof InstrumentType|DrumType;
     for(key in FXChains){
@@ -354,4 +366,4 @@ export function getAudioGraphProps(FXChains: Partial<Record<InstrumentType|DrumT
     return props;
 }
 
-export const { FXChains, masterGain } = buildWaiveAudioGraph();
+export const { FXChains, SMNodes } = buildWaiveAudioGraph();

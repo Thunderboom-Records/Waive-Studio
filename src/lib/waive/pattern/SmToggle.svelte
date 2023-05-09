@@ -1,9 +1,14 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte";
+
 	export let color: string;
 	export let active: boolean = false;
+	
+	const dispatch = createEventDispatcher();
 
 	function toggle() {
 		active = !active;
+		dispatch("toggled", active);
 	}
 </script>
 
@@ -12,7 +17,7 @@
 		<slot />
 	</button>
 {:else}
-	<button on:click={toggle} class="bg-gray-900 text-{color}-600 h-16 w-full btn btn-xs text-xs">
+	<button on:click={toggle} class="bg-{color}-900 text-{color}-600 h-16 w-full btn btn-xs text-xs">
 		<slot />
 	</button>
 {/if}

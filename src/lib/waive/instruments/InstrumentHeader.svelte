@@ -3,7 +3,7 @@
 
 <!-- Col 2: PatternHeader -->
 <div class="bg-gray-900 col-start-2">
-	<h2 class="text-gray-400 text-center">pattern</h2>
+	<h2 class="text-gray-400 text-center">clips</h2>
 </div>
 
 <!-- Col 3: SampleHeader-->

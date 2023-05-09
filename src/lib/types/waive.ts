@@ -1,7 +1,8 @@
 import type { Arrangement } from '$lib/waive/audioEngine/arrangement'
 import type { BarData } from '$lib/waive/audioEngine/barData';
 import type { ListParameter, ValueParameter } from '$lib/waive/audioEngine/parameter';
-import type { ToneAudioNode } from 'tone';
+import type { Sampler } from '$lib/waive/audioEngine/sampler';
+import type { Solo, Gain, ToneAudioNode } from 'tone';
 
 
 export enum InstrumentType {
@@ -46,6 +47,7 @@ export enum NodeType {
     FILTER,
     PHASER,
     LIMITER,
+    SOLO,
 }
 
 export type FX = {
@@ -65,15 +67,14 @@ export enum FXParameterType {
 
 export type FXParameter = (ValueParameter | ListParameter);
 
-// export type FXParameter = {
-//     name: string,
-//     value: number | string,
-//     type: FXParameterType,
-//     range: number[],
-//     exponential?: boolean,
-//     options?: string[],
-//     set?: ((value: any) => void),
-// }
+export type ChainType = (InstrumentType | DrumType);
+
+export type Chain = (FX | Sampler)[];
+
+export type SMControls = {
+    solo: Solo,
+    mute: Gain,
+}
 
 export type Bar = {
     active: boolean,

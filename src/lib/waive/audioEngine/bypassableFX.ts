@@ -1,7 +1,4 @@
 import * as Tone from 'tone';
-import type { ToneWithContextOptions } from 'tone/build/esm/core/context/ToneWithContext';
-import type { RecursivePartial } from 'tone/build/esm/core/util/Interface';
-
 
 /**  
  * wrapper for effect class / bus adapted from:
