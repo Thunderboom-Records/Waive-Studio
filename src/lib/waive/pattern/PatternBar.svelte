@@ -25,6 +25,11 @@
 
 	onMount(() => {
 		let color: string = "white";
+		
+		let rect = canvas.getBoundingClientRect();
+		canvas.width = rect.width;
+		canvas.height = rect.height;
+
 		if(typeof instrument.color == 'string') {
 			color = colors[instrument.color][500];
 		}
@@ -38,13 +43,11 @@
 
 </script>
 
-<!-- TODO: why border color only works sometimes?? -->
-
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <canvas
 	bind:this={canvas}
 	on:click={select}
-	class="flex flex-row rounded-md h-28 bg-{instrument.color}-600 cursor-pointer min-w-pattern w-pattern
+	class="flex flex-row rounded-md h-full bg-{instrument.color}-600 cursor-pointer min-w-pattern w-pattern
 			border-{instrument.color}-500 border-2 {i === selectedIndex ? 'border-solid': 'border-none'}"
 	draggable="true"
 	on:dragstart={dragStart}

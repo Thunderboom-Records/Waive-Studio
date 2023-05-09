@@ -12,27 +12,24 @@
 
 </script>
 
-<div class="flex flex-col gap-2 w-full p-2 my-auto">
+<div class="flex flex-col gap-2 p-2 mx-1 w-28 items-center">
 	<h3 class="text-{instrument.color}-500 text-xl capitalize">
 		{InstrumentType[instrument.type].toLowerCase()}
 	</h3>
-	<div class="flex flex-row gap-x-1">
-		<button
-			on:click={newBar}
-			class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 btn rounded-full w-12 h-6 text-xs"
-		>
-			new
-		</button>
-		<button
-			on:click={newBar}
-			class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 btn rounded-full w-12 h-6 text-xs"
-		>
-			var
-		</button>
-	</div>
-	<div class="flex flex-row space-x-1 justify-center place-items-center">
+	<button
+		on:click={newBar}
+		class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 btn rounded-full w-12 h-6 text-xs"
+	>
+		new
+	</button>
+	<button
+		on:click={newBar}
+		class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 btn rounded-full w-12 h-6 text-xs"
+	>
+		var
+	</button>
+	<!-- <div class="flex flex-row space-x-1 justify-center place-items-center">
 		<button class="btn rounded-full bg-gray-500">
-			<!-- knob icon -->
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="h-6 w-6"
@@ -48,5 +45,5 @@
 			>
 		</button>
 		<p class="text-xs text-gray-400">complexity</p>
-	</div>
+	</div> -->
 </div>

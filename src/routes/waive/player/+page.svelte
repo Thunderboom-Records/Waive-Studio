@@ -61,7 +61,7 @@
 
 
 <div class="flex flex-col bg-gray-800 space-y-1 w-full select-none">
-	<div class="bg-gray-900 flex p-4 justify-between items-center w-full text-white">
+	<div class="bg-gray-900 flex p-4 justify-between items-center w-full text-white h-16">
 		<Logo />
 		<HistoryButtons />
 		<ChainSelect key={InstrumentType.MASTER}>Master FX</ChainSelect>

@@ -15,17 +15,17 @@
 	}
 </script>
 
-<div class="flex flex-row space-x-2 overflow-x-auto w-full">
+<div class="flex flex-row space-x-2 overflow-x-auto w-full h-full">
 	{#each bars as bar, i}
 		<PatternBar {bar} {instrument} {i} bind:selectedIndex={selectedIndex}/>
 	{/each}
 	<button
-		class="flex flex-row justify-around items-center place-items-start rounded-md h-28 bg-gray-600 cursor-pointer hover:bg-gray-500 min-w-pattern w-pattern"
+		class="flex flex-row justify-around items-center place-items-start rounded-md h-full bg-gray-600 cursor-pointer hover:bg-gray-500 min-w-pattern w-pattern"
 		on:click={newBar}
 	>
 		<span class="text-3xl text-gray-800">+</span>
 	</button>
-	{#each {length: Math.max(0, 3 - bars.length)} as _, i}
-	<div class="rounded-md h-28 bg-gray-800 min-w-pattern w-pattern"/>	
+	{#each {length: Math.max(0, 4 - bars.length)} as _, i}
+	<div class="rounded-md h-full bg-gray-800 min-w-pattern w-pattern"/>	
 	{/each}
 </div>

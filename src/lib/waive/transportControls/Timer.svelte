@@ -15,6 +15,6 @@
 	transportControlsLoop.start(0);
 </script>
 
-<div class="badge badge-lg text-white text-xl bg-gray-800 rounded-full py-1 w-32 text-center self-center">
+<div class="badge badge-lg text-white text-xl bg-gray-800 rounded-full h-full w-32 text-center py-1">
 	{formattedTime}
 </div>

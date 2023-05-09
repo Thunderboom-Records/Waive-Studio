@@ -122,39 +122,32 @@
 
 </script>
 
-<!-- Col 1: Placeholder -->
-<div class="col-start-1 row-start-{row}">
-	<div class="bg-gray-900 w-full h-full" />
+<!-- Col 1: Clip Controls -->
+<div class="flex bg-gray-900 py-2 col-start-1 row-start-{row}">
+	<PatternControls on:newBar={requestPattern} {instrument}/>
+	<PatternBars on:newBar={requestPattern} bind:bars={bars} {instrument} bind:selectedIndex={selectedIndex}/>
 </div>
 
-<!-- Col 2: Pattern Controls -->
-<div class="grid grid-cols-4 bg-gray-900 py-2 col-start-2 row-start-{row}">
-	<div class="col-span-1">
-		<PatternControls on:newBar={requestPattern} {instrument}/>
+<!-- Col 2: Sample Controls -->
+{#if instrument.type == InstrumentType.DRUMS}
+	<div class="flex flex-col bg-gray-900 py-2 justify-between items-center gap-2 col-start-2 row-start-{row} h-full">
+		<ChainSelect key={DrumType.KICK} on:switch>kick</ChainSelect>
+		<ChainSelect key={DrumType.SNARE} on:switch>snare</ChainSelect>
+		<ChainSelect key={DrumType.HIHAT} on:switch>hihat</ChainSelect>
+		<ChainSelect key={DrumType.CLAP} on:switch>clap</ChainSelect>
+		<ChainSelect key={DrumType.TOM} on:switch>tom</ChainSelect>
 	</div>
-	<div class="col-span-3">
-		<PatternBars on:newBar={requestPattern} bind:bars={bars} {instrument} bind:selectedIndex={selectedIndex}/>
+{:else}
+	<div class="flex flex-row flex-wrap bg-gray-900 p-2 place-content-evenly gap-x-2 col-start-2 row-start-{row}">
+		<ChainSelect key={instrument.type} on:switch>{instrument.type.toLowerCase()}</ChainSelect>
 	</div>
-</div>
+{/if}
 
-<!-- Col 3: Sample Controls -->
-<div class="flex flex-row flex-wrap bg-gray-900 p-2 content-evenly gap-x-2 col-start-3 row-start-{row}">
-	{#if instrument.type == InstrumentType.DRUMS}
-		<ChainSelect key={DrumType.KICK} on:switch>Kick FX</ChainSelect>
-		<ChainSelect key={DrumType.SNARE} on:switch>Snare FX</ChainSelect>
-		<ChainSelect key={DrumType.HIHAT} on:switch>Hihat FX</ChainSelect>
-		<ChainSelect key={DrumType.CLAP} on:switch>Clap FX</ChainSelect>
-		<ChainSelect key={DrumType.TOM} on:switch>Tom FX</ChainSelect>
-	{:else}
-		<ChainSelect key={instrument.type} on:switch>Edit FX</ChainSelect>
-	{/if}
-</div>
-
-<!-- Col 4-7: Player Display -->
+<!-- Col 3-6: Player Display -->
 <PlayerSection {row} bind:instrument={instrument} on:addBar={addBar} on:removeBar={removeBar}/>
 
-<!-- Col 8: Channel controls -->
-<div class="col-start-8 row-start-{row}">
+<!-- Col 7: Channel controls -->
+<div class="col-start-7 row-start-{row}">
 	{#if channelNode && channelNode instanceof Channel}
 		<SmToggles {channelNode} />
 	{/if}

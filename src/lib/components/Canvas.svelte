@@ -7,7 +7,6 @@
 	import type { Writable } from 'svelte/store';
 	import type { Arrangement } from '$lib/waive/audioEngine/arrangement';
 
-	export let section: PlayerCanvas;
 	export let instrument: Instrument;
 	export let i: number;
 
@@ -28,8 +27,9 @@
 	}
 
 	onMount(() => {
-		canvas.width = canvas.clientWidth;
-		canvas.height = canvas.clientHeight;
+		let rect = canvas.getBoundingClientRect();
+		canvas.width = rect.width;
+		canvas.height = rect.height;
 
 		arrangementStore.subscribe(v => {
 			barData = v.arrangement[i];

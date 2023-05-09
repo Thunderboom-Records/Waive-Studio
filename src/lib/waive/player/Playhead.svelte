@@ -28,7 +28,7 @@
 
 </script>
 
-<div class="col-start-4 col-end-8 row-start-1 row-end-5
+<div class="col-start-3 col-end-7 row-start-1 row-end-5
                 relative z-10 bg-opacity-10 pointer-events-none">
     <div bind:this={loopIndicator} class="bg-black bg-opacity-50 w-3/4 h-full absolute right-0"></div>
     <div bind:this={loopRegion} class="bg-opacity-10 w-1/2 h-full relative">
