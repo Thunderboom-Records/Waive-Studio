@@ -28,8 +28,8 @@
 	}
 
 	onMount(() => {
-		canvas.width = section.canvas.w;
-		canvas.height = section.canvas.h;
+		canvas.width = canvas.clientWidth;
+		canvas.height = canvas.clientHeight;
 
 		arrangementStore.subscribe(v => {
 			barData = v.arrangement[i];
@@ -92,12 +92,13 @@
 	on:dragover={(event) => {event.preventDefault()}}
 	on:mouseenter={(event) => mouseOver = true}
 	on:mouseleave={(event) => mouseOver = false}
-	class="relative border-white {dragHover ? 'border-2' : 'border-none'}"
+	class="relative"
 >
 	<canvas
 		draggable={barData ? "true" : "false"}
 		on:dragstart={dragStart}
-		bind:this={canvas} class="bg-{instrument.color}-500 bg-opacity-10 rounded" 
+		bind:this={canvas}
+		class="bg-{instrument.color}-500 bg-opacity-10 rounded w-full m-0 b-0"
 	/>
 	{#if barData && mouseOver}
 	<button 
@@ -105,4 +106,5 @@
 		on:click={deleteBar}
 	>delete</button>
 	{/if}
+	<div class="absolute bottom-0 left-0 w-full h-full box-border border-white {dragHover ? 'border-4' : 'border-none'} pointer-events-none z-20" />
 </div>

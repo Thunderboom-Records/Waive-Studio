@@ -13,11 +13,11 @@
 </script>
 
 {#if !active}
-	<button on:click={toggle} class="bg-gray-900 h-16 w-full btn btn-xs text-xs">
+	<button on:click={toggle} class="bg-gray-900 w-full btn btn-xs text-xs">
 		<slot />
 	</button>
 {:else}
-	<button on:click={toggle} class="bg-{color}-900 text-{color}-600 h-16 w-full btn btn-xs text-xs">
+	<button on:click={toggle} class="bg-{color}-900 text-{color}-600 w-full btn btn-xs text-xs">
 		<slot />
 	</button>
 {/if}
