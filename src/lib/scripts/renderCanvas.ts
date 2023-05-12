@@ -1,5 +1,6 @@
 import type { Rectangle } from "$lib/types/waive";
-import type { BarData } from "$lib/waive/audioEngine/barData";
+import { midiDrumChannelMap, type BarData } from "$lib/waive/audioEngine/barData";
+import { splitTimeString } from "./utils";
 
 // copied from tailwind.config.cjs...
 export const colors: Record<string, string | Record<number, string>> = {
@@ -42,7 +43,11 @@ function floatToHex(x: number){
     return (y).toString(16).padStart(2, '0')
 }
 
-export function drawNoteBar(canvas: HTMLCanvasElement, barData:  BarData | null, fillColor: string = "#1e1e1e") {
+export function drawNoteBar(
+    canvas: HTMLCanvasElement, 
+    barData:  BarData | null, 
+    fillColor: string = "#1e1e1e", 
+) {
     let ctx = canvas.getContext('2d');
     if(ctx === null){
         return;
@@ -73,7 +78,11 @@ export function drawNoteBar(canvas: HTMLCanvasElement, barData:  BarData | null,
     }
 };
 
-export function drawDrumBar(canvas: HTMLCanvasElement, barData:  BarData | null, fillColor: string = "#1e1e1e") {
+export function drawDrumBar(
+    canvas: HTMLCanvasElement, 
+    barData:  BarData | null, 
+    fillColor: string = "#1e1e1e"
+) {
     let ctx = canvas.getContext('2d');
     if(ctx === null){
         return;
@@ -90,33 +99,28 @@ export function drawDrumBar(canvas: HTMLCanvasElement, barData:  BarData | null,
     drawRect(ctx, {x: 0, y: 0, w: canvas.width, h: canvas.height}, bgColor);
 
     const numRows = barData.gridNotes.length;
-    const numCols = barData.gridNotes[0].length;
 
     const gridWidth = canvas.width/16;
     const gridHeight = canvas.height/numRows;
 
-    for(let i = 0; i < numRows; i++){
-        for(let j = 0; j < numCols; j++){
+    for(let noteEvent of barData.notes){
+        let {time, note, velocity} = noteEvent;
+        const noteColor = fillColor + floatToHex(velocity);
+        const channel = midiDrumChannelMap[note];
 
-            const velocity = barData.gridNotes[i][j];
+        const { beat, sixteenth } = splitTimeString(time);
+        const col = beat * 4 + sixteenth;
 
-            if(velocity < 0.2){
-                continue
-            }
-
-            const noteColor = fillColor + floatToHex(velocity);
-
-            const rect = {
-                x: j*gridWidth,
-                y: i*gridHeight,
-                w: gridWidth,
-                h: gridHeight,
-            }
-    
-            drawRect(ctx, rect, noteColor);
+        const rect = {
+            x: col * gridWidth,
+            y: channel * gridHeight,
+            w: gridWidth,
+            h: gridHeight
         }
 
+        drawRect(ctx, rect, noteColor);
     }
+
 };
 
 // Use separate helper functions to draw the shapes we need

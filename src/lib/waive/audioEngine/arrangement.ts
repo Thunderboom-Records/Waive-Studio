@@ -1,11 +1,12 @@
 import * as Tone from 'tone';
 import type { Part } from 'tone';
 import type { BarData } from './barData';
-import type { NoteEvent, SynthCallback } from '$lib/types/waive';
+import type { NoteConverter, NoteEvent, SynthCallback } from '$lib/types/waive';
 import { splitTimeString } from '$lib/scripts/utils';
 
 
 export class Arrangement {
+    converter: NoteConverter;
     length: number;
     arrangement: (BarData | null)[];
     part: Part | null;
@@ -13,8 +14,10 @@ export class Arrangement {
     midi: string | null;
     timings: NoteEvent[] | null;
     midiOffset: number;
+    _threshold: number = 0;
 
-    constructor(length: number = 4) {
+    constructor(converter: NoteConverter, length: number = 4) {
+        this.converter = converter;
         this.length = length;
         this.arrangement = [];
         this.arrangement.length = 4;
@@ -59,6 +62,7 @@ export class Arrangement {
     }
 
     copy(from: number, to: number) {
+        console.log("copy");
         this.arrangement[to] = this.arrangement[from];
         this.updatePart();
     }
@@ -90,10 +94,14 @@ export class Arrangement {
     getTimings(){
         let timings: NoteEvent[] = [];
         for (let i = 0; i < this.length; i++) {
-            let notes = this.arrangement[i]?.notes;
-            if (!notes) {
+            let barData = this.arrangement[i];
+            if (!barData) {
                 continue;
             }
+
+            let notes = this.converter(barData.gridNotes, this._threshold);
+            barData.notes = notes;
+
             for (let n of notes) {
                 const note = n.note + this.midiOffset;
 
@@ -128,4 +136,15 @@ export class Arrangement {
         this.midi = "";
         return this.midi;
     }
+
+    
+    set threshold(v: number) {
+        this._threshold = v;
+        this.updatePart();
+    }
+
+    get threshold(){
+        return this._threshold;
+    }
+    
 }

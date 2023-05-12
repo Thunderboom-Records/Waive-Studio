@@ -14,7 +14,10 @@
 	} from '../audioEngine/barData';
 	import ChainSelect from './ChainSelect.svelte';
 	import { history } from '$lib/waive/stores/undo';
-	import { arrangements } from '../stores/stores';
+	import { arrangements, thresholds } from '../stores/stores';
+	import { writable } from 'svelte/store';
+	import { ValueParameter } from '../audioEngine/parameter';
+	import FxKnob from '../fxControls/FxKnob.svelte';
 
 	export let instrument: Instrument;
 	export let row: number;
@@ -22,6 +25,28 @@
 
 	let bars: Bar[] = [];
 	let selectedIndex: number = -1;
+
+	let complexity: ValueParameter;
+
+	function updateComplexity(value: any){
+		if(thresholds[InstrumentType.DRUMS]){
+			thresholds[InstrumentType.DRUMS].set(0.8 - value["complexity"])
+		}
+	}
+
+	if(instrument.type === InstrumentType.DRUMS){
+		complexity = new ValueParameter("complexity", 0.6, 0.0, 0.8);
+		complexity.callback = updateComplexity;
+		
+		thresholds[InstrumentType.DRUMS] = writable(0.8 - complexity.value);
+
+		thresholds[InstrumentType.DRUMS].subscribe((value: number) => {
+			arrangements[InstrumentType.DRUMS].update((arrangement) => {
+				arrangement.threshold = value;
+				return arrangement;
+			})
+		});
+	}
 
 	function requestPattern() {
 		getRequest(ROOT_URL, instrument.apiPatternRequest, {}).then((data: any) => {
@@ -31,8 +56,8 @@
 			}
 
 			let barNotes;
-			if (instrument.type == InstrumentType.DRUMS) {
-				barNotes = convertDrumNotesToNoteEvents(data.notes);
+			if (instrument.type === InstrumentType.DRUMS) {
+				barNotes = convertDrumNotesToNoteEvents(data.notes, 0.2);
 			} else {
 				barNotes = convertMelodyNotesToNoteEvents(data.notes, 24);
 			}
@@ -130,12 +155,18 @@
 
 <!-- Col 2: Sample Controls -->
 {#if instrument.type == InstrumentType.DRUMS}
-	<div class="flex flex-col bg-gray-900 py-2 justify-between items-center gap-2 col-start-2 row-start-{row} h-full">
-		<ChainSelect key={DrumType.KICK} on:switch>kick</ChainSelect>
-		<ChainSelect key={DrumType.SNARE} on:switch>snare</ChainSelect>
-		<ChainSelect key={DrumType.HIHAT} on:switch>hihat</ChainSelect>
-		<ChainSelect key={DrumType.CLAP} on:switch>clap</ChainSelect>
-		<ChainSelect key={DrumType.TOM} on:switch>tom</ChainSelect>
+	<div class="flex justify-around items-center bg-gray-900 col-start-2 row-start-{row} h-full">
+		<div>
+			<FxKnob parameter={complexity}/>
+		</div>
+		<div class="flex flex-col py-2 justify-between items-center gap-1 h-full">
+			<ChainSelect key={DrumType.KICK} on:switch>kick</ChainSelect>
+			<ChainSelect key={DrumType.SNARE} on:switch>snare</ChainSelect>
+			<ChainSelect key={DrumType.HIHAT} on:switch>hihat</ChainSelect>
+			<ChainSelect key={DrumType.CLAP} on:switch>clap</ChainSelect>
+			<ChainSelect key={DrumType.TOM} on:switch>tom</ChainSelect>
+		</div>
+		
 	</div>
 {:else}
 	<div class="flex flex-row flex-wrap bg-gray-900 p-2 place-content-evenly gap-x-2 col-start-2 row-start-{row}">

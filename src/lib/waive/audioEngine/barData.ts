@@ -25,6 +25,12 @@ export const drumChannelMidiMap: Record<number, number> = {
     4: 43,  // 06_TH
 }
 
+export const midiDrumChannelMap: Record<number, number> = {};
+for(let channel in drumChannelMidiMap){
+    let midi = drumChannelMidiMap[channel]
+    midiDrumChannelMap[midi] = parseInt(channel);
+}
+
 export function convertDrumNotesToNoteEvents(notes: number[][], threshold: number = 0.2){
     let noteEvents: NoteEvent[] = [];
     for(let drumChannel = 0; drumChannel < notes.length; drumChannel++){
@@ -38,7 +44,7 @@ export function convertDrumNotesToNoteEvents(notes: number[][], threshold: numbe
             const time = `${beat}:${sixteenth}`;
 
             const note = drumChannelMidiMap[drumChannel];
-            const length = '48i';
+            const length = '0:0:1';
             const velocity = notes[drumChannel][i];
 
             noteEvents.push({

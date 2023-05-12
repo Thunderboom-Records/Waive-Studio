@@ -97,6 +97,8 @@ export type Sample = {
 }
 
 export type SynthCallback = (event: NoteEvent, time: number) => void;
+
+export type NoteConverter = (notes: number[][], threshold?: number) => NoteEvent[];
  
 export type UndoableAction = {
     name: string,

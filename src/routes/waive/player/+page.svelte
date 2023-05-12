@@ -19,18 +19,19 @@
 	import { arrangements, loopLength } from '$lib/waive/stores/stores';
 	import { writable } from 'svelte/store';
 	import Playhead from '$lib/waive/player/Playhead.svelte';
+	import { convertDrumNotesToNoteEvents, convertMelodyNotesToNoteEvents } from '$lib/waive/audioEngine/barData';
 
-	const drumArrangement = new Arrangement();
+	const drumArrangement = new Arrangement(convertDrumNotesToNoteEvents);
 	drumArrangement.synthCallback = makeDrumsCallback(FXChains)
 	arrangements[InstrumentType.DRUMS] = writable(drumArrangement);
 
-	const bassArrangement = new Arrangement();
+	const bassArrangement = new Arrangement(convertMelodyNotesToNoteEvents);
 	if(typeof FXChains[InstrumentType.BASS] !== 'undefined'){
 		bassArrangement.synthCallback = makeBassCallback(FXChains[InstrumentType.BASS][0].node);
 	}
 	arrangements[InstrumentType.BASS] = writable(bassArrangement);
 
-	const leadArrangement = new Arrangement();
+	const leadArrangement = new Arrangement(convertMelodyNotesToNoteEvents);
 	arrangements[InstrumentType.LEAD] = writable(leadArrangement);
 
 	let instruments: Instrument[] = [

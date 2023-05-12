@@ -43,7 +43,7 @@ const config = {
 				'128': '28rem'
 			},
 			gridTemplateColumns: {
-				'instrument-grid': '30rem, 8rem, repeat(4, minmax(12rem ,1fr)), 4rem'
+				'instrument-grid': '30rem, 11rem, repeat(4, minmax(12rem ,1fr)), 4rem'
 			},
 			minWidth: {
 				'pattern': '3.75rem',

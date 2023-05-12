@@ -30,8 +30,6 @@ export function makeDrumsCallback(drumSynths: Record<string, (FX | Sampler)[]>){
 	}
 
 	let callback = (event: NoteEvent, time: number) => {
-		console.log("drumCallback", event, time);
-
 		if(typeof midiDrumMap[event.note] === 'undefined'){
 			return;
 		}

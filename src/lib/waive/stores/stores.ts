@@ -18,3 +18,5 @@ export let sampleOptions: Partial<Record<InstrumentType | DrumType, Writable<Sam
 export let arrangements: Record<string, Writable<Arrangement>> = {};
 
 export let recording: Writable<boolean> = writable(false);
+
+export let thresholds: Record<string, Writable<number>> = {};

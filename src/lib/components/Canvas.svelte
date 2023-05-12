@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from 'svelte';
 
-	import { InstrumentType, type Instrument, type PlayerCanvas, type Rectangle } from '$lib/types/waive';
+	import { InstrumentType, type Instrument } from '$lib/types/waive';
 	import type { BarData } from '$lib/waive/audioEngine/barData';
 	import { drawNoteBar, drawDrumBar, colors } from '$lib/scripts/renderCanvas';
 	import type { Writable } from 'svelte/store';
