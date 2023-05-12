@@ -14,7 +14,8 @@ const midiDrumMap: Record<number, DrumType> = {
 
 export function makeBassCallback(synth: any){
 	let callback = (event: NoteEvent, time: number) => {
-		synth.triggerAttackRelease(Tone.Frequency(event.note, "midi").toFrequency(), event.length, time);
+		console.log(event);
+		synth.triggerAttackRelease(Tone.Frequency(event.note+24, "midi").toFrequency(), event.length, time);
 	}
 
 	return callback;
