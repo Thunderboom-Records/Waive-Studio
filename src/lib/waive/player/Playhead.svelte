@@ -16,15 +16,17 @@
     
             loopRegion.style.width = (p * 100) + "%";
             loopIndicator.style.width = ((1-p) * 100) + "%";
-        })
-    })
+        });
 
-    Tone.Transport.scheduleRepeat((time) => {
-        Tone.Draw.schedule(() => {
+        function update(){
             const p = Tone.Transport.progress;
             cursor.style.left = (p*100) + "%";
-        }, time)
-    }, "64n")
+
+            requestAnimationFrame(update)
+        }
+
+        requestAnimationFrame(update)
+    })
 
 </script>
 
