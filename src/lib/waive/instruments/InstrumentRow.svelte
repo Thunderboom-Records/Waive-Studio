@@ -155,7 +155,7 @@
 
 <!-- Col 2: Sample Controls -->
 {#if instrument.type == InstrumentType.DRUMS}
-	<div class="flex justify-around items-center bg-gray-900 col-start-2 row-start-{row} h-full">
+	<div class="flex justify-between items-center bg-gray-900 col-start-2 row-start-{row} h-full px-2">
 		<div>
 			<FxKnob parameter={complexity}/>
 		</div>
@@ -169,7 +169,10 @@
 		
 	</div>
 {:else}
-	<div class="flex flex-row flex-wrap bg-gray-900 p-2 place-content-evenly gap-x-2 col-start-2 row-start-{row}">
+	<div class="flex justify-between items-center bg-gray-900 col-start-2 row-start-{row} h-full px-2">
+		<div>
+			<FxKnob parameter={complexity} disabled={true} label={"complexity"}/>
+		</div>
 		<ChainSelect key={instrument.type} on:switch>{instrument.type.toLowerCase()}</ChainSelect>
 	</div>
 {/if}
