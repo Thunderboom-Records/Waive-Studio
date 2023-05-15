@@ -6,8 +6,8 @@
 	
 	const dispatch = createEventDispatcher()
 
-	function newBar(){
-		dispatch("newBar");
+	function newClip(){
+		dispatch("newClip");
 	}
 
 </script>
@@ -17,13 +17,13 @@
 		{InstrumentType[instrument.type].toLowerCase()}
 	</h3>
 	<button
-		on:click={newBar}
+		on:click={newClip}
 		class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 btn rounded-full w-12 h-6 text-xs"
 	>
 		new
 	</button>
 	<button
-		on:click={newBar}
+		on:click={newClip}
 		class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 btn rounded-full w-12 h-6 text-xs"
 	>
 		var

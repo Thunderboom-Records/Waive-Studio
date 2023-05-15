@@ -59,7 +59,8 @@
 	function dragStart(event: any){
 		event.preventDefault;
 		const data = {
-			index: barIndex, 
+			index: barIndex,
+			barData: barData,
 			type: instrument.type
 		}
 		event.dataTransfer.setData('text/plain', JSON.stringify(data));
@@ -90,8 +91,8 @@
 	on:dragleave={() => {dragHover = false}}
 	on:drop={dropped}
 	on:dragover={(event) => {event.preventDefault()}}
-	on:mouseenter={(event) => mouseOver = true}
-	on:mouseleave={(event) => mouseOver = false}
+	on:mouseenter={() => mouseOver = true}
+	on:mouseleave={() => mouseOver = false}
 	class="relative"
 >
 	<canvas
@@ -102,9 +103,9 @@
 	/>
 	{#if barData && mouseOver}
 	<button 
-		class="absolute bottom-0 right-0 text-gray-400 bg-gray-800 bg-opacity-80 py-0 px-2" 
+		class="absolute top-0 right-0 text-gray-400 bg-gray-800 bg-opacity-80 py-0 px-2" 
 		on:click={deleteBar}
-	>delete</button>
+	>X</button>
 	{/if}
 	<div class="absolute bottom-0 left-0 w-full h-full box-border border-white {dragHover ? 'border-4' : 'border-none'} pointer-events-none z-20" />
 </div>

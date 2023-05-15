@@ -48,10 +48,10 @@
 		});
 	}
 
-	function requestPattern() {
+	function requestClip() {
 		getRequest(ROOT_URL, instrument.apiPatternRequest, {}).then((data: any) => {
 			if (!data || !data.ok) {
-				console.log('no pattern data');
+				console.log('no clip data');
 				return;
 			}
 
@@ -88,13 +88,37 @@
 		});
 	}
 
+	function deleteClip(event: any){
+		let i = event.detail;
+
+		let oldClip = bars[i];
+		let oldSelected = selectedIndex;
+
+		let action: UndoableAction = {
+			name: 'delete clip',
+			description: `deleting clip ${i}`,
+			action: () => {
+				bars.splice(i, 1);
+				bars = bars;
+				selectedIndex -= 1;
+			},
+			undo: () => {
+				bars.splice(i, 0, oldClip);
+				bars = bars;
+				selectedIndex = oldSelected;
+			}
+		}
+
+		history.newAction(action);
+	}
+
 	function addBar(event: any){
 		let data = event.detail;
 		if(data.type !== instrument.type){
 			return;
 		}
 		
-		let barData = bars[data.index].barData;
+		let barData = data.barData;
 		let oldBarData = instrument.arrangement.at(data.i)
 
 		let action: UndoableAction = {
@@ -149,8 +173,8 @@
 
 <!-- Col 1: Clip Controls -->
 <div class="flex bg-gray-900 py-2 col-start-1 row-start-{row}">
-	<PatternControls on:newBar={requestPattern} {instrument}/>
-	<PatternBars on:newBar={requestPattern} bind:bars={bars} {instrument} bind:selectedIndex={selectedIndex}/>
+	<PatternControls on:newClip={requestClip} {instrument}/>
+	<PatternBars on:newClip={requestClip} on:deleteClip={deleteClip} bind:bars={bars} {instrument} bind:selectedIndex={selectedIndex}/>
 </div>
 
 <!-- Col 2: Sample Controls -->

@@ -8,20 +8,22 @@
 	export let bars: Bar[];
 	export let selectedIndex: number | null;
 
-	const dispatch = createEventDispatcher()
+	const dispatch = createEventDispatcher();
 
-	function newBar(){
-		dispatch("newBar");
+	function newClip(){
+		dispatch("newClip");
 	}
 </script>
 
 <div class="flex flex-row space-x-2 overflow-x-auto w-full h-full">
-	{#each bars as bar, i}
-		<PatternBar {bar} {instrument} {i} bind:selectedIndex={selectedIndex}/>
-	{/each}
+	{#key bars}
+		{#each bars as bar, i}
+			<PatternBar {bar} {instrument} {i} bind:selectedIndex={selectedIndex} on:deleteClip/>
+		{/each}	
+	{/key}
 	<button
 		class="flex flex-row justify-around items-center place-items-start rounded-md h-full bg-gray-600 cursor-pointer hover:bg-gray-500 min-w-pattern w-pattern"
-		on:click={newBar}
+		on:click={newClip}
 	>
 		<span class="text-3xl text-gray-800">+</span>
 	</button>
