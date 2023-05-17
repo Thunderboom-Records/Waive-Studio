@@ -9,7 +9,7 @@
 <header class="bg-purple-500 flex-grow-0 flex-shrink-0 flex-auto">
 	<nav class="mx-auto max-w-7xl px-6 lg:px-8" aria-label="Top">
 		<div
-			class="flex w-full items-center justify-between  py-6 ">
+			class="flex w-full items-center justify-between py-6 ">
 			<div class="w-full flex items-center justify-between">
 				<Logo />
 				<div class="ml-10 space-x-8 ">

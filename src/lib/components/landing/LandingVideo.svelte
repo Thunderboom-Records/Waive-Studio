@@ -1,3 +1,5 @@
-<div class="h-30 w-full bg-purple-500">
-
+<div class="w-full h-[32rem]  bg-gray-800">
+	<h2 class="text-center text-white font-semibold text-3xl">
+		VIDEO
+	</h2>
 </div>

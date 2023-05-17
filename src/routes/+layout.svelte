@@ -17,7 +17,7 @@
 	<title>Thunderboom Records</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gray-700 flex flex-col">
+<div class="min-h-screen bg-gray-800 flex flex-col">
 	<Header {routes} />
 	<main class="flex-grow-1 flex-shrink-0 flex-auto">
 		<slot />

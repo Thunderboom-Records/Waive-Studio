@@ -8,7 +8,7 @@
 	import LandingEvents from "$lib/components/landing/LandingEvents.svelte";
 </script>
 
-<div class="bg-gray-800 h-full">
+<div class="h-full">
 	<LandingBanner />
 
 	<LandingVideo />
