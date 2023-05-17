@@ -84,6 +84,9 @@
 		dispatch("removeBar", {i, type: instrument.type})
 	}
 
+	function requestVariation(){
+		dispatch("newClip", {variation: true, z: barData?.z, add: i});
+	}
 </script>
 
 <div
@@ -102,6 +105,12 @@
 		class="bg-{instrument.color}-500 bg-opacity-10 rounded w-full m-0 b-0"
 	/>
 	{#if barData && mouseOver}
+	<button
+		class="absolute top-0 left-0 text-gray-400 bg-gray-800 bg-opacity-80 py-0 px-2"
+		on:click={requestVariation}
+	>
+		var
+	</button>
 	<button 
 		class="absolute top-0 right-0 text-gray-400 bg-gray-800 bg-opacity-80 py-0 px-2" 
 		on:click={deleteBar}
