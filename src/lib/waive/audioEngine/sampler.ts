@@ -103,7 +103,6 @@ export class Sampler extends SoundSource {
                 note = this._note;
             }
 
-            console.log(note);
             this.node.triggerAttackRelease(note, duration, time, velocity);
 
             this.callback(note);
