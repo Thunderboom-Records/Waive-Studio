@@ -8,11 +8,6 @@
 	const dispatch = createEventDispatcher()
 
 	$: variation = selectedIndex >= 0;
-
-	function newClip(){
-		dispatch("newClip", true);
-	}
-
 </script>
 
 <div class="flex flex-col gap-2 p-2 mx-1 w-28 items-center">
@@ -20,13 +15,13 @@
 		{InstrumentType[instrument.type].toLowerCase()}
 	</h3>
 	<button
-		on:click={newClip}
+		on:click={() => dispatch("newClip", {variation: false})}
 		class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 btn rounded-full w-12 h-6 text-xs"
 	>
 		new
 	</button>
 	<button
-		on:click={newClip}
+		on:click={() => dispatch("newClip", {variation: true})}
 		class="{variation ? `bg-${instrument.color}-500 hover:bg-${instrument.color}-600` : 'bg-gray-600'} btn rounded-full w-12 h-6 text-xs"
 		disabled={!variation}
 	>

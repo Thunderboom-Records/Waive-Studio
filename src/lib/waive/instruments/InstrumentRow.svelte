@@ -49,11 +49,15 @@
 	}
 
 	function requestClip(event: any) {
-		console.log(event);
 		let data: any = {};
-		if(event.detail){
-			data.z = bars[selectedIndex].barData.z
+		if(event.detail?.variation){
+			if(event.detail.z){
+				data.z = event.detail.z;
+			} else {
+				data.z = bars[selectedIndex].barData.z;
+			}	
 		}
+
 		postRequest(ROOT_URL, instrument.apiPatternRequest, data).then((data: any) => {
 			if (!data || !data.ok) {
 				console.log('no clip data');
@@ -70,27 +74,59 @@
 			const barData = new BarData(barNotes, data.notes);
 			barData.z = data.z;
 
-			let bar = {
+			let clip = {
 				active: true,
 				barData: barData
 			};
 
-			let action: UndoableAction = {
-				name: 'requested bar',
-				description: `new bar received for ${instrument.type}`,
-				action: () => {
-					bars.push(bar);
-					bars = bars;
-					selectedIndex = bars.length - 1;
-				},
-				undo: () => {
-					bars = bars.slice(0, bars.length - 1);
-					selectedIndex = bars.length - 1;
-				}
+			if(typeof event.detail?.add !== 'undefined'){
+				swapClip(clip, event.detail?.add);
+			} else {
+				addClipToPool(clip);
 			}
 
-			history.newAction(action);
 		});
+	}
+
+	function addClipToPool(clip: Bar){
+		let action: UndoableAction = {
+			name: 'requested bar',
+			description: `new bar received for ${instrument.type}`,
+			action: () => {
+				bars.push(clip);
+				bars = bars;
+				selectedIndex = bars.length - 1;
+			},
+			undo: () => {
+				bars = bars.slice(0, bars.length - 1);
+				selectedIndex = bars.length - 1;
+			}
+		}
+
+		history.newAction(action);
+	}
+
+	function swapClip(clip: Bar, i: number){
+		let oldBarData = instrument.arrangement.at(i)
+
+		let action: UndoableAction = {
+			name: 'clip variation',
+			description: `new variation received for ${instrument.type}`,
+			action: () => {
+				arrangements[instrument.type].update(v => {
+					v.add(clip.barData, i);
+					return v;
+				})
+			},
+			undo: () => {
+				arrangements[instrument.type].update(v => {
+					v.add(oldBarData, i);
+					return v;
+				})
+			}
+		}
+
+		history.newAction(action);
 	}
 
 	function deleteClip(event: any){
@@ -207,7 +243,7 @@
 {/if}
 
 <!-- Col 3-6: Player Display -->
-<PlayerSection {row} bind:instrument={instrument} on:addBar={addBar} on:removeBar={removeBar}/>
+<PlayerSection {row} bind:instrument={instrument} on:addBar={addBar} on:removeBar={removeBar} on:newClip={requestClip} />
 
 <!-- Col 7: Channel controls -->
 <div class="col-start-7 row-start-{row}">
