@@ -6,11 +6,10 @@
 	import Header from '$lib/components/Header.svelte';
 
 	let routes: Route[] = [
-		{ href: '/waive/player', label: 'Waive' },
-		{ href: '/projects', label: 'Projects' },
+		{ href: '/studio', label: 'Studio' },
+		{ href: '/tutorials', label: 'Tutorials' },
+		{ href: '/events', label: 'Events' },
 		{ href: '/about', label: 'About' },
-		{ href: '/team', label: 'Team' },
-		{ href: '/contact', label: 'Contact' }
 	];
 </script>
 
@@ -18,10 +17,10 @@
 	<title>Thunderboom Records</title>
 </svelte:head>
 
-<div class="min-h-screen bg-slate-800">
+<div class="min-h-screen bg-gray-800 flex flex-col">
 	<Header {routes} />
-	<div class="flex flex-col ">
+	<main class="flex-grow-1 flex-shrink-0 flex-auto">
 		<slot />
-		<Footer />
-	</div>
+	</main>
+	<Footer />
 </div>
