@@ -10,11 +10,6 @@ export class BarData {
         this.notes = notes;
         this.gridNotes = gridNotes;
     }
-
-    renderToCanvas() {
-        // not where this should be...
-        return;
-    }
 }
 
 export const drumChannelMidiMap: Record<number, number> = {
@@ -23,6 +18,14 @@ export const drumChannelMidiMap: Record<number, number> = {
     2: 42,  // 02_HH
     3: 39,  // 03_CL
     4: 43,  // 06_TH
+}
+
+export const drumTypeMidiMap: Record<string, number> = {
+    "KICK": 36,
+    "SNARE": 38,
+    "HIHAT": 42,
+    "CLAP": 39,
+    "TOM": 43,
 }
 
 export const midiDrumChannelMap: Record<number, number> = {};

@@ -8,7 +8,7 @@
 	import InstrumentHeader from '$lib/waive/instruments/InstrumentHeader.svelte';
 	import InstrumentControls from '$lib/waive/instruments/InstrumentControls.svelte';
 	import { Arrangement } from '$lib/waive/audioEngine/arrangement';
-	import { makeBassCallback, makeDrumsCallback } from '$lib/waive/audioEngine/synths';
+	import { makeBassCallback, makeDrumsCallback, makeLeadCallback } from '$lib/waive/audioEngine/synths';
 	import ChainSelect from '$lib/waive/instruments/ChainSelect.svelte';
 	import Timer from '$lib/waive/transportControls/Timer.svelte';
 	import PlayButtons from '$lib/waive/transportControls/PlayButtons.svelte';
@@ -32,6 +32,9 @@
 	arrangements[InstrumentType.BASS] = writable(bassArrangement);
 
 	const leadArrangement = new Arrangement(convertMelodyNotesToNoteEvents);
+	if(typeof FXChains[InstrumentType.LEAD] !== 'undefined'){
+		leadArrangement.synthCallback = makeLeadCallback(FXChains[InstrumentType.LEAD][0]);
+	}
 	arrangements[InstrumentType.LEAD] = writable(leadArrangement);
 
 	let instruments: Instrument[] = [

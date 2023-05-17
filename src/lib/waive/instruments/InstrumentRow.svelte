@@ -60,7 +60,7 @@
 
 		postRequest(ROOT_URL, instrument.apiPatternRequest, data).then((data: any) => {
 			if (!data || !data.ok) {
-				console.log('no clip data');
+				console.log('no clip data', data.error);
 				return;
 			}
 
@@ -250,5 +250,4 @@
 	{#if channelNode && channelNode instanceof Channel}
 		<SmToggles {channelNode} />
 	{/if}
-	<!-- <DownloadButton {instrument} /> -->
 </div>

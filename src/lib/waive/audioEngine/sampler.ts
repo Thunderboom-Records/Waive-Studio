@@ -11,32 +11,22 @@ export class Sampler {
     label: string = 'Sampler';
     parameters: FXParameter[] = [];
     current?: Sample;
-    node: Tone.AmplitudeEnvelope;
+    node: Tone.Sampler;
     buffer: Tone.ToneAudioBuffer;
-    player: Tone.Player;
     apiInstrumentName?: string;
+    _note: number;
 
     constructor(context?: Tone.BaseContext, props: any = {}){
         if(typeof context === 'undefined'){
             context = Tone.getContext();
         }
 
-        if(typeof props.ampEnv === 'undefined'){
-            props.ampEnv = {
-                attack: 0.0,
-                decay: 0.0,
-                sustain: 1.0,
-                release: 1.0,
-            }
-        }
+        this._note = props.note ? props.note : 36;
 
-        props.ampEnv.context = context;
-
-        this.node = new Tone.AmplitudeEnvelope(props.ampEnv);
         this.buffer = new Tone.ToneAudioBuffer();
-        this.player = new Tone.Player({url:this.buffer, context:context});
-
-        this.player.connect(this.node);
+        const sample_map: {[midi: number]: Tone.ToneAudioBuffer} = {};
+        sample_map[this._note] = this.buffer;
+        this.node = new Tone.Sampler({urls: sample_map, context: context, release: "0:1"});
 
         if(typeof props.current !== 'undefined'){
             this.selectSample(props.current);
@@ -54,9 +44,9 @@ export class Sampler {
         }
 
         this.current = sample;
-        let url = ROOT_URL + "drum/" + sample.url
+        let url = ROOT_URL + "sample/" + sample.url
 
-        this.player.stop();
+        this.node.releaseAll();
         return this.buffer.load(url)
     }
 
@@ -64,14 +54,27 @@ export class Sampler {
         this.current = undefined;
         this.buffer.dispose();
         this.buffer = new Tone.ToneAudioBuffer();
-        this.player.buffer = this.buffer;
+        const sample_map: {[midi: number]: Tone.ToneAudioBuffer} = {};
+        sample_map[this._note] = this.buffer;
+        this.node.set({urls: sample_map});
     }
 
-    play(velocity?: number | undefined, time?: Time | undefined){
+    play(note?: number, velocity?: number, time: Time = Tone.immediate(), duration?: Time){
         if(this.buffer.loaded){
-            this.player.start(time);
-            this.node.triggerAttackRelease(1.0, time, velocity)
+            if(typeof duration === 'undefined'){
+                duration = Tone.Time(this.buffer.length, 'samples').toSeconds();
+            }
+            
+            if(typeof note === 'undefined'){
+                note = this._note;
+            }
+
+            this.node.triggerAttackRelease(note, duration, time, velocity)
         }
+    }
+
+    stop(){
+        this.node.releaseAll();
     }
 
     getWaveform(){
@@ -85,4 +88,16 @@ export class Sampler {
     toDestination(){
         this.node.toDestination();
     }
+
+    set note(v: number){
+        this._note = v;
+        const sample_map: {[midi: number]: Tone.ToneAudioBuffer} = {};
+        sample_map[this._note] = this.buffer;
+        this.node.set({urls: sample_map});
+    }
+
+    get note(){
+        return this._note;
+    }
+    
 }

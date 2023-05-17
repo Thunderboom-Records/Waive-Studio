@@ -4,6 +4,7 @@ import { BypassableFX } from './bypassableFX';
 import { Sampler } from './sampler';
 import { ValueParameter, ListParameter } from './parameter';
 import { nearestTimeString } from '$lib/scripts/utils';
+import { drumChannelMidiMap, drumTypeMidiMap } from './barData';
 
 
 const defaultProps: Partial<Record<NodeType, any>> = {};
@@ -18,7 +19,8 @@ defaultProps[NodeType.REVERB] = {decay: 1.0, wet: 0.7};
 defaultProps[NodeType.SAMPLER] = {
     ampEnv: {
         attack: 0.0, decay: 0.0, sustain: 1.0, release: 1.0
-    }
+    },
+    note: 48,
 };
 defaultProps[NodeType.SYNTH] = {
     portamento: 0.2,
@@ -67,6 +69,7 @@ const leadFXChain: NodeType[] = [
     NodeType.SAMPLER,
     NodeType.FILTER, 
     NodeType.DELAY,
+    NodeType.REVERB,
     NodeType.CHANNEL,
 ];
 
@@ -303,6 +306,9 @@ export function buildWaiveAudioGraph(context?: Tone.BaseContext, props?: any){
     const master = buildFXChain(masterFXChain, context, props?.MASTER);
     const bass = buildFXChain(bassFXChain, context, props?.BASS);
     const lead = buildFXChain(leadFXChain, context, props?.LEAD);
+    if(lead[0] instanceof Sampler){
+        lead[0].apiInstrumentName = "LEAD";
+    }
     
     SMNodes[InstrumentType.BASS] = new Tone.Channel({context});
     bass.at(-1)?.node.connect(SMNodes[InstrumentType.BASS]);
@@ -318,6 +324,7 @@ export function buildWaiveAudioGraph(context?: Tone.BaseContext, props?: any){
         let drumChain = buildFXChain(drumChannelFXChain, context, props ? props[drumType] : undefined);
         if(drumChain[0] instanceof Sampler){
             drumChain[0].apiInstrumentName = apiInstrumentNames[drumType];
+            drumChain[0].note = drumTypeMidiMap[drumType];
         }
         drumChain.at(-1)?.node.connect(SMNodes[InstrumentType.DRUMS]);
         FXChains[drumType] = drumChain;
@@ -347,8 +354,9 @@ export function getAudioGraphProps(FXChains: Partial<Record<ChainType, Chain>>){
         for(let fx of chain){
             let prop: Record<string, any> = {};
             if(fx instanceof Sampler){
-                prop.ampEnv = fx.node.get();
+                prop.node = fx.node.get();
                 prop.current = fx.current;
+                prop.note = fx.note;
 
             } else {
                 for(const param of fx.parameters){

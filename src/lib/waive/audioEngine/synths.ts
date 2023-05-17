@@ -20,12 +20,20 @@ export function makeBassCallback(synth: any){
 	return callback;
 }
 
+export function makeLeadCallback(synth: any){
+	let callback = (event: NoteEvent, time: number) => {
+		synth.play(Tone.Frequency(event.note, "midi").toFrequency(), event.velocity, time, event.length);
+	}
+
+	return callback;
+}
+
 export function makeDrumsCallback(drumSynths: Record<string, (FX | Sampler)[]>){
 	let synths: Record<string, Sampler> = {};
 	for(const key in drumSynths){
 		let FXChain = drumSynths[key];
 		if(FXChain[0] instanceof Sampler){
-			synths[key] = FXChain[0] as Sampler;
+			synths[key] = FXChain[0];
 		}
 	}
 
@@ -39,7 +47,7 @@ export function makeDrumsCallback(drumSynths: Record<string, (FX | Sampler)[]>){
 			return;
 		}
 
-		synths[type].play(event.velocity, time);
+		synths[type].play(event.note, event.velocity, time);
 	}
 
 	return callback;
