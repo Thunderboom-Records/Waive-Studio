@@ -3,11 +3,14 @@
 	import { InstrumentType, type Instrument } from '$lib/types/waive';
 	
 	export let instrument: Instrument;
+	export let selectedIndex: number;
 	
 	const dispatch = createEventDispatcher()
 
+	$: variation = selectedIndex >= 0;
+
 	function newClip(){
-		dispatch("newClip");
+		dispatch("newClip", true);
 	}
 
 </script>
@@ -24,7 +27,8 @@
 	</button>
 	<button
 		on:click={newClip}
-		class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 btn rounded-full w-12 h-6 text-xs"
+		class="{variation ? `bg-${instrument.color}-500 hover:bg-${instrument.color}-600` : 'bg-gray-600'} btn rounded-full w-12 h-6 text-xs"
+		disabled={!variation}
 	>
 		var
 	</button>

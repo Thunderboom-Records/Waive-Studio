@@ -6,7 +6,7 @@
 	import PlayerSection from '../player/PlayerSection.svelte';
 	import PatternControls from '../pattern/PatternControls.svelte';
 	import PatternBars from '../pattern/PatternBars.svelte';
-	import { getRequest, ROOT_URL } from '$lib/scripts/utils';
+	import { postRequest, ROOT_URL } from '$lib/scripts/utils';
 	import {
 		BarData,
 		convertDrumNotesToNoteEvents,
@@ -48,8 +48,13 @@
 		});
 	}
 
-	function requestClip() {
-		getRequest(ROOT_URL, instrument.apiPatternRequest, {}).then((data: any) => {
+	function requestClip(event: any) {
+		console.log(event);
+		let data: any = {};
+		if(event.detail){
+			data.z = bars[selectedIndex].barData.z
+		}
+		postRequest(ROOT_URL, instrument.apiPatternRequest, data).then((data: any) => {
 			if (!data || !data.ok) {
 				console.log('no clip data');
 				return;
@@ -173,7 +178,7 @@
 
 <!-- Col 1: Clip Controls -->
 <div class="flex bg-gray-900 py-2 col-start-1 row-start-{row}">
-	<PatternControls on:newClip={requestClip} {instrument}/>
+	<PatternControls on:newClip={requestClip} {instrument} bind:selectedIndex={selectedIndex}/>
 	<PatternBars on:newClip={requestClip} on:deleteClip={deleteClip} bind:bars={bars} {instrument} bind:selectedIndex={selectedIndex}/>
 </div>
 

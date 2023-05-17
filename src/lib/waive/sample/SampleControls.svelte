@@ -9,7 +9,6 @@
 	import Waveform from '$lib/components/Waveform.svelte';
 	import { cleanName, download, postRequest, ROOT_URL } from '$lib/scripts/utils';
 	import { bufferToWave } from '../audioEngine/record';
-	import type { f } from 'vitest/dist/index-5aad25c1';
 
 	export let sampler: Sampler;
 	export let sampleOptionsKey: InstrumentType | DrumType;
