@@ -1,7 +1,6 @@
 <script lang="ts">
-	import Faq from '$lib/thunderboom/Faq.svelte';
 </script>
 
 <main class="flex flex-row ">
-	<Faq />
+	<h1>Tutorials</h1>
 </main>
