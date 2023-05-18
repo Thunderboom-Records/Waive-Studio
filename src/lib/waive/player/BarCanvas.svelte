@@ -27,17 +27,25 @@
 	}
 
 	onMount(() => {
-		let rect = canvas.getBoundingClientRect();
-		canvas.width = rect.width;
-		canvas.height = rect.height;
+		resize()
+		window.addEventListener("resize", resize);
 
 		arrangementStore.subscribe(v => {
 			barData = v.arrangement[i];
 			updateCanvas();
 		});
 
-		updateCanvas();
+		return () => {
+			window.removeEventListener("resize", resize);
+		}
 	})
+
+	function resize(){
+		let rect = canvas.getBoundingClientRect();
+		canvas.width = rect.width;
+		canvas.height = rect.height;
+		updateCanvas();
+	}
 
 	function updateCanvas(){
 		if(instrument.type === InstrumentType.DRUMS){
@@ -96,13 +104,13 @@
 	on:dragover={(event) => {event.preventDefault()}}
 	on:mouseenter={() => mouseOver = true}
 	on:mouseleave={() => mouseOver = false}
-	class="relative"
+	class="relative h-full w-full"
 >
 	<canvas
 		draggable={barData ? "true" : "false"}
 		on:dragstart={dragStart}
 		bind:this={canvas}
-		class="bg-{instrument.color}-500 bg-opacity-10 rounded w-full m-0 b-0"
+		class="bg-{instrument.color}-500 bg-opacity-10 rounded w-full h-full m-0 b-0"
 	/>
 	{#if barData && mouseOver}
 	<button

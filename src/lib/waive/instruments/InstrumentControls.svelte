@@ -17,7 +17,7 @@
 
 </script>
 
-<div class="flex flex-row gap-2 p-2">
+<div class="flex flex-row gap-2 p-2 overflow-y-scroll">
     {#if typeof selectedFX !== 'undefined'}
         <ChainLabel>{name}</ChainLabel>
         {#each selectedFX as fx}

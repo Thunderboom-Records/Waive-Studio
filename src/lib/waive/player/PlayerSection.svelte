@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Canvas from '$lib/components/Canvas.svelte';
+	import BarCanvas from './BarCanvas.svelte';
 	import type { Instrument } from '$lib/types/waive';
 	import { arrangements } from '../stores/stores';
 
@@ -11,7 +11,7 @@
 
 {#each instrument.arrangement.arrangement as _, i}
 	<div class="col-start-{i + 3} row-start-{row} flex flex-row justify-center place-items-center">
-		<Canvas bind:instrument={instrument} {i} bind:arrangementStore={arrangementStore} on:addBar on:removeBar on:newClip />
+		<BarCanvas bind:instrument={instrument} {i} bind:arrangementStore={arrangementStore} on:addBar on:removeBar on:newClip />
 	</div>
 {/each}
 
