@@ -2,15 +2,15 @@ import * as Tone from 'tone';
 import type { ToneAudioBuffer } from "tone";
 
 import { FXChains, buildWaiveAudioGraph, getAudioGraphProps } from "./fxChains";
-import { download } from '$lib/scripts/utils';
+import { download, getChainSource } from '$lib/scripts/utils';
 import { recording } from '../stores/stores';
 import { arrangements } from '../stores/stores';
 import { InstrumentType } from '$lib/types/waive';
 import { get } from 'svelte/store';
-import { makeBassCallback, makeDrumsCallback } from './synths';
+import { makeMelodyCallback, makeDrumsCallback } from './synths';
 
 export function record(){
-    const offlineContext = new Tone.OfflineContext(2, Tone.Time(Tone.Transport.loopEnd).toSeconds(), 44100);
+    const offlineContext = new Tone.OfflineContext(2, Tone.Time(Tone.Transport.loopEnd).toSeconds(), Tone.getContext().sampleRate);
     const offlineTransport = offlineContext.transport;
     offlineTransport.bpm.value = Tone.Transport.bpm.value;
     offlineTransport.swing = Tone.Transport.swing;
@@ -21,7 +21,7 @@ export function record(){
 
     if(typeof offlineFXChains[InstrumentType.BASS] !== 'undefined'){
       const bassTimings = get(arrangements[InstrumentType.BASS]).getTimings();
-      const bassCallback = makeBassCallback(offlineFXChains[InstrumentType.BASS][0].node);
+      const bassCallback = makeMelodyCallback(getChainSource(offlineFXChains[InstrumentType.BASS]), 24);
 
       const bassPart = new Tone.Part({context: offlineContext});
       bassPart.callback = (time, val) => bassCallback(val, time);
@@ -29,6 +29,18 @@ export function record(){
         bassPart.add(event.time, event)
       });
       bassPart.start(0);
+    }
+
+    if(typeof offlineFXChains[InstrumentType.LEAD] !== 'undefined'){
+      const leadTimings = get(arrangements[InstrumentType.LEAD]).getTimings();
+      const leadCallback = makeMelodyCallback(getChainSource(offlineFXChains[InstrumentType.LEAD]));
+
+      const leadPart = new Tone.Part({context: offlineContext});
+      leadPart.callback = (time, val) => leadCallback(val, time);
+      leadTimings.forEach(event => {
+        leadPart.add(event.time, event)
+      });
+      leadPart.start(0);
     }
 
     const drumTimings = get(arrangements[InstrumentType.DRUMS]).getTimings();
@@ -47,13 +59,13 @@ export function record(){
       // wait for all samples to reload... not great!
       offlineContext.render().then(buffer => {
         console.log("rendering done");
-        console.log(buffer.numberOfChannels, buffer.length, buffer.duration);
+        console.log(buffer.numberOfChannels, buffer.sampleRate, buffer.length, buffer.duration);
         recording.set(false);
         const href = URL.createObjectURL(bufferToWave(buffer));
-        download(href, "loop.wav");
+        download(href, "WAIVE.wav");
 
         // TODO: dispose of graph!
-
+        offlineContext.dispose();
       })
     }, 500)
 }

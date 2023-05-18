@@ -4,7 +4,38 @@ import { NodeType, type FXParameter, type Sample } from "$lib/types/waive";
 import type { Time } from 'tone/build/esm/core/type/Units';
 
 
-export class Sampler {
+export abstract class SoundSource extends Tone.ToneAudioNode{
+    abstract node: Tone.ToneAudioNode;
+    input: Tone.InputNode | undefined;
+	output: Tone.OutputNode | undefined;
+    name: string = "SoundSource";
+
+    callbacks: ((note?: number) => void)[] = [];
+
+    addCallback(func: (note?: number) => void){
+        this.callbacks.push(func)
+    }
+
+    callback(note?: number){
+        for(const callback of this.callbacks){
+            callback(note);
+        }
+    }
+
+    abstract play(note?: number, velocity?: number, time?: Time, duration?: Time): void;
+
+    connect(node: Tone.ToneAudioNode){
+        this.node?.connect(node);
+        return this;
+    }
+
+    toDestination(){
+        this.node?.toDestination();
+        return this;
+    }
+}
+
+export class Sampler extends SoundSource {
     type: NodeType = NodeType.SAMPLER;
     bypassable: boolean = false;
     enabled: boolean = true;
@@ -15,8 +46,9 @@ export class Sampler {
     buffer: Tone.ToneAudioBuffer;
     apiInstrumentName?: string;
     _note: number;
-
+    
     constructor(context?: Tone.BaseContext, props: any = {}){
+        super();
         if(typeof context === 'undefined'){
             context = Tone.getContext();
         }
@@ -27,6 +59,8 @@ export class Sampler {
         const sample_map: {[midi: number]: Tone.ToneAudioBuffer} = {};
         sample_map[this._note] = this.buffer;
         this.node = new Tone.Sampler({urls: sample_map, context: context, release: "0:1"});
+        this.input = this.node.input;
+        this.output = this.node.output;
 
         if(typeof props.current !== 'undefined'){
             this.selectSample(props.current);
@@ -69,7 +103,10 @@ export class Sampler {
                 note = this._note;
             }
 
-            this.node.triggerAttackRelease(note, duration, time, velocity)
+            console.log(note);
+            this.node.triggerAttackRelease(note, duration, time, velocity);
+
+            this.callback(note);
         }
     }
 
@@ -79,14 +116,6 @@ export class Sampler {
 
     getWaveform(){
         return this.buffer?.toArray(0) as Float32Array;
-    }
-
-    connect(node: Tone.ToneAudioNode){
-        this.node.connect(node);
-    }
-
-    toDestination(){
-        this.node.toDestination();
     }
 
     set note(v: number){

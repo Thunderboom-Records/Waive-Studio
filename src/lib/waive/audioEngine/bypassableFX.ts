@@ -1,4 +1,5 @@
 import * as Tone from 'tone';
+import type { SoundSource } from './sampler';
 
 /**  
  * wrapper for effect class / bus adapted from:

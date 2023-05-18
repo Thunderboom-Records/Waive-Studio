@@ -1,7 +1,7 @@
 import type { Arrangement } from '$lib/waive/audioEngine/arrangement'
 import type { BarData } from '$lib/waive/audioEngine/barData';
 import type { ListParameter, ValueParameter } from '$lib/waive/audioEngine/parameter';
-import type { Sampler } from '$lib/waive/audioEngine/sampler';
+import type { Sampler, SoundSource } from '$lib/waive/audioEngine/sampler';
 import type { Solo, Gain, ToneAudioNode } from 'tone';
 import type { Time } from 'tone/build/esm/core/type/Units';
 
@@ -53,7 +53,7 @@ export enum NodeType {
 
 export type FX = {
     type: NodeType,
-    node: ToneAudioNode,
+    node: ToneAudioNode | SoundSource,
     label: string,
     bypassable: boolean,
     enabled: boolean,

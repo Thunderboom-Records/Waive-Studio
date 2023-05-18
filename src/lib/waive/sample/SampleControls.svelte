@@ -8,6 +8,7 @@
 	import Waveform from '$lib/components/Waveform.svelte';
 	import { cleanName, download, postRequest, ROOT_URL } from '$lib/scripts/utils';
 	import { bufferToWave } from '../audioEngine/record';
+	import IndicatorLed from '../instruments/IndicatorLed.svelte';
 	
 	export let sampler: Sampler;
 	export let sampleOptionsKey: InstrumentType | DrumType;
@@ -125,7 +126,7 @@
 </script>
 
 <div class="flex flex-col p-2 space-y-2 h-full justify-center place-items-center bg-gray-700 rounded-lg">
-	<div class="flex flex-row justify-between w-60 gap-x-2">
+	<div class="flex flex-row justify-between items-center w-60 gap-x-2">
 		<button
 			class="flex flex-row justify-center place-items-center 
 					bg-gray-500 hover:bg-gray-600 btn rounded-full w-12 h-8 text-sm"
@@ -171,6 +172,7 @@
 				/>
 			</svg>
 		</button>
+		<IndicatorLed {sampler} />
 	</div>
 
 	<SampleSelection 

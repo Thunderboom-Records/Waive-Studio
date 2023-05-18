@@ -4,7 +4,8 @@ import { BypassableFX } from './bypassableFX';
 import { Sampler } from './sampler';
 import { ValueParameter, ListParameter } from './parameter';
 import { nearestTimeString } from '$lib/scripts/utils';
-import { drumChannelMidiMap, drumTypeMidiMap } from './barData';
+import { drumTypeMidiMap } from './barData';
+import { BassSynth } from './synths';
 
 
 const defaultProps: Partial<Record<NodeType, any>> = {};
@@ -223,7 +224,7 @@ function addFXCompressor(props?: any){
 function addSynth(props?: any){
     const {enabled = true, bypassable = false, ...fxProps} = props;
 
-    let node = new Tone.MonoSynth(fxProps);
+    let node = new BassSynth(fxProps);
 
     return {
         type: NodeType.SYNTH,
@@ -273,7 +274,8 @@ export function buildFXChain(chain: NodeType[], context?: Tone.BaseContext, prop
                 node = new Sampler(context, nodeProps);
                 break
             case NodeType.SYNTH:
-                node = addSynth(nodeProps);
+                // node = addSynth(nodeProps);
+                node = new BassSynth(context, nodeProps);
                 break
             default:
                 console.log("unknown FX type: " + NodeType[nodeType]);
