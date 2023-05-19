@@ -12,7 +12,7 @@ function select(item: string) {
 </script>
 
 
-<section class="relative h-96 bg-purple-500 w-full flex flex-col justify-center items-center space-y-2">
+<section class="relative h-96 bg-purple-500 w-full flex flex-col justify-center items-center space-y-2 ">
 	<div class="mx-auto">
 		<Carousel item={selected}/>
 	</div>
