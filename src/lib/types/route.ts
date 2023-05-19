@@ -3,6 +3,12 @@ export type Route = {
     label: string;
 };
 
+export type LandingPostContent = {
+    title: string;
+    description: string,
+    link: Route,
+}
+
 export type LandingStudioCardContent = {
     title: string;
     description: string,
