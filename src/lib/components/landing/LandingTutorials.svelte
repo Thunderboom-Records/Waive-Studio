@@ -1,4 +1,4 @@
-<div class="w-full h-[32rem]  bg-gray-800 ">
+<div class="w-full h-[32rem]  bg-gray-800 pt-4">
 	<h2 class="text-white font-semibold text-3xl text-center">
 		Tutorials
 	</h2>
