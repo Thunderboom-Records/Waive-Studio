@@ -16,6 +16,11 @@ export type LandingStudioCardContent = {
     img: Image
 }
 
+export type LandingEventsContent = {
+    title: string
+    img: Image,
+}
+
 export type Image = {
     src: string;
     alt: string,
