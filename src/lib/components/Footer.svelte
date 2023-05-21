@@ -8,7 +8,7 @@
 	<div class="text-white">
 		<h3 class="text-4xl">Get in touch</h3>
 		<p class="font-extralight text-sm">For inquiries, email
-			<a class="text-purple-500" href="mailto:max@thunderboomrecords.com">
+			<a class="text-gray-400 underline" href="mailto:max@thunderboomrecords.com">
 				max@thunderboomrecords.com
 			</a>
 		</p>
