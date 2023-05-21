@@ -40,21 +40,20 @@ const config = {
 				'sans': ['VG5000', ...defaultTheme.fontFamily.sans]
 			},
 			width: {
-				'128': '28rem'
+				'128': '28rem',
+				'pattern': '3.75rem',
 			},
 			gridTemplateColumns: {
 				'instrument-grid': '30rem, 11rem, repeat(4, minmax(12rem ,1fr)), 4rem'
 			},
 			minWidth: {
 				'pattern': '3.75rem',
-			},
-			width: {
-				'pattern': '3.75rem',
+			},dth: {
 			}
 		}
 	},
 
-	plugins: []
+	plugins: [require("daisyui")]
 };
 
 module.exports = config;

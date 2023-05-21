@@ -14,7 +14,7 @@
 </script>
 
 <svelte:head>
-	<title>Thunderboom Records</title>
+	<title>Waive Studio</title>
 </svelte:head>
 
 <div class="min-h-screen bg-gray-800 flex flex-col">
