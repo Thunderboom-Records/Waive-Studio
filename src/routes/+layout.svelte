@@ -19,7 +19,7 @@
 
 <div class="min-h-screen bg-gray-800 flex flex-col">
 	<Header {routes} />
-	<main class="flex-grow-1 flex-shrink-0 flex-auto">
+	<main class="flex-grow-1 flex-shrink-0 flex-auto mt-">
 		<slot />
 	</main>
 	<Footer />

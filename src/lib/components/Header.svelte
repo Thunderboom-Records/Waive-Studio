@@ -3,12 +3,10 @@
 	import NavLink from '$lib/components/NavLink.svelte';
 	import Logo from "$lib/components/Logo.svelte";
 	import { DummyIcon } from "$lib/content/content";
-
 	export let routes: Route[];
-
 </script>
 
-<header class="absolute w-full z-20 bg-purple-500 flex-grow-0 flex-shrink-0 flex-auto">
+<header class="sticky w-full z-20 bg-purple-500 flex-grow-0 flex-shrink-0 flex-auto">
 	<nav class="mx-auto max-w-7xl px-6 lg:px-8" aria-label="Top">
 		<div class="flex w-full items-center justify-between py-6 ">
 			<div class="flex w-full items-center justify-between">
