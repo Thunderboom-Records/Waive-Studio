@@ -49,11 +49,11 @@
 	}
 </script>
 
-<div class="w-full min-h-[32rem] bg-gray-800">
+<div class="w-full min-h-[32rem] max-h-[50vh] bg-gray-800 ">
 	<video
 		poster="https://sveltejs.github.io/assets/caminandes-llamigos.jpg"
 		src="https://sveltejs.github.io/assets/caminandes-llamigos.mp4"
-		class="min-w-full"
+		class="min-w-full z-20 aspect-[4/3] "
 		on:mousemove={handleMove}
 		on:touchmove|preventDefault={handleMove}
 		on:mousedown={handleMousedown}

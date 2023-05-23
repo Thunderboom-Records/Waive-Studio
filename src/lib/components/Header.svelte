@@ -8,17 +8,21 @@
 
 </script>
 
-<header class="absolute w-full z-20 bg-transparent flex-grow-0 flex-shrink-0 flex-auto">
+<header class="absolute w-full z-20 bg-purple-500 flex-grow-0 flex-shrink-0 flex-auto">
 	<nav class="mx-auto max-w-7xl px-6 lg:px-8" aria-label="Top">
 		<div class="flex w-full items-center justify-between py-6 ">
 			<div class="flex w-full items-center justify-between">
 				<Logo icon={ DummyIcon } href="/"/>
-				<div class="flex flex-row space-x-8">
+				<div class="flex flex-row space-x-8 justify-center items-center">
 					{#each routes as route, index}
 						{#if index === routes.length - 1}
-							<div class="divider divider-horizontal"></div>
+							<div class="w-0 h-8 border-[1px] border-white/80"></div>
 						{/if}
-						<NavLink href={route.href}>{route.label}</NavLink>
+						<NavLink href={route.href}>
+							<p class="font-extralight tracking-wider">
+								{route.label.toUpperCase()}
+							</p>
+						</NavLink>
 					{/each}
 				</div>
 			</div>
