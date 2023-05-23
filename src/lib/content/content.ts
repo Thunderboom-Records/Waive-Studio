@@ -1,5 +1,4 @@
 import type {Icon, LandingBannerContent, LandingStudioContent, LandingVideoContent} from "$lib/types/route";
-import {D} from "../../../.svelte-kit/output/client/_app/immutable/chunks/index.f8767003";
 
 export const DummyIcon: Icon = {
     alt: "alt",
