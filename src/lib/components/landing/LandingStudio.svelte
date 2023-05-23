@@ -8,7 +8,7 @@
 </script>
 
 <div class="flex flex-col w-full bg-gray-700 space-y-12 py-24 px-8 justify-center items-center">
-	<h2 class="text-white text-6xl w-full max-w-3xl">
+	<h2 class="text-white text-6xl lg:text-8xl w-full max-w-[60vw]">
 		Studio
 	</h2>
 

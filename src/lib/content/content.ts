@@ -52,9 +52,9 @@ export const LandingStudioContentDummy: LandingStudioContent = {
             title: "DAW",
             description: "Sinds de pandemie zijn augmented reality, avatars en kunstmatige intelligentie een steeds grotere rol gaan spelen in de live optredens van nu.",
             links: [
-                {label: "play", href: "#"},
-                {label: "code", href: "#"},
-                {label: "read more", href: "#"},
+                {label: "play", href: "/studio"},
+                {label: "code", href: "https://github.com/Thunderboom-Records/Waive-Studio"},
+                {label: "read more", href: "/studio/daw"},
             ],
             img: {
                 src: "",

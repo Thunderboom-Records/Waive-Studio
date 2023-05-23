@@ -17,10 +17,10 @@
 			<h2 class="tracking-wide text-6xl lg:text-8xl">
 				{content.title}
 			</h2>
-			<p class="text-sm md:text-lg tracking-widest">
+			<p class="text-sm md:text-2xl tracking-widest leading-loose">
 				{content.description}
 			</p>
-			<a href={content.link.href} class=" text-md md:text-lg leading-6 text-white">
+			<a href={content.link.href} class="text-md md:text-2xl leading-6 text-white">
 				{content.link.label.toUpperCase()} <span aria-hidden="true" class="text-purple-600"> > </span>
 			</a>
 		</div>

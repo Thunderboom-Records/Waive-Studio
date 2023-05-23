@@ -33,13 +33,13 @@
 	]
 </script>
 
-<div class="flex flex-col w-full space-y-12 py-24 px-8 justify-center items-center bg-gradient-to-b from-orange-500 to-orange-600">
-	<h2 class="text-white text-6xl w-full max-w-3xl">
+<div class="flex flex-col w-full space-y-12 py-24 px-8 justify-center items-center bg-gradient-to-l from-yellow-500 to-yellow-700">
+	<h2 class="text-white text-6xl lg:text-8xl w-full max-w-[60vw]">
 		Events
 	</h2>
 
 	{#each events as event}
-		<div class="w-full max-w-3xl bg-white flex flex-row space-x-8">
+		<div class="w-full max-w-[60vw] bg-white flex flex-row space-x-8">
 			<img src={event.img.src} alt={event.img.alt} width={event.img.width} height={event.img.height}/>
 			<div class="flex justify-start items-center w-full">
 				<h3 class="text-black text-center  text-2xl">{event.title}</h3>
@@ -47,11 +47,3 @@
 		</div>
 	{/each}
 </div>
-
-<style>
-	.gradient {
-		background:
-			linear-gradient(to bottom, blue 50%, orange 50%),
-			linear-gradient(100deg, blue, orange);
-	}
-</style>
