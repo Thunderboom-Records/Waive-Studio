@@ -23,8 +23,8 @@ const config = {
 				600: '#273e60',
 			},
 			'purple': {
-				500: '#9352c7',
-				600: '#632b8d',
+				500: '#b63efb',
+				600: '#8225b8',
 			},
 			'orange': {
 				500: '#eb7130',
@@ -33,6 +33,10 @@ const config = {
 			'green': {
 				500: '#54ba84',
 				600: '#326e52',
+			},
+			'yellow': {
+				500: '#dea13f',
+				700: '#a16531'
 			}
 		},
 		extend: {	
@@ -40,21 +44,22 @@ const config = {
 				'sans': ['VG5000', ...defaultTheme.fontFamily.sans]
 			},
 			width: {
-				'128': '28rem'
+				'128': '28rem',
+				'pattern': '3.75rem',
 			},
 			gridTemplateColumns: {
 				'instrument-grid': 'minmax(10rem, 30rem), 12rem, repeat(4, minmax(12rem ,1fr)), 4rem'
 			},
 			minWidth: {
 				'pattern': '3.75rem',
-			},
-			width: {
-				'pattern': '3.75rem',
+			},dth: {
 			}
 		}
 	},
-
-	plugins: []
+	daisyui: {
+		themes: [],
+	},
+	plugins: [require("daisyui")]
 };
 
 module.exports = config;
