@@ -1,3 +1,5 @@
+import type { Chain } from '$lib/types/waive';
+import { SoundSource } from '$lib/waive/audioEngine/sampler';
 import * as Tone from 'tone';
 
 import type { BarsBeatsSixteenths } from "tone/build/esm/core/type/Units";
@@ -45,6 +47,17 @@ export function download(href: string, filename: string) {
 	document.body.appendChild(a);
 	a.click();
 	a.remove();
+}
+
+export function getChainSource(chain?: Chain){
+    if(typeof chain === 'undefined'){
+        return
+    }
+    for(const fx of chain){
+        if(fx instanceof SoundSource){
+            return fx
+        }
+    }
 }
 
 export function splitTimeString(time: string | BarsBeatsSixteenths){

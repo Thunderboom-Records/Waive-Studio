@@ -1,7 +1,8 @@
 import * as Tone from 'tone';
 
-import { DrumType, type FX, type NoteEvent } from '$lib/types/waive';
-import { Sampler } from './sampler';
+import { DrumType, NodeType, type FX, type NoteEvent, type FXParameter, type Chain } from '$lib/types/waive';
+import { SoundSource } from './sampler';
+import { getChainSource } from '$lib/scripts/utils';
 
 
 const midiDrumMap: Record<number, DrumType> = {
@@ -12,21 +13,22 @@ const midiDrumMap: Record<number, DrumType> = {
 	43: DrumType.TOM,
 }
 
-export function makeBassCallback(synth: any){
+export function makeMelodyCallback(synth?: SoundSource, noteOffset: number = 0){
+	if(typeof synth === 'undefined'){
+		console.log("makeMelodyCallback: synth undefined")
+		return () => {};
+	}
 	let callback = (event: NoteEvent, time: number) => {
-		synth.triggerAttackRelease(Tone.Frequency(event.note+24, "midi").toFrequency(), event.length, time);
+		synth.play(Tone.Frequency(event.note + noteOffset, "midi").toFrequency(), event.velocity, time, event.length);
 	}
 
 	return callback;
 }
 
-export function makeDrumsCallback(drumSynths: Record<string, (FX | Sampler)[]>){
-	let synths: Record<string, Sampler> = {};
+export function makeDrumsCallback(drumSynths: Record<string, Chain>){
+	let synths: Record<string, SoundSource | undefined> = {};
 	for(const key in drumSynths){
-		let FXChain = drumSynths[key];
-		if(FXChain[0] instanceof Sampler){
-			synths[key] = FXChain[0] as Sampler;
-		}
+		synths[key] = getChainSource(drumSynths[key]);
 	}
 
 	let callback = (event: NoteEvent, time: number) => {
@@ -35,12 +37,45 @@ export function makeDrumsCallback(drumSynths: Record<string, (FX | Sampler)[]>){
 		}
 
 		let type = midiDrumMap[event.note];
-		if(typeof synths[type] === 'undefined'){
-			return;
-		}
 
-		synths[type].play(event.velocity, time);
+		synths[type]?.play(event.note, event.velocity, time, "16n");
 	}
 
 	return callback;
+}
+
+export class BassSynth extends SoundSource {
+	type: NodeType = NodeType.SAMPLER;
+	bypassable: boolean = false;
+    enabled: boolean = true;
+	label: string = 'Sampler';
+	parameters: FXParameter[] = [];
+	node: Tone.MonoSynth;
+
+	constructor(context?: Tone.BaseContext, fxProps: any = {}){
+		super();
+		if(typeof context === 'undefined'){
+            context = Tone.getContext();
+        }
+
+		if(!fxProps.context){
+			fxProps.context = context;
+		}
+
+		this.node = new Tone.MonoSynth(fxProps);
+		this.input = this.node.input;
+		this.output = this.node.output;
+	}
+
+	play(note?: number, velocity?: number, time?: Tone.Unit.Time, duration?: Tone.Unit.Time): void {
+		if(typeof note === 'undefined'){
+			note = 48;
+		}
+		if(typeof duration === 'undefined'){
+			duration = "0:1";
+		}
+
+		this.node.triggerAttackRelease(note, duration, time, velocity);
+		this.callback(note);
+	}
 }

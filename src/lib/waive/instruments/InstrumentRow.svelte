@@ -6,7 +6,7 @@
 	import PlayerSection from '../player/PlayerSection.svelte';
 	import PatternControls from '../pattern/PatternControls.svelte';
 	import PatternBars from '../pattern/PatternBars.svelte';
-	import { postRequest, ROOT_URL } from '$lib/scripts/utils';
+	import { getChainSource, postRequest, ROOT_URL } from '$lib/scripts/utils';
 	import {
 		BarData,
 		convertDrumNotesToNoteEvents,
@@ -18,6 +18,8 @@
 	import { writable } from 'svelte/store';
 	import { ValueParameter } from '../audioEngine/parameter';
 	import FxKnob from '../fxControls/FxKnob.svelte';
+	import IndicatorLed from './IndicatorLed.svelte';
+	import { FXChains } from '../audioEngine/fxChains';
 
 	export let instrument: Instrument;
 	export let row: number;
@@ -60,7 +62,7 @@
 
 		postRequest(ROOT_URL, instrument.apiPatternRequest, data).then((data: any) => {
 			if (!data || !data.ok) {
-				console.log('no clip data');
+				console.log('no clip data', data.error);
 				return;
 			}
 
@@ -220,25 +222,24 @@
 
 <!-- Col 2: Sample Controls -->
 {#if instrument.type == InstrumentType.DRUMS}
-	<div class="flex justify-between items-center bg-gray-900 col-start-2 row-start-{row} h-full px-2">
+	<div class="flex justify-between items-center bg-gray-900 col-start-2 row-start-{row} h-full p-2 gap-2">
 		<div>
 			<FxKnob parameter={complexity}/>
 		</div>
-		<div class="flex flex-col py-2 justify-between items-center gap-1 h-full">
-			<ChainSelect key={DrumType.KICK} on:switch>kick</ChainSelect>
-			<ChainSelect key={DrumType.SNARE} on:switch>snare</ChainSelect>
-			<ChainSelect key={DrumType.HIHAT} on:switch>hihat</ChainSelect>
-			<ChainSelect key={DrumType.CLAP} on:switch>clap</ChainSelect>
-			<ChainSelect key={DrumType.TOM} on:switch>tom</ChainSelect>
+		<div class="flex flex-col justify-between items-center gap-1 h-full">
+			<ChainSelect key={DrumType.KICK} on:switch>kick <IndicatorLed sampler={getChainSource(FXChains[DrumType.KICK])}/></ChainSelect>
+			<ChainSelect key={DrumType.SNARE} on:switch>snare <IndicatorLed sampler={getChainSource(FXChains[DrumType.SNARE])}/></ChainSelect>
+			<ChainSelect key={DrumType.HIHAT} on:switch>hihat <IndicatorLed sampler={getChainSource(FXChains[DrumType.HIHAT])}/></ChainSelect>
+			<ChainSelect key={DrumType.CLAP} on:switch>clap <IndicatorLed sampler={getChainSource(FXChains[DrumType.CLAP])}/></ChainSelect>
+			<ChainSelect key={DrumType.TOM} on:switch>tom <IndicatorLed sampler={getChainSource(FXChains[DrumType.TOM])}/></ChainSelect>
 		</div>
-		
 	</div>
 {:else}
-	<div class="flex justify-between items-center bg-gray-900 col-start-2 row-start-{row} h-full px-2">
+	<div class="flex justify-between items-center bg-gray-900 col-start-2 row-start-{row} h-full p-2 gap-2">
 		<div>
 			<FxKnob parameter={complexity} disabled={true} label={"complexity"}/>
 		</div>
-		<ChainSelect key={instrument.type} on:switch>{instrument.type.toLowerCase()}</ChainSelect>
+		<ChainSelect key={instrument.type} on:switch>{instrument.type.toLowerCase()} <IndicatorLed sampler={getChainSource(FXChains[instrument.type])}/></ChainSelect>
 	</div>
 {/if}
 
@@ -250,5 +251,4 @@
 	{#if channelNode && channelNode instanceof Channel}
 		<SmToggles {channelNode} />
 	{/if}
-	<!-- <DownloadButton {instrument} /> -->
 </div>

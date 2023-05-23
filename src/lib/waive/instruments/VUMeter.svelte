@@ -18,7 +18,10 @@
             let value = meter.getValue();
             let p: number = Array.isArray(value) ? value[0] * 100 : value * 100;
 
-            indicator.style.height = p + "%";
+            if(indicator){
+                indicator.style.height = p + "%";
+            }
+            
             requestAnimationFrame(show);
         }
 

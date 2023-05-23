@@ -20,7 +20,10 @@
 
         function update(){
             const p = Tone.Transport.progress;
-            cursor.style.left = (p*100) + "%";
+
+            if(cursor){
+                cursor.style.left = (p*100) + "%";
+            }
 
             requestAnimationFrame(update)
         }

@@ -7,7 +7,6 @@ import type {CarouselItem, LandingBannerContent} from "$lib/types/route";
 
 
 let selected = "700"
-
 export let content: LandingBannerContent = LandingBannerContentDummy;
 
 let items: CarouselItem[];

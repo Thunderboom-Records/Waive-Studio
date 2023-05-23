@@ -8,7 +8,7 @@
 	import InstrumentHeader from '$lib/waive/instruments/InstrumentHeader.svelte';
 	import InstrumentControls from '$lib/waive/instruments/InstrumentControls.svelte';
 	import { Arrangement } from '$lib/waive/audioEngine/arrangement';
-	import { makeBassCallback, makeDrumsCallback } from '$lib/waive/audioEngine/synths';
+	import { makeMelodyCallback, makeDrumsCallback } from '$lib/waive/audioEngine/synths';
 	import ChainSelect from '$lib/waive/instruments/ChainSelect.svelte';
 	import Timer from '$lib/waive/transportControls/Timer.svelte';
 	import PlayButtons from '$lib/waive/transportControls/PlayButtons.svelte';
@@ -20,6 +20,7 @@
 	import { writable } from 'svelte/store';
 	import Playhead from '$lib/waive/player/Playhead.svelte';
 	import { convertDrumNotesToNoteEvents, convertMelodyNotesToNoteEvents } from '$lib/waive/audioEngine/barData';
+	import { getChainSource } from '$lib/scripts/utils';
 
 	const drumArrangement = new Arrangement(convertDrumNotesToNoteEvents);
 	drumArrangement.synthCallback = makeDrumsCallback(FXChains)
@@ -27,11 +28,14 @@
 
 	const bassArrangement = new Arrangement(convertMelodyNotesToNoteEvents);
 	if(typeof FXChains[InstrumentType.BASS] !== 'undefined'){
-		bassArrangement.synthCallback = makeBassCallback(FXChains[InstrumentType.BASS][0].node);
+		bassArrangement.synthCallback = makeMelodyCallback(getChainSource(FXChains[InstrumentType.BASS]), 24);
 	}
 	arrangements[InstrumentType.BASS] = writable(bassArrangement);
 
 	const leadArrangement = new Arrangement(convertMelodyNotesToNoteEvents);
+	if(typeof FXChains[InstrumentType.LEAD] !== 'undefined'){
+		leadArrangement.synthCallback = makeMelodyCallback(getChainSource(FXChains[InstrumentType.LEAD]));
+	}
 	arrangements[InstrumentType.LEAD] = writable(leadArrangement);
 
 	let instruments: Instrument[] = [

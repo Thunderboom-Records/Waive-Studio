@@ -105,7 +105,7 @@ export class Arrangement {
             for (let n of notes) {
                 const note = n.note + this.midiOffset;
 
-                let bbs = splitTimeString(n.time);
+                let bbs = splitTimeString(n.time.toString());
                 let time = `${bbs.bar + i}:${bbs.beat}:${bbs.sixteenth}`;
 
                 timings.push({ note, time, length: n.length, velocity: n.velocity });

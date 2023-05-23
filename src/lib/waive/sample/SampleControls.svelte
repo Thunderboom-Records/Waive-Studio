@@ -1,5 +1,4 @@
 <script lang="ts">
-	import * as Tone from 'tone';
 	import type { DrumType, InstrumentType, Sample, UndoableAction } from '$lib/types/waive';
 	import type { Sampler } from '$lib/waive/audioEngine/sampler';
 	import { get } from 'svelte/store';
@@ -9,7 +8,8 @@
 	import Waveform from '$lib/components/Waveform.svelte';
 	import { cleanName, download, postRequest, ROOT_URL } from '$lib/scripts/utils';
 	import { bufferToWave } from '../audioEngine/record';
-
+	import IndicatorLed from '../instruments/IndicatorLed.svelte';
+	
 	export let sampler: Sampler;
 	export let sampleOptionsKey: InstrumentType | DrumType;
 
@@ -23,14 +23,29 @@
 		currentOptions = value;
 	});
 
+	const requestStrings: Record<string, string> = {
+		"00_KD": "requestDrumSample",
+		"01_SD": "requestDrumSample",
+		"02_HH": "requestDrumSample",
+		"03_CL": "requestDrumSample",
+		"06_TH": "requestDrumSample",
+		"LEAD": "requestSamplerSound",
+	}
 
 	function requestSample(z: number[] | null | undefined = null){
-		postRequest(ROOT_URL, 'requestDrumSample', {
+		if(typeof sampler.apiInstrumentName === 'undefined' || typeof requestStrings[sampler.apiInstrumentName] === 'undefined'){
+			console.log("no valid sample request string", sampler.apiInstrumentName);
+			return
+		}
+
+		const requestString = requestStrings[sampler.apiInstrumentName];
+
+		postRequest(ROOT_URL, requestString, {
 			instrument: sampler.apiInstrumentName, 
 			z: z
 		}).then((data) => {
 			if(!data.ok){
-				console.log("no data");
+				console.log("no data", data.error);
 				return
 			}
 
@@ -46,7 +61,7 @@
 			}
 
 			const sample: Sample = {
-				url: data.drum_samples,
+				url: data.url,
 				source: data.source,
 				name: name,
 				z: data.z,
@@ -87,29 +102,31 @@
 		current = sample;
 		sampler.selectSample(current).then(() => {
 			waveform = sampler.getWaveform();
+		}).catch(() => {
+			console.log("error with", sample?.url)
 		});
 	}
 
 	function downloadSample(){
-		const offlineContext = new Tone.OfflineContext(2, sampler.buffer.duration + 0.5, 44100);
-		const playerAttributes = sampler.player.get();
-		playerAttributes.context = offlineContext;
-		playerAttributes.url = sampler.buffer;
-		const player = new Tone.Player(playerAttributes);
-		player.toDestination();
-		player.start(0);
+		// const offlineContext = new Tone.OfflineContext(2, sampler.buffer.duration + 0.5, 44100);
+		// const playerAttributes = sampler.node.get();
+		// playerAttributes.context = offlineContext;
+		
+		// const player = new Tone.Sampler(playerAttributes);
+		// player.toDestination();
+		// player.triggerAttackRelease(sampler.note, );
 
-		offlineContext.render().then(buffer => {
-			const href = URL.createObjectURL(bufferToWave(buffer));
+		// offlineContext.render().then(buffer => {
+			const href = URL.createObjectURL(bufferToWave(sampler.buffer));
 			download(href, sampler.current?.name+".wav");
-		})
+		// })
 
 	}
 
 </script>
 
 <div class="flex flex-col p-2 space-y-2 h-full justify-center place-items-center bg-gray-700 rounded-lg">
-	<div class="flex flex-row justify-between w-60 gap-x-2">
+	<div class="flex flex-row justify-between items-center w-60 gap-x-2">
 		<button
 			class="flex flex-row justify-center place-items-center 
 					bg-gray-500 hover:bg-gray-600 btn rounded-full w-12 h-8 text-sm"
@@ -155,6 +172,7 @@
 				/>
 			</svg>
 		</button>
+		<IndicatorLed {sampler} />
 	</div>
 
 	<SampleSelection 

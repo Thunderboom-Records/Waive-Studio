@@ -13,7 +13,8 @@
 
 <button 
     on:click={()=>{selectedChain.set(key)}}
-    class="hover:bg-gray-500 btn rounded-full w-20 max-h-8 h-full text-sm text-gray-400 {active ? 'bg-gray-600' : 'bg-gray-800'}"
+    class="flex justify-between px-3 items-center hover:bg-gray-500 btn rounded-full w-24 
+            max-h-8 h-full text-sm text-gray-400 {active ? 'bg-gray-600' : 'bg-gray-800'}"
 >
     <slot/>
 </button>
