@@ -17,7 +17,7 @@ $: items = content.items;
 </script>
 
 
-<section class="relative overflow-hidden min-h-[70vh] bg-gradient-to-b from-purple-600 from-40% to-purple-500 w-full flex flex-col justify-center items-center space-y-2 lg:space-y-8">
+<section class="relative overflow-hidden min-h-[70vh]  bg-gradient-to-b from-purple-600 from-40% to-purple-500 w-full flex flex-col justify-center items-center space-y-2 lg:space-y-8">
 	<div class="z-20 mx-auto max-w-[80vw] flex justify-center items-center">
 		<Carousel item={selected}/>
 	</div>
@@ -27,7 +27,7 @@ $: items = content.items;
 		{/each}
 	</div>
 
-	<div class="z-20 absolute flex flex-row left-4 lg:left-16 bottom-8 lg:bottom-16 space-x-4">
+	<div class="z-20 absolute flex flex-row left-16 bottom-8 space-x-4">
 		<Logo icon={ DummyIcon } />
 		<Logo icon={ DummyIcon } />
 		<Logo icon={ DummyIcon } />
