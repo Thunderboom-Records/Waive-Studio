@@ -8,8 +8,8 @@
 			img: {
 				src: placeholder,
 				alt: "alt",
-				width: "400",
-				height: "200",
+				width: "300",
+				height: "120",
 			},
 		},
 		{
@@ -17,8 +17,8 @@
 			img: {
 				src: placeholder,
 				alt: "alt",
-				width: "400",
-				height: "200",
+				width: "300",
+				height: "120",
 			},
 		},
 		{
@@ -26,24 +26,32 @@
 			img: {
 				src: placeholder,
 				alt: "alt",
-				width: "400",
-				height: "200",
+				width: "300",
+				height: "120",
 			},
 		},
 	]
 </script>
 
-<div class="w-full min-h-[32rem]  bg-orange-500 pt-4 flex flex-col justify-center items-center p-8 space-y-4">
-	<h2 class="text-center text-white font-semibold text-6xl mt-4">
+<div class="flex flex-col w-full space-y-12 py-24 px-8 justify-center items-center bg-gradient-to-b from-orange-500 to-orange-600">
+	<h2 class="text-white text-6xl w-full max-w-3xl">
 		Events
 	</h2>
 
 	{#each events as event}
-		<div class="w-2/3 h-[16rem] bg-white flex flex-row space-x-8">
+		<div class="w-full max-w-3xl bg-white flex flex-row space-x-8">
 			<img src={event.img.src} alt={event.img.alt} width={event.img.width} height={event.img.height}/>
 			<div class="flex justify-start items-center w-full">
-				<h3 class="text-black text-center text-2xl">{event.title}</h3>
+				<h3 class="text-black text-center  text-2xl">{event.title}</h3>
 			</div>
 		</div>
 	{/each}
 </div>
+
+<style>
+	.gradient {
+		background:
+			linear-gradient(to bottom, blue 50%, orange 50%),
+			linear-gradient(100deg, blue, orange);
+	}
+</style>

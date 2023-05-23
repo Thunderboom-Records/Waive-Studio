@@ -23,8 +23,8 @@ const config = {
 				600: '#273e60',
 			},
 			'purple': {
-				500: '#9352c7',
-				600: '#632b8d',
+				500: '#b63efb',
+				600: '#8225b8',
 			},
 			'orange': {
 				500: '#eb7130',
@@ -52,7 +52,9 @@ const config = {
 			}
 		}
 	},
-
+	daisyui: {
+		themes: [],
+	},
 	plugins: [require("daisyui")]
 };
 
