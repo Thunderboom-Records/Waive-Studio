@@ -2,28 +2,33 @@
 
 import Carousel from "$lib/components/Carousel.svelte";
 import Logo from "$lib/components/Logo.svelte";
+import {DummyIcon, LandingBannerContentDummy} from "$lib/content/content";
+import type {CarouselItem, LandingBannerContent} from "$lib/types/route";
 
 
 let selected = "700"
 
-function select(item: string) {
-	selected = item;
-}
+export let content: LandingBannerContent = LandingBannerContentDummy;
+
+let items: CarouselItem[];
+
+$: items = content.items;
+
 </script>
 
 
-<section class="relative h-96 bg-purple-500 w-full flex flex-col justify-center items-center space-y-2 ">
+<section class="relative min-h-[32rem] lg:min-h-[70vh] bg-gradient-to-b from-purple-600 to-purple-500 w-full flex flex-col justify-center items-center space-y-2 lg:space-y-8">
 	<div class="mx-auto">
 		<Carousel item={selected}/>
 	</div>
 	<div class="absolute flex flex-row left-4 bottom-8">
-		<Logo />
-		<Logo />
-		<Logo />
+		<Logo icon={ DummyIcon } />
+		<Logo icon={ DummyIcon } />
+		<Logo icon={ DummyIcon } />
 	</div>
 	<div class="flex flex-row space-x-2">
-		<button on:click={() => select("700")} class="btn btn-sm text-white">x</button>
-		<button on:click={() => select("800")} class="btn btn-sm text-white">x</button>
-		<button on:click={() => select("900")} class="btn btn-sm text-white">x</button>
+		{#each items as item, index}
+			<input type="radio" name="radio-1" bind:group={items} class="radio w-3 h-3 border-0 checked:bg-white bg-gray-400/20" checked />
+		{/each}
 	</div>
 </section>

@@ -1,15 +1,15 @@
 <script lang="ts">
-	import type {LandingStudioCardContent} from "$lib/types/route";
+	import type {LandingStudioContent} from "$lib/types/route";
 	import dawScreenshot from '$lib/assets/waive-studio.jpeg';
-	export let content: LandingStudioCardContent;
+	export let content: LandingStudioContent;
 </script>
 
 <div class="bg-white w-full max-w-3xl">
-	<div class="py-16 px-12 flex flex-row justify-start items-center relative isolate overflow-hidden bg-gradient-to-r from-gray-600 to-gray-800">
+	<div class="py-4 px-12 flex flex-row justify-start items-center relative isolate overflow-hidden bg-gradient-to-r from-gray-600 to-gray-800">
 		<div class="max-w-md text-left text-white space-y-4">
-			<h2 class="text-3xl font-bold tracking-tight ">{content.title}</h2>
-			<p class="text-md text-start">{content.description}</p>
-			<div class="flex items-center gap-x-6 justify-start">
+			<h2 class="text-3xl tracking-wide">{content.title}</h2>
+			<p class="text-md font-light text-start">{content.description}</p>
+			<div class="flex items-center tracking-wider gap-x-6 justify-start">
 				{#each content.links as link}
 					<a href={link.href} class="text-sm leading-6 text-white">{link.label.toUpperCase()} <span aria-hidden="true" class="text-purple-600"> > </span></a>
 				{/each}

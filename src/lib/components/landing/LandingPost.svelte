@@ -11,16 +11,16 @@
 	}
 </script>
 
-<div class="w-full h-[32rem] flex flex-row text-white ">
+<div class="w-full flex flex-row text-white ">
 	<div class="w-full bg-gradient-to-t from-purple-500 to-purple-600">
 		<div class="max-w-7xl flex flex-col justify-center items-start p-24 space-y-8">
-			<h2 class="font-semibold text-8xl">
+			<h2 class="tracking-wide text-6xl lg:text-8xl">
 				{content.title}
 			</h2>
-			<p class="text-lg tracking-widest">
+			<p class="text-sm md:text-lg tracking-widest">
 				{content.description}
 			</p>
-			<a href={content.link.href} class="text-lg leading-6 text-white">
+			<a href={content.link.href} class=" text-md md:text-lg leading-6 text-white">
 				{content.link.label.toUpperCase()} <span aria-hidden="true" class="text-purple-600"> > </span>
 			</a>
 		</div>

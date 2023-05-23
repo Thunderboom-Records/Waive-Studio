@@ -21,5 +21,4 @@
 	<LandingTutorials />
 
 	<LandingEvents />
-
 </div>

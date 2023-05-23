@@ -2,6 +2,8 @@
 	export let href: string;
 </script>
 
-<a {href} class="text-base font-medium text-white hover:text-indigo-50">
+
+
+<a {href} class="text-base font-medium text-white hover:underline">
 	<slot />
 </a>

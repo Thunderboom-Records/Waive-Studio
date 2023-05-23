@@ -25,11 +25,11 @@
 	];
 </script>
 
-<div class="w-full h-[32rem]  bg-gray-800 pt-4">
-	<h2 class="text-white font-semibold text-3xl text-center">
+<div class="flex flex-col w-full bg-gray-800 space-y-12 py-24 px-8 justify-center items-center">
+	<h2 class="text-white text-6xl w-full max-w-3xl">
 		Tutorials
 	</h2>
-	<div class="flex flex-row w-full">
+	<div class="flex flex-row w-full max-w-3xl">
 		<div class="carousel rounded-box flex flex-row">
 			{#each items as item}
 				<div class="carousel-item">
