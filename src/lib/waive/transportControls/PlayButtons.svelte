@@ -48,7 +48,7 @@
 
 <div class="flex flex-row space-x-2 items-center">
 	{#if state === PlayingState.STOPPED}
-		<button on:click={start} class="btn btn-circle text-white">
+		<button on:click={start} class="btn btn-circle border-0 text-white">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
@@ -64,7 +64,7 @@
 			</svg>
 		</button>
 	{:else if state === PlayingState.STOPPING}
-		<button on:click={start} class="btn btn-circle text-white pulse">
+		<button on:click={start} class="btn btn-circle border-0 text-white pulse">
 			<svg 
 				xmlns="http://www.w3.org/2000/svg" 
 				viewBox="0 0 24 24" 
@@ -80,7 +80,7 @@
 			</svg>
 		</button>
 	{:else if state === PlayingState.PLAYING}
-		<button on:click={stop} class="btn btn-circle text-white">
+		<button on:click={stop} class="btn btn-circle border-0 text-white">
 			<svg 
 				xmlns="http://www.w3.org/2000/svg" 
 				viewBox="0 0 24 24" 
@@ -96,7 +96,7 @@
 			</svg>
 		</button> 
 	{/if}
-	<button on:click={startRecord} class="btn btn-circle text-white">
+	<button on:click={startRecord} class="btn btn-circle border-0 text-white">
 		<svg 
 			xmlns="http://www.w3.org/2000/svg" 
 			viewBox="0 0 24 24" 

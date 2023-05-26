@@ -125,10 +125,10 @@
 
 </script>
 
-<div class="flex flex-col p-2 space-y-2 h-full justify-center place-items-center bg-gray-700 rounded-lg">
+<div class="flex flex-col w-full max-w-[30rem] p-2 space-y-2 h-full max-h-screen justify-center place-items-center bg-gray-700 rounded-lg">
 	<div class="flex flex-row justify-between items-center w-60 gap-x-2">
 		<button
-			class="flex flex-row justify-center place-items-center 
+			class="flex flex-row justify-center place-items-center
 					bg-gray-500 hover:bg-gray-600 btn rounded-full w-12 h-8 text-sm"
 			on:click={() => sampler.play()}
 		>

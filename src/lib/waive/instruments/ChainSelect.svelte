@@ -4,7 +4,7 @@
 
     export let key: ChainType;
 
-    let active: boolean = false;
+    let active = false;
     selectedChain.subscribe(value => {
         active = value == key;
     });
@@ -13,7 +13,7 @@
 
 <button 
     on:click={()=>{selectedChain.set(key)}}
-    class="flex justify-between px-3 items-center hover:bg-gray-500 btn rounded-full w-24 
+    class="flex justify-between px-3 items-center border-0 hover:bg-gray-500 btn rounded-full w-24
             max-h-8 h-full text-sm text-gray-400 {active ? 'bg-gray-600' : 'bg-gray-800'}"
 >
     <slot/>

@@ -38,24 +38,24 @@
 
 <!-- BPM -->
 <div class="flex flex-row space-x-1 justify-center place-items-center h-full">
-	<div class="badge flex place-items-center justify-center rounded-l-full bg-gray-800 h-full w-24" on:wheel={scrollBPM}>{bpm} bpm</div>
-	<button class="btn btn-sm bg-gray-800 hover:bg-gray-500 h-full w-8" on:click={() => updateBPM(-1)}> - </button>
-	<button class="btn btn-sm bg-gray-800 hover:bg-gray-500 h-full rounded-r-full w-8" on:click={() => updateBPM(1)}> + </button>
+	<div class="badge flex border-0 place-items-center justify-center rounded-l-full bg-gray-800 h-full w-24" on:wheel={scrollBPM}>{bpm} bpm</div>
+	<button class="btn btn-sm border-0 bg-gray-800 hover:bg-gray-500 h-full w-8" on:click={() => updateBPM(-1)}> - </button>
+	<button class="btn btn-sm border-0 bg-gray-800 hover:bg-gray-500 h-full rounded-r-full w-8" on:click={() => updateBPM(1)}> + </button>
 </div>
 
 <!-- Swing Controls -->
 <div class="flex flex-row space-x-1 justify-center place-items-center h-full">
-	<div class="badge flex place-items-center justify-center rounded-l-full  bg-gray-800 h-full w-24" on:wheel={scrollSwing}>{swing}% swing</div>
-	<button class="btn btn-sm bg-gray-800 hover:bg-gray-500 h-full w-8" on:click={() => updateSwing(-0.01)}> - </button>
-	<button class="btn btn-sm btn btn-sm bg-gray-800 hover:bg-gray-500 h-full rounded-r-full w-8" on:click={() => updateSwing(0.01)}> + </button>
+	<div class="badge flex border-0 place-items-center justify-center rounded-l-full  bg-gray-800 h-full w-24" on:wheel={scrollSwing}>{swing}% swing</div>
+	<button class="btn btn-sm border-0 bg-gray-800 hover:bg-gray-500 h-full w-8" on:click={() => updateSwing(-0.01)}> - </button>
+	<button class="btn btn-sm border-0 bg-gray-800 hover:bg-gray-500 h-full rounded-r-full w-8" on:click={() => updateSwing(0.01)}> + </button>
 </div>
 
 <!-- Loop Controls -->
 <div class="flex flex-row space-x-1 justify-center place-items-center h-full">
-	<span class="badge flex place-items-center justify-center rounded-l-full  bg-gray-800 h-full w-20">loop:</span>
+	<span class="badge border-0 flex place-items-center justify-center rounded-l-full bg-gray-800 h-full w-20">loop:</span>
 	<select 
 		bind:value={loopSelection} on:change={() => loopLength.set(loopSelection)} 
-		class="select max-w-xs rounded-r-full text-center bg-gray-800 hover:bg-gray-500 h-full cursor-pointer"
+		class="select select-sm max-w-xs border-0 rounded-r-full text-center bg-gray-800 hover:bg-gray-500 cursor-pointer"
 	>
 		{#each loopOptions as option, i}
 			<option value={option.value}>{option.name}</option>

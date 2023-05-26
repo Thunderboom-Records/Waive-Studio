@@ -1,26 +1,17 @@
 <script lang="ts">
-	import type { Route } from '$lib/types/route';
-
 	import '$lib/styles/app.postcss';
-	import Footer from '$lib/components/Footer.svelte';
-	import Header from '$lib/components/Header.svelte';
+	export const ssr = false;
 
-	let routes: Route[] = [
-		{ href: '/studio', label: 'Studio' },
-		{ href: '/tutorials', label: 'Tutorials' },
-		{ href: '/events', label: 'Events' },
-		{ href: '/about', label: 'About' },
-	];
 </script>
 
 <svelte:head>
 	<title>Waive Studio</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gray-800 flex flex-col">
-	<Header {routes} />
-	<main class="flex-grow-1 flex-shrink-0 flex-auto mt-">
+
+<main class="min-h-screen max-h-screen min-w-screen bg-gray-800 p-6 ">
+	<div class="rounded-xl bg-gray-800 p-6 shadow-2xl shadow-gray-600 border border-gray-500 h-full">
 		<slot />
-	</main>
-	<Footer />
-</div>
+	</div>
+</main>
+
