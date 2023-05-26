@@ -125,11 +125,11 @@
 
 </script>
 
-<div class="flex flex-col w-full max-w-[30rem] p-2 space-y-2 h-full max-h-screen justify-center place-items-center bg-gray-700 rounded-lg">
-	<div class="flex flex-row justify-between items-center w-60 gap-x-2">
+<div class="flex flex-col w-full max-w-[30rem] p-2 space-y-2 h-full max-h-screen justify-center items-center bg-gray-700 rounded-lg">
+	<div class="flex flex-row justify-center items-center w-60 gap-x-2">
 		<button
 			class="flex flex-row justify-center place-items-center
-					bg-gray-500 hover:bg-gray-600 btn rounded-full w-12 h-8 text-sm"
+					bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full w-12 h-8 text-sm"
 			on:click={() => sampler.play()}
 		>
 			<!-- Play button -->
@@ -148,20 +148,20 @@
 		</button>
 
 		<button 
-			class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-20 h-8 text-sm"
+			class="bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full text-sm"
 			on:click={() => requestSample()}
 		>
 			new
 		</button>
 		<button 
-			class="bg-gray-500 hover:bg-gray-600 btn rounded-full w-20 h-8 text-sm"
+			class="flex justify-center items-center content-center bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full text-sm"
 			on:click={() => requestSample(sampler.current?.z)}
 		>
 			var
 		</button>
 		<button
 			on:click={downloadSample}
-			class="flex flex-row justify-center place-items-center bg-gray-500 hover:bg-gray-600 btn rounded-full w-20 h-8 text-sm"
+			class="flex flex-row justify-center place-items-center bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full text-sm"
 		>
 			<!-- Download icon -->
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
@@ -172,7 +172,7 @@
 				/>
 			</svg>
 		</button>
-		<IndicatorLed {sampler} />
+<!--		<IndicatorLed {sampler} />-->
 	</div>
 
 	<SampleSelection 

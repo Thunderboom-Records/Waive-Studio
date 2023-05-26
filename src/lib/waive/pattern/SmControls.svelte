@@ -22,6 +22,8 @@
 	<div class="row-span-2">
 		<VuMeter {node}/>
 	</div>
-	<SmToggle color={"orange"} on:toggled={solo}>S</SmToggle>
-	<SmToggle color={"red"} on:toggled={mute}>M</SmToggle>
+	<div class="flex flex-col justify-between items-center space-y-4">
+		<SmToggle color={"orange"} on:toggled={solo}>S</SmToggle>
+		<SmToggle color={"red"} on:toggled={mute}>M</SmToggle>
+	</div>
 </div>

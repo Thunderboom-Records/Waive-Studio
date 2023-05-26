@@ -10,19 +10,19 @@
 	$: variation = selectedIndex >= 0;
 </script>
 
-<div class="flex flex-col gap-2 p-2 mx-1 w-28 items-center">
+<div class="flex flex-col gap-2 p-2 mx-1 w-28 items-start justify-start">
 	<h3 class="text-{instrument.color}-500 text-xl capitalize">
 		{InstrumentType[instrument.type].toLowerCase()}
 	</h3>
 	<button
 		on:click={() => dispatch("newClip", {variation: false})}
-		class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 btn rounded-full w-12 h-6 text-xs"
+		class="bg-{instrument.color}-500 hover:bg-{instrument.color}-600 btn btn-sm rounded-full w-12 h-6 text-xs"
 	>
 		new
 	</button>
 	<button
 		on:click={() => dispatch("newClip", {variation: true})}
-		class="{variation ? `bg-${instrument.color}-500 hover:bg-${instrument.color}-600` : 'bg-gray-600'} btn rounded-full w-12 h-6 text-xs"
+		class="{variation ? `bg-${instrument.color}-500 hover:bg-${instrument.color}-600` : 'bg-gray-600'} btn btn-sm rounded-full w-12 h-6 text-xs"
 		disabled={!variation}
 	>
 		var
