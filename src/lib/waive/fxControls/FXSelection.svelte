@@ -30,7 +30,7 @@
 
 </script>
 
- <select bind:value={selected} on:change={update} class="select max-w-xs rounded-full text-center bg-gray-400 h-6 px-4"> -->
+ <select bind:value={selected} on:change={update} class="select select-sm rounded-full text-center bg-gray-400 h-6 px-4"> -->
     {#each parameter.options as option}
         <option value={option}>{option}</option>
     {/each}
