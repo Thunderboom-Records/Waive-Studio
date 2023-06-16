@@ -129,7 +129,7 @@
 	<div class="flex flex-row justify-start items-center w-60 gap-x-2 h-full">
 		<!-- NewSampleButton -->
 		<button 
-			class="bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full text-sm capitalize leading-10 font-medium"
+			class="bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full text-sm capitalize leading-8 font-medium"
 			on:click={() => requestSample()}
 		>
 			New
@@ -137,7 +137,7 @@
 
 		<!-- NewVariationButton -->
 		<button
-			class="bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full text-sm capitalize leading-10 font-medium"
+			class="bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full text-sm capitalize leading-8 font-medium"
 			on:click={() => requestSample(sampler.current?.z)}
 		>
 			var
