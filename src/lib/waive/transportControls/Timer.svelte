@@ -16,7 +16,7 @@
 </script>
 
 <div class="flex justify-center items-center content-center badge badge-lg border-0 min-w-fit text-white text-lg bg-gray-800 rounded-full h-full w-32">
-	<p class="h-full w-full text-center leading-10">
+	<p class="h-full w-full text-center leading-8">
 		{formattedTime}
 	</p>
 </div>
