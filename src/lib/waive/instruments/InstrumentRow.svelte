@@ -227,11 +227,26 @@
 			<FxKnob parameter={complexity}/>
 		</div>
 		<div class="flex flex-col justify-between items-center gap-1 h-full">
-			<ChainSelect key={DrumType.KICK} on:switch>kick <IndicatorLed sampler={getChainSource(FXChains[DrumType.KICK])}/></ChainSelect>
-			<ChainSelect key={DrumType.SNARE} on:switch>snare <IndicatorLed sampler={getChainSource(FXChains[DrumType.SNARE])}/></ChainSelect>
-			<ChainSelect key={DrumType.HIHAT} on:switch>hihat <IndicatorLed sampler={getChainSource(FXChains[DrumType.HIHAT])}/></ChainSelect>
-			<ChainSelect key={DrumType.CLAP} on:switch>clap <IndicatorLed sampler={getChainSource(FXChains[DrumType.CLAP])}/></ChainSelect>
-			<ChainSelect key={DrumType.TOM} on:switch>tom <IndicatorLed sampler={getChainSource(FXChains[DrumType.TOM])}/></ChainSelect>
+			<ChainSelect key={DrumType.KICK} on:switch>
+				<p>kick</p>
+				<IndicatorLed sampler={getChainSource(FXChains[DrumType.KICK])}/>
+			</ChainSelect>
+			<ChainSelect key={DrumType.SNARE} on:switch>
+				<p>snare</p>
+				<IndicatorLed sampler={getChainSource(FXChains[DrumType.SNARE])}/>
+			</ChainSelect>
+			<ChainSelect key={DrumType.HIHAT} on:switch>
+				<p>hihat</p>
+				<IndicatorLed sampler={getChainSource(FXChains[DrumType.HIHAT])}/>
+			</ChainSelect>
+			<ChainSelect key={DrumType.CLAP} on:switch>
+				<p>clap</p>
+				<IndicatorLed sampler={getChainSource(FXChains[DrumType.CLAP])}/>
+			</ChainSelect>
+			<ChainSelect key={DrumType.TOM} on:switch>
+				<p>tom</p>
+				<IndicatorLed sampler={getChainSource(FXChains[DrumType.TOM])}/>
+			</ChainSelect>
 		</div>
 	</div>
 {:else}
@@ -247,7 +262,7 @@
 <PlayerSection {row} bind:instrument={instrument} on:addBar={addBar} on:removeBar={removeBar} on:newClip={requestClip} />
 
 <!-- Col 7: Channel controls -->
-<div class="col-start-7 row-start-{row}">
+<div class="col-start-7 row-start-{row} ">
 	{#if channelNode && channelNode instanceof Channel}
 		<SmToggles {channelNode} />
 	{/if}

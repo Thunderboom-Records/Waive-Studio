@@ -65,8 +65,8 @@
 </script>
 
 
-<div class="flex flex-col bg-gray-800 space-y-1 w-full h-full select-none">
-	<div class="bg-gray-900 flex p-4 justify-between items-center w-full text-white h-16">
+<div class="flex flex-col bg-gray-800 space-y-1 w-full h-full select-none overflow-hidden">
+	<div class="bg-gray-900 flex justify-between p-4 max-h-fit w-full text-white h-16">
 		<Logo />
 		<HistoryButtons />
 		<ChainSelect key={InstrumentType.MASTER}>Master FX</ChainSelect>
@@ -82,7 +82,7 @@
 			<InstrumentRow {instrument} row={row+2} channelNode={SMNodes[instrument.type]}/>
 		{/each}
 	</div>
-	<div class="bg-gray-900">
+	<div class="bg-gray-900 w-full max-h-fit">
 		<InstrumentControls />
 	</div>
 </div>

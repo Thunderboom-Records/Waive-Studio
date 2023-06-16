@@ -1,7 +1,5 @@
 <script lang="ts">
 	import '$lib/styles/app.postcss';
-	export const ssr = false;
-
 </script>
 
 <svelte:head>

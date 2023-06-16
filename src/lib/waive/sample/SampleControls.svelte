@@ -125,8 +125,25 @@
 
 </script>
 
-<div class="flex flex-col w-full max-w-[30rem] p-2 space-y-2 h-full max-h-screen justify-center items-center bg-gray-700 rounded-lg">
-	<div class="flex flex-row justify-center items-center w-60 gap-x-2">
+<div class="flex flex-col w-full max-w-[22rem] p-2 space-y-2 h-full max-h-screen justify-center items-start bg-gray-700 rounded-lg">
+	<div class="flex flex-row justify-start items-center w-60 gap-x-2 h-full">
+		<!-- NewSampleButton -->
+		<button 
+			class="bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full text-sm capitalize leading-9 font-medium"
+			on:click={() => requestSample()}
+		>
+			New
+		</button>
+
+		<!-- NewVariationButton -->
+		<button
+			class="bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full text-sm capitalize leading-9 font-medium"
+			on:click={() => requestSample(sampler.current?.z)}
+		>
+			var
+		</button>
+
+		<!-- PlayButton -->
 		<button
 			class="flex flex-row justify-center place-items-center
 					bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full w-12 h-8 text-sm"
@@ -147,18 +164,7 @@
 			</svg>
 		</button>
 
-		<button 
-			class="bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full text-sm"
-			on:click={() => requestSample()}
-		>
-			new
-		</button>
-		<button 
-			class="flex justify-center items-center content-center bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full text-sm"
-			on:click={() => requestSample(sampler.current?.z)}
-		>
-			var
-		</button>
+		<!-- DownloadButton -->
 		<button
 			on:click={downloadSample}
 			class="flex flex-row justify-center place-items-center bg-gray-500 hover:bg-gray-600 btn btn-sm rounded-full text-sm"
@@ -173,12 +179,13 @@
 			</svg>
 		</button>
 <!--		<IndicatorLed {sampler} />-->
-	</div>
 
-	<SampleSelection 
-		bind:current={current} 
-		bind:options={currentOptions} 
-		on:selection={(event) => selection(event.detail)}
-	/>
+	</div>
+		<SampleSelection
+			bind:current={current}
+			bind:options={currentOptions}
+			on:selection={(event) => selection(event.detail)}
+		/>
+
 	<Waveform bind:waveform={waveform} />
 </div>
