@@ -13,7 +13,7 @@
 
 </script>
 
-<select bind:value={current} on:change={selectSample} class="select select-sm max-w-[20rem] rounded-full pl-4 text-start bg-gray-500 h-8">
+<select bind:value={current} on:change={selectSample} class="select select-sm max-w-[20rem] rounded-full pl-4 text-start bg-gray-500 h-8 leading-9 font-medium italic  truncate">
 	{#if typeof options === 'undefined' || options.length == 0}
 	<option disabled selected value={undefined}>---</option>
 	{:else}

@@ -30,6 +30,6 @@
 
 </script>
 
-<div class="w-6 h-full bg-gray-900 relative">
+<div class="w-6 h-full bg-gray-800 relative">
     <div bind:this={indicator} class="bg-gray-500 absolute bottom-0 w-full"/>
 </div>

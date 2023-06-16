@@ -1,12 +1,12 @@
 
 <!-- Col 1: PatternHeader -->
 <div class="bg-gray-900 col-start-1">
-	<h2 class="text-gray-400 text-center">clips</h2>
+	<h2 class="text-gray-400 text-center">Patterns</h2>
 </div>
 
 <!-- Col 2: SampleHeader-->
 <div class="bg-gray-900 col-start-2">
-	<h2 class="text-gray-400 text-center">controls</h2>
+	<h2 class="text-gray-400 text-center">Samples</h2>
 </div>
 
 <!-- Col 3-6: PlayerHeader -->

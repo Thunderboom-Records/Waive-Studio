@@ -17,9 +17,9 @@
 
 </script>
 
-<div class="flex flex-row gap-2 p-2 overflow-y-scroll">
+<div class="flex flex-row w-full gap-2 p-2 h-full">
     {#if typeof selectedFX !== 'undefined'}
-        <ChainLabel>{name}</ChainLabel>
+        <ChainLabel {name}></ChainLabel>
         {#each selectedFX as fx}
             {#key fx}
                 {#if fx instanceof Sampler}
